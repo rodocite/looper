@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="looper-toolbar" fit>
+  <template>
+    <style>
+     :host {
+      display: block;
+    }
+
+    app-toolbar {
+      background-color: blue;
+    }
+    </style>
+    <app-toolbar>
+      
+      <slot name="drawer-toggle"></slot>
+
+      <div main-title>Title</div>
+    </app-toolbar>
+  </template>
+  <script>
+  class LooperToolbar extends Polymer.Element {
+    static get is() { return 'looper-toolbar'; }
+
+    static get properties() {
+      return {
+        hasToolbar: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        }
+      };
+    }
+  }
+
+  window.customElements.define(LooperToolbar.is, LooperToolbar);
+  </script>
+</dom-module>
