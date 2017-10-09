@@ -8,29 +8,28 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<dom-module id="my-view404">
+<link rel="import" href="shared-styles.html">
+<dom-module id="page-wallet">
   <template>
-    <style>
+    <style include="shared-styles">
      :host {
       display: block;
 
-      padding: 10px 20px;
+      padding: 10px;
     }
     </style>
-    Oops you hit a 404. <a href="[[rootPath]]">Head back to home.</a>
+    <looper-page has-toolbar>
+      <div class="card">
+        <div class="circle">1</div>
+        <h1>market</h1>
+      </div>
+    </looper-page>
   </template>
   <script>
-  class MyView404 extends Polymer.Element {
-    static get is() { return 'my-view404'; }
-    static get properties() {
-      return {
-        // This shouldn't be neccessary, but the Analyzer isn't picking up
-        // Polymer.Element#rootPath
-        rootPath: String,
-      };
-    }
+  class MyView2 extends Polymer.Element {
+    static get is() { return 'page-wallet'; }
   }
 
-  window.customElements.define(MyView404.is, MyView404);
+  window.customElements.define(MyView2.is, MyView2);
   </script>
 </dom-module>

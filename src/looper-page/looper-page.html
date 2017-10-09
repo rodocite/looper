@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="looper-page" fit>
+  <template>
+    <style>
+     :host {
+      display: block;
+    }
+
+    app-toolbar {
+      background-color: blue;
+    }
+    </style>
+    <app-drawer-layout fullbleed force-narrow>
+      <app-drawer no-focus-trap slot="drawer">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="markets" href="[[rootPath]]markets">View One</a>
+          <a name="mywallet" href="[[rootPath]]mywallet">View Two</a>
+        </iron-selector>
+      </app-drawer>
+      <app-header-layout>
+        <app-header reveals effects="waterfall" slot="header">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div main-title>Title</div>
+          </app-toolbar>
+        </app-header>
+        <slot></slot>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+  <script>
+  class PageLayout extends Polymer.Element {
+    static get is() { return 'looper-page'; }
+
+    static get properties() {
+      return {
+        hasToolbar: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        }
+      };
+    }
+  }
+
+  window.customElements.define(PageLayout.is, PageLayout);
+  </script>
+</dom-module>
