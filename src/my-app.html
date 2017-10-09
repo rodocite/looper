@@ -68,11 +68,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-weight: bold;
     }
     </style>
-    <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+    <app-location use-hash-as-path route="{{route}}">
     </app-location>
-    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+    <app-route route="{{route}}" pattern=":page" data="{{routeData}}" tail="{{subroute}}">
+
     </app-route>
-    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
       <page-markets name="markets"></page-markets>
       <page-wallet name="market"></page-wallet>
       <page-mywallet name="mywallet"></page-mywallet>
@@ -105,14 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     _routePageChanged(page) {
-      // If no page was found in the route data, page will be an empty string.
-      // Default to 'view1' in that case.
+      console.log("new page: " + page);
       this.page = page || 'markets';
-
-      // Close a non-persistent drawer when the page & route are changed.
-      if (!this.$.drawer.persistent) {
-        this.$.drawer.close();
-      }
     }
 
     _pageChanged(page) {
