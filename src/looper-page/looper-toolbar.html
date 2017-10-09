@@ -6,15 +6,19 @@
       display: block;
     }
 
-    app-toolbar {
-      background-color: blue;
+    paper-button {
+      /*background-color: blue;*/
+      text-transform: none;
     }
     </style>
     <app-toolbar>
-      
       <slot name="drawer-toggle"></slot>
-
-      <div main-title>Title</div>
+      <a href="#mywallet">
+        <paper-button noink active>My Wallet</paper-button>
+      </a>
+      <a href="#markets">
+        <paper-button noink>No ripple effect</paper-button>
+      </a>
     </app-toolbar>
   </template>
   <script>

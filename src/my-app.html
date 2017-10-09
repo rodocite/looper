@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
@@ -76,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
     <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
       <page-markets name="markets"></page-markets>
-      <page-wallet name="market"></page-wallet>
+      <page-market name="market"></page-market>
       <page-mywallet name="mywallet"></page-mywallet>
       <page-404 name="404"></page-404>
     </iron-pages>
