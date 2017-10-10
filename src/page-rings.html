@@ -9,36 +9,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="page-market">
+<dom-module id="page-rings">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
      :host {
       display: block;
+      padding: 10px;
     }
+
+
     </style>
     <looper-page>
-      <simple-toolbar slot="main-toolbar" title="Market" back-link="#markets"></simple-toolbar>
+      <looper-toolbar slot="main-toolbar" active-tab="rings">
+        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+      </looper-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card >
+          <div class="card-content">
+            <a href="#ring">Link to a Ring</a>
           </div>
         </paper-card>
       </div>
     </looper-page>
   </template>
   <script>
-  class PageMarket extends Polymer.Element {
-    static get is() { return 'page-market'; }
+  class PageRings extends Polymer.Element {
+    static get is() { return 'page-rings'; }
   }
 
-  window.customElements.define(PageMarket.is, PageMarket);
+  window.customElements.define(PageRings.is, PageRings);
   </script>
 </dom-module>

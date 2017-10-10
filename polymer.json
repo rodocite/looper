@@ -4,6 +4,12 @@
   "fragments": [
     "src/page-markets.html",
     "src/page-market.html",
+    "src/page-rings.html",
+    "src/page-ring.html",
+    "src/page-orders.html",
+    "src/page-order.html",
+    "src/page-fills.html",
+    "src/page-fill.html",
     "src/page-mywallet.html",
     "src/page-404.html"
   ],

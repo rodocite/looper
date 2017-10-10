@@ -16,7 +16,7 @@
       /*background-color: blue;*/
       background-color: rgba(0, 0, 0, 0.1);
     }
- /*   paper-toolbar {
+    /*   paper-toolbar {
       background-color: white;
     }
 
@@ -28,14 +28,7 @@
       <a href="[[backLink]]" slot="top" class="styless-link">
         <paper-icon-button icon='arrow-back' noink></paper-icon-button>
       </a>
-      <span slot="top" class="title">Title</span>
-      <a href="#markets" slot="top" class="styless-link">
-        <paper-button noink>Markets</paper-button>
-      </a>
-      <a href="#mywallet" slot="top" class="styless-link">
-        <paper-button noink>Wallet</paper-button>
-      </a>
-      <span slot="top" class="title"></span>
+      <span slot="top" class="title">[[title]]</span>
     </paper-toolbar>
   </template>
   <script>
@@ -46,7 +39,11 @@
       return {
         backLink: {
           type: String,
-          reflectToAttribute: true
+          // reflectToAttribute: true
+        },
+        title: {
+          type: String
+          // reflectToAttribute: true
         }
       };
     }

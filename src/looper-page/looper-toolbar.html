@@ -10,20 +10,22 @@
       /*background-color: grey;*/
     }
 
-    a[active] > paper-button {
+    a[active]>paper-button {
       background-color: red;
     }
-
     </style>
     <paper-toolbar class="medium-tall">
       <slot slot="top"></slot>
       <span slot="top" class="title">Looper</span>
       <span slot="middle" class="title"></span>
-      <a href="#markets" active$='[[isActiveTab("markets")]]' slot="middle"" class="styless-link">
+      <a href="#markets" active$="[[isActiveTab('markets')]]" slot="middle" class="styless-link">
         <paper-button noink>Markets</paper-button>
       </a>
-      <a href="#mywallet" active$='[[isActiveTab("mywallet")]]' slot="middle" class="styless-link">
+      <a href="#mywallet" active$="[[isActiveTab('mywallet')]]" slot="middle" class="styless-link">
         <paper-button noink>Wallet</paper-button>
+      </a>
+      <a href="#rings" active$="[[isActiveTab('rings')]]" slot="middle" class="styless-link">
+        <paper-button noink>Rings</paper-button>
       </a>
       <span slot="middle" class="title"></span>
     </paper-toolbar>

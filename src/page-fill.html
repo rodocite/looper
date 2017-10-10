@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="page-market">
+<dom-module id="page-fill">
   <template>
     <style include="shared-styles">
      :host {
@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-      <simple-toolbar slot="main-toolbar" title="Market" back-link="#markets"></simple-toolbar>
+      <simple-toolbar slot="main-toolbar" title="Fill" back-link="#fills"></simple-toolbar>
       <div class="sections">
         <paper-card heading="Card Title">
           <div class="card-content">Some content</div>
@@ -35,10 +35,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </looper-page>
   </template>
   <script>
-  class PageMarket extends Polymer.Element {
-    static get is() { return 'page-market'; }
+  class PageFill extends Polymer.Element {
+    static get is() { return 'page-fill'; }
   }
 
-  window.customElements.define(PageMarket.is, PageMarket);
+  window.customElements.define(PageFill.is, PageFill);
   </script>
 </dom-module>
