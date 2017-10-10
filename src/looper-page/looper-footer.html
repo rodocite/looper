@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="looper-footer" fit>
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+     :host {
+      display: block;
+      /*height: 64px;*/
+      /*line-height: 64px;*/
+      /*text-align: center;*/
+      background-color: var(--google-grey-300);
+      width:100%;
+      /*@apply --center-layout;*/
+    }
+
+    </style>
+    <div class="horizontal layout">
+      <div class="vertical layout">
+        <div>Abc</div>
+        <div>Abc</div>
+        <div>Abc</div>
+      </div>
+      <div class="vertical layout">
+        <div>Abc</div>
+        <div>Abc</div>
+        <div>Abc</div>
+      </div>
+      <div class="vertical layout">
+        <div>Abc</div>
+        <div>Abc</div>
+        <div>Abc</div>
+      </div>
+      <div class="vertical layout">
+        <div>Abc</div>
+        <div>Abc</div>
+        <div>Abc</div>
+      </div>
+    </div>
+  </template>
+  <script>
+  class LooperFooter extends Polymer.Element {
+    static get is() { return 'looper-footer'; }
+
+    static get properties() {
+      return {};
+    }
+  }
+
+  window.customElements.define(LooperFooter.is, LooperFooter);
+  </script>
+</dom-module>

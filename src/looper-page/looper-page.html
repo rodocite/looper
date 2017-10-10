@@ -1,15 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="looper-page">
   <template>
-    <style include="shared-styles">
-    <style> :host {
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+     :host {
       display: block;
     }
 
-    app-header {
-/*      color: #fff;
-      background-color: var(--google-blue-500);*/
-    }
     </style>
     <app-header-layout has-scrolling-region fullbleed>
       <app-header slot="header">
