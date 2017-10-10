@@ -1,34 +1,39 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="looper-toolbar" fit>
   <template>
-    <style include="shared-styles">
-    <style> :host {
+    <style include="shared-styles"></style>
+    <style>
+     :host {
       display: block;
     }
 
-    paper-toolbar {
-      /*background-color: grey;*/
+    paper-button {
+      height: 64px;
     }
 
-    a[active]>paper-button {
-      background-color: red;
+    app-toolbar {
+      color: #fff;
+      background-color: var(--google-green-500);
     }
+
+    a[active] > paper-button {
+      background-color: var(--google-green-700);
+    }
+
     </style>
-    <paper-toolbar class="medium-tall">
-      <slot slot="top"></slot>
-      <span slot="top" class="title">Looper</span>
-      <span slot="middle" class="title"></span>
-      <a href="#markets" active$="[[isActiveTab('markets')]]" slot="middle" class="styless-link">
+    <app-toolbar>
+      <div condensed-title></div>
+      <a href="#markets" active$="[[isActiveTab('markets')]]" class="styless-link">
         <paper-button noink>Markets</paper-button>
       </a>
-      <a href="#mywallet" active$="[[isActiveTab('mywallet')]]" slot="middle" class="styless-link">
+      <a href="#mywallet" active$="[[isActiveTab('mywallet')]]" class="styless-link">
         <paper-button noink>Wallet</paper-button>
       </a>
-      <a href="#rings" active$="[[isActiveTab('rings')]]" slot="middle" class="styless-link">
+      <a href="#rings" active$="[[isActiveTab('rings')]]" class="styless-link">
         <paper-button noink>Rings</paper-button>
       </a>
-      <span slot="middle" class="title"></span>
-    </paper-toolbar>
+      <div condensed-title></div>
+    </app-toolbar>
   </template>
   <script>
   class LooperToolbar extends Polymer.Element {

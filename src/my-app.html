@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
@@ -25,11 +26,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="looper-page/looper-toolbar.html">
+<link rel="import" href="looper-page/looper-footer.html">
 <link rel="import" href="looper-page/simple-toolbar.html">
 <link rel="import" href="looper-page/looper-page.html">
 <link rel="lazy-import" href="page-markets.html">
@@ -57,8 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     app-header {
-      color: #fff;
-      background-color: var(--app-primary-color);
+      /*color:var(--app-primary-color);*/
+      background-color: #fff;
     }
 
     app-header paper-icon-button {
@@ -81,24 +85,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: black;
       font-weight: bold;
     }
+
+    paper-icon-button:not([narrow]) [drawer-toggle] {
+      display: none;
+    }
+
     </style>
     <app-location use-hash-as-path route="{{route}}">
     </app-location>
     <app-route route="{{route}}" pattern=":page" data="{{routeData}}" tail="{{subroute}}">
-
     </app-route>
-    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
-      <page-market name="market"></page-market>
-      <page-markets name="markets"></page-markets>
-      <page-mywallet name="mywallet"></page-mywallet>
-      <page-rings name="rings"></page-rings>
-      <page-ring name="ring"></page-ring>
-      <page-orders name="orders"></page-orders>
-      <page-order name="order"></page-order>
-      <page-fills name="fills"></page-fills>
-      <page-fill name="fill"></page-fill>
-      <page-404 name="404"></page-404>
-    </iron-pages>
+    <app-drawer-layout fullbleed force-narrow>
+      <app-drawer no-focus-trap slot="drawer">
+        <a name="markets" href="#markets">
+          <paper-item>Item 1</paper-item>
+        </a>
+        <a name="mywallet" href="#mywallet">
+          <paper-item>Item 2</paper-item>
+        </a>
+      </app-drawer>
+      <app-header-layout has-scrolling-region fullbleed>
+        <app-header fixed slot="header">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div spacer></div>
+            <div main-title>Looper</div>
+          </app-toolbar>
+        </app-header>
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
+          <page-market name="market"></page-market>
+          <page-markets name="markets"></page-markets>
+          <page-mywallet name="mywallet"></page-mywallet>
+          <page-rings name="rings"></page-rings>
+          <page-ring name="ring"></page-ring>
+          <page-orders name="orders"></page-orders>
+          <page-order name="order"></page-order>
+          <page-fills name="fills"></page-fills>
+          <page-fill name="fill"></page-fill>
+          <page-404 name="404"></page-404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
   </template>
   <script>
   class MyApp extends Polymer.Element {

@@ -7,29 +7,27 @@
       display: block;
     }
 
-    paper-icon-button {
-      /*background-color: blue;*/
-      text-transform: none;
+    paper-button {
+      height: 64px;
+    }
+
+    app-toolbar {
+      color: #fff;
+      background-color: var(--google-green-500);
     }
 
     paper-icon-button:hover {
       /*background-color: blue;*/
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: var(--google-green-700);
     }
-    /*   paper-toolbar {
-      background-color: white;
-    }
-
-    paper-button {
-      color: black;
-    }*/
     </style>
-    <paper-toolbar>
-      <a href="[[backLink]]" slot="top" class="styless-link">
+    <app-toolbar>
+      <a href="[[backLink]]" class="styless-link">
         <paper-icon-button icon='arrow-back' noink></paper-icon-button>
       </a>
-      <span slot="top" class="title">[[title]]</span>
-    </paper-toolbar>
+      <div spacer></div>
+      <div condensed-title>[[title]]</div>
+    </app-toolbar>
   </template>
   <script>
   class SimpleToolbar extends Polymer.Element {
