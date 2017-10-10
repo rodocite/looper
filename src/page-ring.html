@@ -9,28 +9,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="my-view1">
+<dom-module id="page-ring">
   <template>
     <style include="shared-styles">
      :host {
       display: block;
-
-      padding: 10px;
     }
     </style>
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-    </div>
+    <looper-page>
+      <simple-toolbar slot="main-toolbar" title="Ring" back-link="#rings"></simple-toolbar>
+      <div class="sections">
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
+      </div>
+    </looper-page>
   </template>
   <script>
-    
-  class MyView1 extends Polymer.Element {
-    static get is() { return 'my-view1'; }
+  class PageRing extends Polymer.Element {
+    static get is() { return 'page-ring'; }
   }
 
-  window.customElements.define(MyView1.is, MyView1);
+  window.customElements.define(PageRing.is, PageRing);
   </script>
 </dom-module>

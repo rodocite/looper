@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
+<dom-module id="simple-toolbar" fit>
+  <template>
+    <style include="shared-styles">
+    <style> :host {
+      display: block;
+    }
+
+    paper-icon-button {
+      /*background-color: blue;*/
+      text-transform: none;
+    }
+
+    paper-icon-button:hover {
+      /*background-color: blue;*/
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    /*   paper-toolbar {
+      background-color: white;
+    }
+
+    paper-button {
+      color: black;
+    }*/
+    </style>
+    <paper-toolbar>
+      <a href="[[backLink]]" slot="top" class="styless-link">
+        <paper-icon-button icon='arrow-back' noink></paper-icon-button>
+      </a>
+      <span slot="top" class="title">[[title]]</span>
+    </paper-toolbar>
+  </template>
+  <script>
+  class SimpleToolbar extends Polymer.Element {
+    static get is() { return 'simple-toolbar'; }
+
+    static get properties() {
+      return {
+        backLink: {
+          type: String,
+          // reflectToAttribute: true
+        },
+        title: {
+          type: String
+          // reflectToAttribute: true
+        }
+      };
+    }
+  }
+
+  window.customElements.define(SimpleToolbar.is, SimpleToolbar);
+  </script>
+</dom-module>
