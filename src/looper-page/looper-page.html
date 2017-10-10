@@ -1,36 +1,22 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="looper-page" fit>
+<dom-module id="looper-page">
   <template>
     <style include="shared-styles">
     <style> :host {
       display: block;
     }
+
+    app-header {
+      color: #fff;
+      background-color: var(--google-blue-500);
+    }
     </style>
-    <app-drawer-layout fullbleed force-narrow>
-      <app-drawer no-focus-trap slot="drawer">
-        <app-header-layout>
-          <app-header>
-            <paper-toolbar class="medium-tall">
-              <span slot="top" class="title">Looper</span>
-            </paper-toolbar>
-          </app-header>
-          <!-- <paper-menu> -->
-            <a name="markets" href="#markets">
-              <paper-item>Item 1</paper-item>
-            </a>
-            <a name="mywallet" href="#mywallet">
-              <paper-item>Item 2</paper-item>
-            </a>
-          <!-- </paper-menu> -->
-        </app-header-layout>
-      </app-drawer>
-      <app-header-layout>
-        <app-header reveals effects="waterfall" slot="header">
-          <slot name="main-toolbar"></slot>
-        </app-header>
-        <slot></slot>
-      </app-header-layout>
-    </app-drawer-layout>
+    <app-header-layout has-scrolling-region fullbleed>
+      <app-header slot="header">
+        <slot name="secondary-toolbar"></slot>
+      </app-header>
+      <slot></slot>
+    </app-header-layout>
   </template>
   <script>
   class LooperPage extends Polymer.Element {
