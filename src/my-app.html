@@ -16,18 +16,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="looper-page/looper-toolbar.html">
+<link rel="import" href="looper-page/simple-toolbar.html">
 <link rel="import" href="looper-page/looper-page.html">
 <link rel="lazy-import" href="page-markets.html">
-<link rel="lazy-import" href="page-wallet.html">
+<link rel="lazy-import" href="page-market.html">
 <link rel="lazy-import" href="page-mywallet.html">
 <link rel="lazy-import" href="page-404.html">
 <dom-module id="my-app">
@@ -76,8 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </app-route>
     <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
-      <page-markets name="markets"></page-markets>
       <page-market name="market"></page-market>
+      <page-markets name="markets"></page-markets>
       <page-mywallet name="mywallet"></page-mywallet>
       <page-404 name="404"></page-404>
     </iron-pages>

@@ -9,16 +9,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="page-wallet">
+<dom-module id="page-market">
   <template>
     <style include="shared-styles">
      :host {
       display: block;
-
-      padding: 10px;
     }
     </style>
-    <looper-page has-toolbar>
+    <looper-page>
+      <simple-toolbar slot="main-toolbar" back-link="#markets"></simple-toolbar>
       <div class="card">
         <div class="circle">1</div>
         <h1>market</h1>
@@ -26,10 +25,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </looper-page>
   </template>
   <script>
-  class MyView2 extends Polymer.Element {
-    static get is() { return 'page-wallet'; }
+  class PageMarket extends Polymer.Element {
+    static get is() { return 'page-market'; }
   }
 
-  window.customElements.define(MyView2.is, MyView2);
+  window.customElements.define(PageMarket.is, PageMarket);
   </script>
 </dom-module>

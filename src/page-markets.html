@@ -11,27 +11,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
      :host {
       display: block;
       padding: 10px;
     }
+
+
     </style>
     <looper-page>
       <looper-toolbar slot="main-toolbar">
         <paper-icon-button slot="drawer-toggle" icon="menu" drawer-toggle></paper-icon-button>
       </looper-toolbar>
-      <div class="card">
+      <div class="sections">
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
+      </div>
+      <!--      <div class="card">
         <div class="circle">1</div>
         <h1>Markets</h1>
-      </div>
+
+      </div> -->
     </looper-page>
   </template>
   <script>
-  class MyView1 extends Polymer.Element {
+  class PageMarkets extends Polymer.Element {
     static get is() { return 'page-markets'; }
   }
 
-  window.customElements.define(MyView1.is, MyView1);
+  window.customElements.define(PageMarkets.is, PageMarkets);
   </script>
 </dom-module>

@@ -5,14 +5,9 @@
      :host {
       display: block;
     }
-
-    app-toolbar {
-      background-color: blue;
-    }
     </style>
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
-       
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="markets" href="#markets">View One</a>
           <a name="mywallet" href="#mywallet">View Two</a>
@@ -21,7 +16,6 @@
       <app-header-layout>
         <app-header reveals effects="waterfall" slot="header">
           <slot name="main-toolbar"></slot>
-          
         </app-header>
         <slot></slot>
       </app-header-layout>
@@ -32,8 +26,7 @@
     static get is() { return 'looper-page'; }
 
     static get properties() {
-      return {
-      };
+      return {};
     }
   }
 
