@@ -8,10 +8,21 @@
     </style>
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="markets" href="#markets">View One</a>
-          <a name="mywallet" href="#mywallet">View Two</a>
-        </iron-selector>
+        <app-header-layout>
+          <app-header>
+            <paper-toolbar class="medium-tall">
+              <span slot="top" class="title">Looper</span>
+            </paper-toolbar>
+          </app-header>
+          <!-- <paper-menu> -->
+            <a name="markets" href="#markets">
+              <paper-item>Item 1</paper-item>
+            </a>
+            <a name="mywallet" href="#mywallet">
+              <paper-item>Item 2</paper-item>
+            </a>
+          <!-- </paper-menu> -->
+        </app-header-layout>
       </app-drawer>
       <app-header-layout>
         <app-header reveals effects="waterfall" slot="header">

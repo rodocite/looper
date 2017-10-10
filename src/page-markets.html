@@ -11,14 +11,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
   <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
       display: block;
       padding: 10px;
     }
 
+    .market-list {
+      --app-grid-columns: 3;
+      /*--app-grid-item-height: 40px;*/
+      --app-grid-gutter: 0px;
+    }
 
+  /*  .market-list > .item:first-child {
+      @apply --app-grid-expandible-item;
+    }*/
+
+    .item {
+      padding: 10px 5px 10px 5px;
+      border-bottom:solid 1px #eeeeee;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
     </style>
     <looper-page>
       <looper-toolbar slot="main-toolbar" active-tab="markets">
@@ -30,9 +48,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href="#market">LRC/ETH</a>
           </div>
         </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
+        <paper-card>
+          <div class="card-content market-list">
+            <ul class="app-grid">
+              <li class="item">1</li>
+              <li class="item">2</li>
+              <li class="item">3</li>
+              <li class="item">1</li>
+              <li class="item">2</li>
+              <li class="item">3</li>
+            </ul>
           </div>
         </paper-card>
       </div>
