@@ -30,16 +30,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 22px;
     }
 
+    a.styless-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .sections {
       @apply --layout-center;
       @apply --layout-vertical;
       background-color: #eeeeee;
       width: 100%;
+      margin-top: 10px;
     }
 
-    .sections>paper-card {
+    .sections > paper-card {
       width: 100%;
       margin: 10px 0 10px 0;
+    }
+
+    paper-button {
+      text-transform: none;
+      border-radius: 0;
     }
 
     @media(min-width:1024px) {

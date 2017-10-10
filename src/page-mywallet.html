@@ -19,12 +19,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-      <looper-toolbar slot="main-toolbar">
-        <paper-icon-button slot="drawer-toggle" icon="menu" drawer-toggle></paper-icon-button>
+      <looper-toolbar slot="main-toolbar" active-tab="mywallet">
+        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
       </looper-toolbar>
-      <div class="card">
-        <div class="circle">1</div>
-        <h1>My Wallet</h1>
+      <div class="sections">
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
+        <paper-card heading="Card Title">
+          <div class="card-content">Some content</div>
+          <div class="card-actions">
+            <paper-button>Some action</paper-button>
+          </div>
+        </paper-card>
       </div>
     </looper-page>
   </template>

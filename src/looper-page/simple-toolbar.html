@@ -2,8 +2,8 @@
 <!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
 <dom-module id="simple-toolbar" fit>
   <template>
-    <style>
-     :host {
+    <style include="shared-styles">
+    <style> :host {
       display: block;
     }
 
@@ -12,21 +12,31 @@
       text-transform: none;
     }
 
-    app-toolbar > a {
-      color:inherit;
-      text-decoration: none;
-    }
-
     paper-icon-button:hover {
       /*background-color: blue;*/
       background-color: rgba(0, 0, 0, 0.1);
     }
+ /*   paper-toolbar {
+      background-color: white;
+    }
+
+    paper-button {
+      color: black;
+    }*/
     </style>
-    <app-toolbar>
-      <a href="[[backLink]]">
+    <paper-toolbar>
+      <a href="[[backLink]]" slot="top" class="styless-link">
         <paper-icon-button icon='arrow-back' noink></paper-icon-button>
       </a>
-    </app-toolbar>
+      <span slot="top" class="title">Title</span>
+      <a href="#markets" slot="top" class="styless-link">
+        <paper-button noink>Markets</paper-button>
+      </a>
+      <a href="#mywallet" slot="top" class="styless-link">
+        <paper-button noink>Wallet</paper-button>
+      </a>
+      <span slot="top" class="title"></span>
+    </paper-toolbar>
   </template>
   <script>
   class SimpleToolbar extends Polymer.Element {

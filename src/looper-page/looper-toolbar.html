@@ -1,25 +1,32 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="looper-toolbar" fit>
   <template>
-    <style>
-     :host {
+    <style include="shared-styles">
+    <style> :host {
       display: block;
     }
 
-    paper-button {
-      /*background-color: blue;*/
-      text-transform: none;
+    paper-toolbar {
+      /*background-color: grey;*/
     }
+
+    a[active] > paper-button {
+      background-color: red;
+    }
+
     </style>
-    <app-toolbar>
-      <slot name="drawer-toggle"></slot>
-      <a href="#mywallet">
-        <paper-button noink active>My Wallet</paper-button>
+    <paper-toolbar class="medium-tall">
+      <slot slot="top"></slot>
+      <span slot="top" class="title">Looper</span>
+      <span slot="middle" class="title"></span>
+      <a href="#markets" active$='[[isActiveTab("markets")]]' slot="middle"" class="styless-link">
+        <paper-button noink>Markets</paper-button>
       </a>
-      <a href="#markets">
-        <paper-button noink>No ripple effect</paper-button>
+      <a href="#mywallet" active$='[[isActiveTab("mywallet")]]' slot="middle" class="styless-link">
+        <paper-button noink>Wallet</paper-button>
       </a>
-    </app-toolbar>
+      <span slot="middle" class="title"></span>
+    </paper-toolbar>
   </template>
   <script>
   class LooperToolbar extends Polymer.Element {
@@ -27,7 +34,15 @@
 
     static get properties() {
       return {
+        activeTab: {
+          type: String,
+          reflectToAttribute: true
+        }
       };
+    }
+
+    isActiveTab(a) {
+      return this.activeTab === a;
     }
   }
 
