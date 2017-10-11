@@ -1,0 +1,58 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-wallet-default.html">
+<link rel="import" href="page-wallet-generate.html">
+<link rel="import" href="page-wallet-unlock.html">
+<link rel="import" href="page-wallet-ready.html">
+<dom-module id="page-wallet">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+    iron-pages {
+      background-color: red;
+    }
+    </style>
+    <looper-page>
+      <looper-toolbar slot="secondary-toolbar" active-tab="wallet"> </looper-toolbar>
+      <app-header-layout>
+        <iron-pages selected="[[subpage]]" attr-for-selected="name" fallback-selection="404" role="main">
+          <page-wallet-default name="default"></page-wallet-default>
+          <page-wallet-unlock name="unlock"></page-wallet-unlock>
+          <page-wallet-generate name="generate"></page-wallet-generate>
+          <page-wallet-ready name="ready"></page-wallet-ready>
+        </iron-pages>
+        <looper-footer></looper-footer>
+      </app-header-layout>
+    </looper-page>
+  </template>
+  <script>
+  class PageMyWallet extends Polymer.Element {
+    static get is() {
+      return 'page-wallet';
+    }
+    static get properties() {
+      return {
+        subpage: {
+          type: String,
+          value: 'ready'
+        }
+      };
+    }
+  }
+
+  window.customElements.define(PageMyWallet.is, PageMyWallet);
+  </script>
+</dom-module>

@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Ring" back-link="#rings"></simple-toolbar>
+      <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
       <div class="sections">
         <paper-card heading="Card Title">
           <div class="card-content">Some content</div>
@@ -36,7 +36,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
   <script>
   class PageRing extends Polymer.Element {
-    static get is() { return 'page-ring'; }
+    static get is() {
+      return 'page-ring';
+    }
+    static get properties() {
+      return {
+        id: String
+      };
+    }
   }
 
   window.customElements.define(PageRing.is, PageRing);

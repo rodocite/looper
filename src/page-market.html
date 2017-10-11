@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Market" back-link="#markets"></simple-toolbar>
+      <simple-toolbar slot="secondary-toolbar" title="Market" id="[[marketId()]]" back-link="#/markets"></simple-toolbar>
       <div class="sections">
         <paper-card heading="Card Title">
           <div class="card-content">Some content</div>
@@ -36,7 +36,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
   <script>
   class PageMarket extends Polymer.Element {
-    static get is() { return 'page-market'; }
+    static get is() {
+      return 'page-market';
+    }
+    static get properties() {
+      return {
+        id: String
+      };
+    }
+
+    marketId() {
+      return this.id.toUpperCase();
+    }
   }
 
   window.customElements.define(PageMarket.is, PageMarket);

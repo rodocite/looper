@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="page-mywallet-generate" fit>
+<dom-module id="page-wallet-unlock" fit>
   <template>
     <style include="shared-styles"></style>
     <style> :host {
@@ -7,11 +7,11 @@
     }
 
     </style>
-    generate
+    unlock
   </template>
   <script>
-  class PageMyWalletGenerate extends Polymer.Element {
-    static get is() { return 'page-mywallet-generate'; }
+  class PageMyWalletUnlock extends Polymer.Element {
+    static get is() { return 'page-wallet-unlock'; }
 
     static get properties() {
       return {
@@ -19,6 +19,6 @@
     }
   }
 
-  window.customElements.define(PageMyWalletGenerate.is, PageMyWalletGenerate);
+  window.customElements.define(PageMyWalletUnlock.is, PageMyWalletUnlock);
   </script>
 </dom-module>

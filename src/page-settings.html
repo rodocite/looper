@@ -9,43 +9,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="page-fill">
+<dom-module id="page-settings">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
      :host {
       display: block;
     }
+
+
+    app-toolbar {
+      background-color: var(--google-grey-500);
+    }
     </style>
     <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Fill" id="[[id]]" back-link="#/fills"></simple-toolbar>
+      <app-toolbar>
+        <div condensed-title></div>
+       Settings
+        <div condensed-title></div>
+        <paper-icon-button noink icon="close"></paper-icon-button>
+      </app-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <div class="card-content">
+            <a href="#/ring">Link to a Ring</a>
           </div>
         </paper-card>
       </div>
     </looper-page>
   </template>
   <script>
-  class PageFill extends Polymer.Element {
-    static get is() {
-      return 'page-fill';
-    }
-    static get properties() {
-      return {
-        id: String
-      };
-    }
+  class PageSettings extends Polymer.Element {
+    static get is() { return 'page-settings'; }
   }
 
-  window.customElements.define(PageFill.is, PageFill);
+  window.customElements.define(PageSettings.is, PageSettings);
   </script>
 </dom-module>

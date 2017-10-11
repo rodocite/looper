@@ -44,14 +44,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-order.html">
 <link rel="lazy-import" href="page-fills.html">
 <link rel="lazy-import" href="page-fill.html">
-<link rel="lazy-import" href="page-mywallet.html">
-<link rel="lazy-import" href="page-mywallet-default.html">
-<link rel="lazy-import" href="page-mywallet-generate.html">
-<link rel="lazy-import" href="page-mywallet-unlock.html">
-<link rel="lazy-import" href="page-mywallet-ready.html">
+<link rel="lazy-import" href="page-wallet.html">
 <link rel="lazy-import" href="page-transfer">
 <link rel="lazy-import" href="page-authorize">
 <link rel="lazy-import" href="page-convert">
+<link rel="lazy-import" href="page-settings">
 <link rel="lazy-import" href="page-404.html">
 <dom-module id="my-app">
   <template>
@@ -76,6 +73,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       --paper-icon-button-ink-color: white;
     }
 
+
+ a[styleless] {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    
     .drawer-list {
       margin: 0 20px;
     }
@@ -96,42 +100,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-icon-button:not([narrow]) [drawer-toggle] {
       display: none;
     }
-
     </style>
     <app-location use-hash-as-path route="{{route}}">
     </app-location>
-    <app-route route="{{route}}" pattern=":page" data="{{routeData}}" tail="{{subroute}}">
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}">
+    </app-route>
+    <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
     </app-route>
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
-        <a name="markets" href="#markets">
+        <a name="markets" href="#/markets">
           <paper-item>Item 1</paper-item>
         </a>
-        <a name="mywallet" href="#mywallet">
+        <a name="wallet" href="#/wallet">
           <paper-item>Item 2</paper-item>
         </a>
       </app-drawer>
       <app-header-layout has-scrolling-region fullbleed>
         <app-header fixed slot="header">
           <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
             <div spacer></div>
+            <iron-icon icon="menu"></iron-icon>
             <div main-title>Looper</div>
+            <a styleless href="#/settings"><paper-icon-button icon="settings"></paper-icon-button></a>
           </app-toolbar>
         </app-header>
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
-          <page-market name="market"></page-market>
+          <page-market name="market" id={{pageId}}></page-market>
           <page-markets name="markets"></page-markets>
-          <page-mywallet name="mywallet"></page-mywallet>
+          <page-wallet name="wallet"></page-wallet>
           <page-rings name="rings"></page-rings>
-          <page-ring name="ring"></page-ring>
+          <page-ring name="ring" id={{pageId}}></page-ring>
           <page-orders name="orders"></page-orders>
-          <page-order name="order"></page-order>
+          <page-order name="order" id={{pageId}}></page-order>
           <page-fills name="fills"></page-fills>
-          <page-fill name="fill"></page-fill>
+          <page-fill name="fill" id={{pageId}}></page-fill>
           <page-convert name="convert"></page-convert>
           <page-authorize name="authorize"></page-authorize>
           <page-transfer name="transfer"></page-transfer>
+          <page-settings name="settings"></page-settings>
           <page-404 name="404"></page-404>
         </iron-pages>
       </app-header-layout>
@@ -148,17 +156,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged',
         },
+        pageId: {
+          type: String,
+          reflectToAttribute: true
+        },
         routeData: Object,
-        subroute: String,
+        // subroute: String,
         // This shouldn't be neccessary, but the Analyzer isn't picking up
         // Polymer.Element#rootPath
         rootPath: String,
+        subrouteData: Object
       };
     }
 
     static get observers() {
       return [
         '_routePageChanged(routeData.page)',
+        '_routeIdChanged(subrouteData.pageId)'
       ];
     }
 
@@ -176,6 +190,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._showPage404.bind(this),
         true);
     }
+
+    _routeIdChanged(pageId) {
+      console.log("new pageId: " + pageId);
+      this.pageId = pageId || '';
+    }
+
 
     _showPage404() {
       this.page = '404';

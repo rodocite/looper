@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Order" back-link="#orders"></simple-toolbar>
+      <simple-toolbar slot="secondary-toolbar" title="Order" id="[[id]]" back-link="#/orders"></simple-toolbar>
       <div class="sections">
         <paper-card heading="Card Title">
           <div class="card-content">Some content</div>
@@ -36,7 +36,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
   <script>
   class PageOrder extends Polymer.Element {
-    static get is() { return 'page-order'; }
+    static get is() { 
+      return 'page-order'; }
+          static get properties() {
+      return {
+        id: String
+      };
+    }
   }
 
   window.customElements.define(PageOrder.is, PageOrder);
