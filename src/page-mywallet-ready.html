@@ -1,0 +1,24 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="page-mywallet-ready" fit>
+  <template>
+    <style include="shared-styles"></style>
+    <style> :host {
+      display: block;
+    }
+
+    </style>
+    ready
+  </template>
+  <script>
+  class PageMyWalletReady extends Polymer.Element {
+    static get is() { return 'page-mywallet-ready'; }
+
+    static get properties() {
+      return {
+      };
+    }
+  }
+
+  window.customElements.define(PageMyWalletReady.is, PageMyWalletReady);
+  </script>
+</dom-module>

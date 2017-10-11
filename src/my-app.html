@@ -45,10 +45,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-fills.html">
 <link rel="lazy-import" href="page-fill.html">
 <link rel="lazy-import" href="page-mywallet.html">
+<link rel="lazy-import" href="page-mywallet-default.html">
+<link rel="lazy-import" href="page-mywallet-generate.html">
+<link rel="lazy-import" href="page-mywallet-unlock.html">
+<link rel="lazy-import" href="page-mywallet-ready.html">
+<link rel="lazy-import" href="page-transfer">
+<link rel="lazy-import" href="page-authorize">
+<link rel="lazy-import" href="page-convert">
 <link rel="lazy-import" href="page-404.html">
 <dom-module id="my-app">
   <template>
-    <style>
+    <style include="shared-styles">
      :host {
       --app-primary-color: #4285f4;
       --app-secondary-color: black;
@@ -122,6 +129,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <page-order name="order"></page-order>
           <page-fills name="fills"></page-fills>
           <page-fill name="fill"></page-fill>
+          <page-convert name="convert"></page-convert>
+          <page-authorize name="authorize"></page-authorize>
+          <page-transfer name="transfer"></page-transfer>
           <page-404 name="404"></page-404>
         </iron-pages>
       </app-header-layout>

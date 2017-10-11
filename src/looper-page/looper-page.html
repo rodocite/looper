@@ -9,8 +9,8 @@
 
     </style>
     <app-header-layout has-scrolling-region fullbleed>
-      <app-header slot="header">
-        <slot name="secondary-toolbar"></slot>
+      <app-header slot="header" fixed condenses effects="waterfall">
+        <slot name="secondary-toolbar" sticky></slot>
       </app-header>
       <slot></slot>
     </app-header-layout>

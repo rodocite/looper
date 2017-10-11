@@ -12,18 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="shared-styles">
   <template>
     <style>
-    .circle {
-      display: inline-block;
-      width: 64px;
-      height: 64px;
-      text-align: center;
-      color: #555;
-      border-radius: 50%;
-      background: #ddd;
-      font-size: 30px;
-      line-height: 64px;
-    }
-
     h1 {
       margin: 16px 0;
       color: #212121;
@@ -55,12 +43,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .sections>paper-card {
       width: 100%;
-      margin: 10px 0 10px 0;
+      margin: 8px 0 8px 0;
+    }
+
+    .sections>paper-card[transparent] {
+      background-color: transparent;
     }
 
     paper-icon-button {
-      /*background-color: blue;*/
       text-transform: none;
+    }
+
+    paper-icon-button:hover {
+      background-color: rgba(0, 0, 0, .1);
     }
 
     paper-button {

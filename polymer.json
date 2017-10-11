@@ -11,6 +11,9 @@
     "src/page-fills.html",
     "src/page-fill.html",
     "src/page-mywallet.html",
+    "src/page-authorize.html",
+    "src/page-convert.html",
+    "src/page-transfer.html",
     "src/page-404.html"
   ],
   "sources": [

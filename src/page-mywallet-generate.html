@@ -1,0 +1,24 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="page-mywallet-generate" fit>
+  <template>
+    <style include="shared-styles"></style>
+    <style> :host {
+      display: block;
+    }
+
+    </style>
+    generate
+  </template>
+  <script>
+  class PageMyWalletGenerate extends Polymer.Element {
+    static get is() { return 'page-mywallet-generate'; }
+
+    static get properties() {
+      return {
+      };
+    }
+  }
+
+  window.customElements.define(PageMyWalletGenerate.is, PageMyWalletGenerate);
+  </script>
+</dom-module>
