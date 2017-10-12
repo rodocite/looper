@@ -9,20 +9,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="page-wallet-default.html">
-<link rel="import" href="page-wallet-generate.html">
-<link rel="import" href="page-wallet-unlock.html">
-<link rel="import" href="page-wallet-ready.html">
+<link rel="lazy-import" href="page-wallet-default.html">
+<link rel="lazy-import" href="page-wallet-generate.html">
+<link rel="lazy-import" href="page-wallet-unlock.html">
+<link rel="lazy-import" href="page-wallet-ready.html">
 <dom-module id="page-wallet">
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
       display: block;
-    }
-
-    iron-pages {
-      background-color: red;
     }
     </style>
     <looper-page>
@@ -47,9 +43,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return {
         subpage: {
           type: String,
-          value: 'ready'
+          value: 'generate',
+          observer: '_subpageChanged'
         }
       };
+    }
+
+    ready() {
+      super.ready();
+
+      this.addEventListener('generate-wallet', e => this.subpage = 'generate');
+      this.addEventListener('unlock-wallet', e => this.subpage = 'unlock');
+      this.addEventListener('reset-wallet', e => this.subpage = 'default');
+    }
+
+    _subpageChanged(subpage) {
+      var resolvedPageUrl = this.resolveUrl('page-wallet-' + subpage + '.html');
+      Polymer.importHref(
+        resolvedPageUrl,
+        null,
+        this._showPage404.bind(this),
+        true);
+    }
+
+    _showPage404() {
+      window.location = "#/404"
     }
   }
 

@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
@@ -33,6 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
@@ -83,12 +85,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
 
- a[styleless] {
+    a[styleless] {
       color: inherit;
       text-decoration: none;
     }
 
-    
+
     .drawer-list {
       margin: 0 20px;
     }
@@ -132,13 +134,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div spacer></div>
             <iron-icon icon="menu"></iron-icon>
             <div main-title>Looper</div>
-            <a styleless href="#/settings"><paper-icon-button icon="settings"></paper-icon-button></a>
           </app-toolbar>
         </app-header>
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
           <page-market name="market" id={{pageId}}></page-market>
           <page-markets name="markets"></page-markets>
-          <page-wallet name="wallet"></page-wallet>
+          <page-wallet name="wallet""></page-wallet>
           <page-rings name="rings"></page-rings>
           <page-ring name="ring" id={{pageId}}></page-ring>
           <page-orders name="orders"></page-orders>
@@ -187,7 +188,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _routePageChanged(page) {
       console.log("new page: " + page);
-      this.page = page || 'markets';
+      this.page = page || 'wallet';
     }
 
     _pageChanged(page) {
