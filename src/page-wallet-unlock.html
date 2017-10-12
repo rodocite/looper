@@ -2,10 +2,18 @@
 <dom-module id="page-wallet-unlock" fit>
   <template>
     <style include="shared-styles"></style>
-    <style> :host {
+    <style>
+     :host {
       display: block;
-    }
 
+      --paper-card-actions: {
+        background-color: var(--paper-grey-50);
+      }
+      --paper-card-header-text: {
+        font-size: 18px;
+        color: var(--paper-grey-500);
+      }
+    }
     </style>
     unlock
   </template>
@@ -14,8 +22,7 @@
     static get is() { return 'page-wallet-unlock'; }
 
     static get properties() {
-      return {
-      };
+      return {};
     }
   }
 

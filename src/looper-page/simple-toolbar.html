@@ -17,6 +17,9 @@
       background-color: var(--google-green-500);
     }
 
+    paper-icon-button {
+      color: white;
+    }
     </style>
     <app-toolbar>
       <a href="[[backLink]]" class="styless-link">
@@ -39,8 +42,6 @@
         title: String,
         id: String
       };
-
-
     }
     formatId() {
       if (this.id) return (" / " + this.id);
