@@ -1,5 +1,13 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "Looper",
+  "version": "0.0.0",
+  "description": "A Loopring Web Wallet",
+  "homepage": "https://loopring.org/",
+  "bugs": "https://github.com/Loopring/looper/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Loopring/looper.git"
+  },
   "license": "BSD-3-Clause",
   "devDependencies": {
     "qrcode": "^0.8.2",
@@ -18,6 +26,7 @@
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
-    "test:integration": "polymer build # test that psk builds without error with the CLI"
+    "test:integration": "polymer build # test that psk builds without error with the CLI",
+    "start": "polymer serve"
   }
 }
