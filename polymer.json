@@ -15,7 +15,11 @@
     "src/page-convert.html",
     "src/page-transfer.html",
     "src/page-settings.html",
-    "src/page-404.html"
+    "src/page-404.html",
+    "src/page-wallet-default.html",
+    "src/page-wallet-unlock.html",
+    "src/page-wallet-generate.html",
+    "src/page-wallet-default.html"
   ],
   "sources": [
     "src/**/*",

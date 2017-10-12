@@ -17,17 +17,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
     }
 
-
     app-toolbar {
-      background-color: var(--google-grey-500);
+      color: white;
+      background-color: var(--google-grey-700);
+    }
+
+    paper-icon-button {
+      color: white;
     }
     </style>
     <looper-page>
       <app-toolbar>
         <div condensed-title></div>
-       Settings
+        Settings
         <div condensed-title></div>
-        <paper-icon-button noink icon="close"></paper-icon-button>
+        <a href="/#/">
+          <paper-icon-button noink icon="close"></paper-icon-button>
+        </a>
       </app-toolbar>
       <div class="sections">
         <paper-card>
@@ -40,7 +46,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
   <script>
   class PageSettings extends Polymer.Element {
-    static get is() { return 'page-settings'; }
+    static get is() {
+      return 'page-settings';
+    }
+
   }
 
   window.customElements.define(PageSettings.is, PageSettings);
