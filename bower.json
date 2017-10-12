@@ -1,7 +1,7 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "Looper",
   "authors": [
-    "The Polymer Authors"
+    "The Loopring Team"
   ],
   "license": "https://polymer.github.io/LICENSE.txt",
   "dependencies": {

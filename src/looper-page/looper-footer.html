@@ -2,38 +2,111 @@
 <dom-module id="looper-footer" fit>
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-    <style>
+    <style include="shared-styles">
      :host {
       display: block;
-      /*height: 64px;*/
-      /*line-height: 64px;*/
-      /*text-align: center;*/
       background-color: var(--google-grey-300);
-      width:100%;
-      /*@apply --center-layout;*/
+      width: 100%;
+      color: rgba(0, 0, 0, .54);
     }
 
+    .social,
+    .menus {
+      padding: 16px 0 16px 0;
+    }
+
+    .social a {
+      padding: 0 8px 0 8px;
+      color: rgba(0,0,0,.78);
+    }
+
+    .social a:hover {
+      color: var(--google-green-500);
+    }
+
+    .social {
+      padding: 16px;
+    }
+
+    .menus {
+      min-width: 1024px;
+      padding: 16px 0 32px 0;
+      border-top: 1px dashed rgba(0, 0, 0, .1);
+    }
+
+    .menus a {
+      text-decoration: none;
+      color: rgba(0, 0, 0, .54);
+    }
+
+    .menus a:hover {
+      color: var(--google-green-500);
+    }
+
+    .copyright {
+      color: rgba(0, 0, 0, .54);
+      padding-bottom: 0;
+    }
     </style>
-    <div class="horizontal layout">
-      <div class="vertical layout">
-        <div>Abc</div>
-        <div>Abc</div>
-        <div>Abc</div>
+    <!-- <div class="social-logo">
+  <span><a href="https://github.com/loopring" class="wrapper"><i class="icon-github icon"></i></a></span>
+  <span><a href="https://loopring.now.sh/" class="wrapper"><i class="icon-slack icon"></i></a></span>
+  <span><a href="https://twitter.com/loopringorg" class="wrapper"><i class="icon-twitter icon"></i></a></span>
+  <span><a href="mailto:foundation@loopring.org" class="wrapper"><i class="icon-mail icon"></i></a></span>
+  <span><a href="https://medium.com/@loopring" class="wrapper"><i class="icon-medium icon"></i></a></span>
+</div>
+
+</div> -->
+    <div class="vertical center layout">
+      <div class="horizontal layout social">
+        <a styleless href="https://github.com/loopring">
+          <iron-icon icon="media1:github"></iron-icon>
+        </a>
+        <a styleless href="https://loopring.now.sh">
+          <iron-icon icon="media1:slack"></iron-icon>
+        </a>
+        <a styleless href="https://twitter.com/loopringorg">
+          <iron-icon icon="media1:twitter"></iron-icon>
+        </a>
+        <a styleless href="mailto:foundation@loopring.org">
+          <iron-icon icon="mail"></iron-icon>
+        </a>
+        <a styleless href="https://medium.com/@loopring">
+          <iron-icon icon="media1:medium"></iron-icon>
+        </a>
+        <a styleless href="https://www.facebook.com/loopringofficial">
+          <iron-icon icon="media1:facebook"></iron-icon>
+        </a>
+        <a styleless href="https://t.me/loopringfans">
+          <iron-icon icon="media1:telegram"></iron-icon>
+        </a>
       </div>
-      <div class="vertical layout">
-        <div>Abc</div>
-        <div>Abc</div>
-        <div>Abc</div>
+      <div class="horizontal layout justified menus">
+        <div class="vertical start layout">
+          <div><a>Loopring Foundation</a></div>
+          <div><a>Knowledge Base</a></div>
+          <div><a>Disclaimer</a></div>
+          <div><a>Donation</a></div>
+        </div>
+        <div class="vertical start layout">
+          <div><a>LRC Smart Contract</a></div>
+          <div><a>Loopring Protocol Smart Contract</a></div>
+          <div><a>Loopring Ringhash Smart Contract</a></div>
+          <div><a>EtherToken Smart Contract</a></div>
+        </div>
+        <div class="vertical start layout">
+          <div><a>Fellowship of the Ring (FoR)</a></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="vertical start layout">
+          <div><a href="https://github.com/Loopring/whitepaper/raw/master/en_whitepaper.pdf">Loopring Whitepaper</a></div>
+          <div> </div>
+          <div></div>
+        </div>
       </div>
-      <div class="vertical layout">
-        <div>Abc</div>
-        <div>Abc</div>
-        <div>Abc</div>
-      </div>
-      <div class="vertical layout">
-        <div>Abc</div>
-        <div>Abc</div>
-        <div>Abc</div>
+      <div class="copyright">
+        ®Loopring Project Ltd.(Loopring Foundation), All Right Reserved.
       </div>
     </div>
   </template>
