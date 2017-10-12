@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "Looper - ERC20 Token Wallet and DEX",
+  "short_name": "Looper",
+  "description": "Looper is an open-sourced wallet built for Ether and ERC20 tokens.",
   "icons": [
   {
     "src": "images/manifest/icon-192x192.png",

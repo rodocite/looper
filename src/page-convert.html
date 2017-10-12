@@ -11,32 +11,153 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-convert">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
-      display: block;
-    }
+       display: block;
+     }
+     .container {
+       @apply(--layout-vertical);
+       @apply(--layout-center-justified);
+       margin: 50px;
+     }
+     .choseLine {
+       @apply(--layout-horizontal);
+       @apply(--layout-center-justified);
+       #width: 500px;
+       #background-color:mediumvioletred;
+     }
+     .side {
+       @apply(--layout-vertical);
+       width: 220px;
+     }
+     .lable {
+       color: rgb(158, 158, 158);
+       font-size: 12px;
+       text-align: left;
+       transform: scale(0.75) translate(0px, -28px);
+       transform-origin: left top 0px;
+       transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+       user-select: none;
+       width: 240px;
+     }
+     .tokenImage {
+       @apply(--layout-horizontal);
+       @apply(--layout-center-justified);
+     }
+     .tokenImage iron-icon {
+       width: 100px;
+       height: 100px;
+     }
+     .tokenName {
+       text-align:center;
+       font-family: Georgia, serif;
+       font-weight:bold;
+       font-size:1.3em;
+       color: #78909c;
+     }
+     .swap {
+       @apply(--layout-horizontal);
+       @apply(--layout-center);
+       padding-left: 30px;
+       padding-right: 30px;
+     }
+     .swap iron-icon {
+       width: 60px;
+       height: 60px;
+       fill: #ff6500;
+     }
+     .buttonLine {
+       @apply(--layout-horizontal);
+       @apply(--layout-center-justified);
+       margin-top: 50px;
+     }
+     paper-button {
+       font-family: 'Roboto', 'Noto', sans-serif;
+       font-weight: normal;
+       font-size: 14px;
+       -webkit-font-smoothing: antialiased;
+     }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Ether ERC20 Conversion" back-link="#/wallet"></simple-toolbar>
-      <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+      <div class="container">
+        <div class="choseLine">
+          <div class="side">
+            <div>
+              <label class="lable">
+                Convert
+              </label>
+            </div>
+            <div>
+              <div class="left">
+                <div class="tokenImage">
+                  <iron-icon src="[[leftTokenIcon]]" id="leftTokenIcon"></iron-icon>
+                </div>
+                <div class="tokenName" id="leftTokenName">[[leftTokenName]]</div>
+              </div>
+            </div>
           </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+          <div class="swap">
+            <a href="#" on-click="swap"><iron-icon icon="icons:swap-horiz"></iron-icon></a>
           </div>
-        </paper-card>
+          <div class="side">
+            <div>
+              <label class="lable">
+                To
+              </label>
+            </div>
+            <div>
+              <div class="right">
+                <div class="tokenImage">
+                  <iron-icon src="[[rightTokenIcon]]"  id="rightTokenIcon"></iron-icon>
+                </div>
+                <div class="tokenName" id="rightTokenName">[[rightTokenName]]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="choseLine">
+            <paper-input always-float-label label="Amount to convert" id="leftInput">
+              <div slot="suffix">[[leftTokenName]]</div>
+            </paper-input>
+        </div>
+        <div class="buttonLine">
+          <paper-button>Generate Transaction</paper-button>
+        </div>
       </div>
     </looper-page>
   </template>
   <script>
   class PageConvert extends Polymer.Element {
     static get is() { return 'page-convert'; }
+    constructor() {
+      super();
+      this.configData = {
+          ETH: {name: 'ETH', icon: 'images/token/ether.png'},
+          WETH: {name: 'WETH', icon: 'images/token/ether_erc20.png'}
+      }
+    }
+    ready() {
+      super.ready();
+      this.leftTokenName = this.configData.ETH.name;
+      this.leftTokenIcon = this.configData.ETH.icon;
+      this.rightTokenName = this.configData.WETH.name;
+      this.rightTokenIcon = this.configData.WETH.icon;
+    }
+    swap() {
+      if('ETH' == this.leftTokenName){
+        this.leftTokenName = this.configData.WETH.name;
+        this.leftTokenIcon = this.configData.WETH.icon;
+        this.rightTokenName = this.configData.ETH.name;
+        this.rightTokenIcon = this.configData.ETH.icon;
+      } else {
+        this.leftTokenName = this.configData.ETH.name;
+        this.leftTokenIcon = this.configData.ETH.icon;
+        this.rightTokenName = this.configData.WETH.name;
+        this.rightTokenIcon = this.configData.WETH.icon;
+      }
+    }
   }
 
   window.customElements.define(PageConvert.is, PageConvert);
