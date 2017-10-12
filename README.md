@@ -14,12 +14,28 @@ Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
     npm install -g bower
 
+##### Setup Dependencies
+
+Install the node_modules:
+
+    npm i
+    *OR*
+    npm install
+
+Install the bower_components:
+
+    bower i
+    *OR*
+    bower install
+
 ### Start the development server
 
 This command serves the app at `http://127.0.0.1:8081` and provides basic URL
 routing for the app:
 
     polymer serve
+    *OR*
+    npm start
 
 ### Build
 
@@ -63,4 +79,3 @@ Run `polymer help build` for the full list of available options and optimization
 This command serves your app. Replace `build-folder-name` with the folder name of the build you want to serve.
 
     polymer serve build/build-folder-name/
-
