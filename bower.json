@@ -25,14 +25,15 @@
     "iron-input": "PolymerElements/iron-input#^2.0.1",
     "iron-list": "PolymerElements/iron-list#^2.0.9",
     "iron-ajax": "PolymerElements/iron-ajax#^2.0.5",
-    "drop-menu": "acordeonl/drop-menu#^2.0.4",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
-    "nebula-dialog": "arsnebula/nebula-dialog#^2.0.2",
     "paper-input": "PolymerElements/paper-input#^2.0.2",
     "iron-icon": "PolymerElements/iron-icon#^2.0.1",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
-    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.1.0"
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.1.0",
+    "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
+    "highcharts": "highcharts-release#^6.0.1",
+    "highstock": "highstock-release#^6.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",

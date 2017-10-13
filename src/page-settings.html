@@ -44,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div>
             <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
             <paper-button raised on-click="showError">show a error(10s)</paper-button>
+            <paper-button raised on-click="signToSend">signToSend</paper-button>
           </div>
         </paper-card>
       </div>
@@ -64,6 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     showError() {
       var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    signToSend() {
+      var detail = {raw: "raw message"};
+      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
     }
   }
 

@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
+<dom-module id="operation-panel" fit>
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+
+    </style>
+   operation-panel
+  </template>
+  <script>
+  class OperationPanel extends Polymer.Element {
+    static get is() { return 'operation-panel'; }
+
+    static get properties() {
+      return {
+
+      };
+    }
+  }
+
+  window.customElements.define(OperationPanel.is, OperationPanel);
+  </script>
+</dom-module>

@@ -9,27 +9,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="market/recent-fills.html">
 <dom-module id="page-fills">
   <template>
     <style include="shared-styles">
      :host {
       display: block;
     }
+
+    paper-card {
+      padding: 16px
+    }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Fills" back-link="#/markets"></simple-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
+        <paper-card>
+          <recent-fills></recent-fills>
         </paper-card>
       </div>
     </looper-page>

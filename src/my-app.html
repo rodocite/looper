@@ -37,11 +37,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../bower_components/nebula-dialog/nebula-dialog.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="my-icons.html">
@@ -50,6 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="looper-page/looper-footer.html">
 <link rel="import" href="looper-page/simple-toolbar.html">
 <link rel="import" href="looper-page/looper-page.html">
+<link rel="import" href="looper-page/ethereum-signer.html">
+<link rel="import" href="looper-page/signtosend-dialog.html">
 <link rel="lazy-import" href="page-markets.html">
 <link rel="lazy-import" href="page-market.html">
 <link rel="lazy-import" href="page-rings.html">
@@ -64,8 +66,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-convert">
 <link rel="lazy-import" href="page-settings">
 <link rel="lazy-import" href="page-404.html">
-
-<link rel="import" href="transaction-dialog.html">
 <dom-module id="my-app">
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
@@ -125,6 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
     <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
     </app-route>
+    <signtosend-dialog id="signtosend"></signtosend-dialog>
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
         <a name="markets" href="#/markets">
@@ -222,6 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ready() {
       super.ready();
       this.addEventListener('notification', e => this.$.notification.display(e.detail));
+      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
     }
   }
 
