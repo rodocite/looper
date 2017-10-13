@@ -46,6 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="looper-page/looper-toolbar.html">
+<link rel="import" href="looper-page/looper-notification-bar.html">
 <link rel="import" href="looper-page/looper-footer.html">
 <link rel="import" href="looper-page/simple-toolbar.html">
 <link rel="import" href="looper-page/looper-page.html">
@@ -67,6 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="transaction-dialog.html">
 <dom-module id="my-app">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
       --app-primary-color: #4285f4;
@@ -112,6 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-weight: bold;
     }
 
+
     paper-icon-button:not([narrow]) [drawer-toggle] {
       display: none;
     }
@@ -133,6 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-drawer>
       <app-header-layout has-scrolling-region fullbleed>
         <app-header fixed slot="header">
+          <looper-notification-bar id="notification"></looper-notification-bar>
           <app-toolbar>
             <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
             <div spacer></div>
@@ -143,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
           <page-market name="market" id={{pageId}}></page-market>
           <page-markets name="markets"></page-markets>
-          <page-wallet name="wallet""></page-wallet>
+          <page-wallet name="wallet"> </page-wallet>
           <page-rings name="rings"></page-rings>
           <page-ring name="ring" id={{pageId}}></page-ring>
           <page-orders name="orders"></page-orders>
@@ -213,6 +217,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _showPage404() {
       this.page = '404';
+    }
+
+    ready() {
+      super.ready();
+      this.addEventListener('notification', e => this.$.notification.display(e.detail));
     }
   }
 

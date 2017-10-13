@@ -20,7 +20,6 @@
     }
 
     iron-input input {
-      height: 36px;
       width: 400px;
     }
 
@@ -29,7 +28,6 @@
       width: 39px;
       background-color: var(--google-grey-300);
     }
-
 
     .card-actions {
       text-align: center;
@@ -51,6 +49,13 @@
       color: var(--paper-amber-700);
     }
 
+    paper-button[primary] {
+      min-width: 280px;
+    }
+
+    paper-button[primary]>iron-icon {
+      padding-right: 8px;
+    }
 
     strong {
       color: var(--paper-green-700);
@@ -71,10 +76,10 @@
           </div>
         </div>
         <div class="card-actions">
-          <paper-button on-click="unlockClicked">Generate</paper-button>
+          <paper-button on-click="unlockClicked">Generate wallet for me.</paper-button>
         </div>
       </paper-card>
-          <paper-card transparent elevation=0>
+      <paper-card transparent elevation=0>
         <div class="horiziontal center layout">
           <!-- <div class="flex"></div> -->
         </div>
@@ -92,7 +97,7 @@
             </div>
             <div class="input-wrapper horizontal layout center-justified">
               <paper-button primary on-click="downloadKeystore" id="downloadButton">
-                <iron-icon icon="file-download"></iron-icon>Download Keystore File</paper-button>
+                <iron-icon icon="file-download"></iron-icon> Download Keystore File</paper-button>
             </div>
           </div>
         </div>
@@ -100,11 +105,6 @@
           <paper-button id="proceedButton" on-click="proceedClicked">I saved my keystore file. Proceed to unlock my wallet.</paper-button>
         </div>
       </paper-card>
-      <!--       <paper-card transparent elevation=0>
-        <div class="horiziontal center layout">
-          <div class="flex or">Generate Ethereum Wallet</div>
-        </div>
-      </paper-card> -->
     </div>
   </template>
   <script>
