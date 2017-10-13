@@ -1,0 +1,71 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="page-doc">
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+    app-toolbar {
+      color: black;
+      background-color: var(--paper-grey-200);
+
+    }
+
+    paper-icon-button {
+      color: black;
+    }
+
+    paper-card {
+      padding: 24px;
+    }
+    </style>
+    <looper-page>
+      <app-toolbar slot="secondary-toolbar">
+        <div condensed-title></div>
+        Looper Documentation
+        <div condensed-title></div>
+        <a href="/#/">
+          <paper-icon-button noink icon="close"></paper-icon-button>
+        </a>
+      </app-toolbar>
+
+
+      <div class="sections">
+        <paper-card>
+          <marked-element>
+            <div slot="markdown-html"></div>
+            <script type="text/markdown" src="//raw.githubusercontent.com/Loopring/looper/master/README.md"></script>
+          </marked-element>
+        </paper-card>
+      </div>
+    </looper-page>
+  </template>
+  <script>
+  class PageDoc extends Polymer.Element {
+    static get is() {
+      return 'page-doc';
+    }
+    static get properties() {
+      return {
+        markdown: {
+          type: String,
+          reflectToAttribute: true
+        }
+      };
+    }
+  }
+
+  window.customElements.define(PageDoc.is, PageDoc);
+  </script>
+</dom-module>
