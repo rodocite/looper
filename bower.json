@@ -31,7 +31,9 @@
     "iron-icon": "PolymerElements/iron-icon#^2.0.1",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.1.0",
-    "paper-tabs": "PolymerElements/paper-tabs#^2.0.0"
+    "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
+    "highcharts": "highcharts-release#^6.0.1",
+    "highstock": "highstock-release#^6.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",
