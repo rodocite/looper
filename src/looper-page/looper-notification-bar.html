@@ -57,12 +57,8 @@
         padding-right: 16px;
       }
     </style>
-
     <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/notification.json" handle-as="json" last-response="{{notification}}" debounce-duration="300"></iron-ajax>
-
-    <iron-ajax url="http://127.0.0.1:8081/test1.json" last-response="{{notification}}" auto></iron-ajax>
-
-    <app-toolbar class$="[[notification.category]] [[show]]">
+    <app-toolbar class$="[[notification.category]] [[show]]" div="aaaaa">
       <div class="inner horizontal layout">
         <div class="innerLeft">
           <iron-icon icon="social:notifications-none"></iron-icon>
@@ -74,7 +70,7 @@
       </div>
     </app-toolbar>
 
-    [[_load(notification)]]
+    [[_getChanged(notification)]]
 
   </template>
   <script>
@@ -83,7 +79,9 @@
 
           static get properties() {
               return {
-                  notification: Object,
+                  notification: {
+                      type: Object
+                  },
                   show: {
                       type: String,
                       value: "hidden"
@@ -91,30 +89,31 @@
               };
           }
 
-          _load(notification){
-              console.log(notification)
-              this.notification = notification
-          }
-
-          // Display a notificaiton with a timer.
-          display(e) {
+          _getChanged(e){
+              if(!e){
+                  return;
+              }
               if (this.job) {
                   window.clearTimeout(this.job);
                   this.job = null;
               }
-              console.log("get notificaiton: ");
-              console.log(e);
-              this.notification = { category: e.category, message: e.message };
               this.show = "visible";
 
-              var timeout = 5000; //set default timeout 5s
-              if(e.timeout && e.timeout >0){
-                  timeout = e.timeout;
+              if(e.closable){
+                  var timeout = 5000; //set default timeout 5s
+                  if(e.timeout && e.timeout >0){
+                      timeout = e.timeout;
+                  }
+                  var x = this;
+                  this.job = window.setTimeout(function(){
+                      x.show = "hidden";
+                  }, timeout);
               }
-              var x = this;
-              this.job = window.setTimeout(function(){
-                  x.show = "hidden";
-              }, timeout);
+          }
+
+          // Display a notificaiton with a timer.
+          display(e) {
+              this.notification = e;
           }
 
           _close(){
