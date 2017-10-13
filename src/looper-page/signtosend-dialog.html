@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="signtosend-dialog">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+    paper-dialog {}
+
+    iron-autogrow-textarea {
+      width: 340px;
+      height: 120px;
+      -webkit-appearance: none;
+      color: white;
+      font-size: 14px;
+      border: none;
+    }
+
+    .wrapper {
+      background-color: var(--paper-grey-700);
+      padding: 8px;
+    }
+
+    .signed.wrapper {
+      background-color: var(--paper-green-700);
+      background-color: var(--paper-green-700);
+    }
+
+    .title {
+      color: rgba(0, 0, 0, .54);
+      margin-bottom: 8px;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .part {
+      padding: 8px;
+    }
+    </style>
+    <ethereum-signer id="signer"></ethereum-signer>
+    <paper-dialog always-on-top no-cancel-on-outside-click with-backdrop id="dialog" entry-animation="slide-from-top-animation" exit-animation="fade-out-animation">
+      <h2>Sign Transaction</h2>
+      <div class="content horizontal center layout">
+        <div class="part raw vertical layout flex">
+          <div class="title">Raw transaction:</div>
+          <div class="wrapper raw">
+            <iron-autogrow-textarea value={{detail.raw}} readonly="true"></iron-autogrow-textarea>
+          </div>
+        </div>
+        <div class="part  vertical layout flex">
+          <div class="title">Signed transaction:</div>
+          <div class="wrapper signed">
+            <iron-autogrow-textarea value={{signed}} readonly="true"></iron-autogrow-textarea>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>Send Transaction</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+  <script>
+  class SigntosendDialog extends Polymer.Element {
+    static get is() { return 'signtosend-dialog'; }
+
+    static get properties() {
+      return {
+        detail: Object,
+        signed: String
+      };
+    }
+
+    show(detail) {
+      this.detail = detail;
+      this.$.signer.sign(detail);
+      this.signed = detail.raw + "fdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fd";
+
+      this.$.dialog.toggle();
+    }
+  }
+
+  window.customElements.define(SigntosendDialog.is, SigntosendDialog);
+  </script>
+</dom-module>

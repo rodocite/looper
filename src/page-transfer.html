@@ -142,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
           <div class="lineHoriziontal">
-            <paper-button raised on-click="openDialog">Generate Transaction</paper-button>
+            <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
           </div>
 
         </div>
@@ -177,9 +177,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </iron-list>
           </div>
         </div>
-
-        <transaction-dialog opened={{isOpen}} raw={{raw}} signed={{signed}} id="dialog"></transaction-dialog>
-
       </div>
 
     </looper-page>
@@ -195,11 +192,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           extData.style.display='block';
        }
     }
-    openDialog(){
-       //test datas
-       this.raw = "raw111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111rawdatas";
-       this.signed = "signed222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222signeddatas";
-       this.isOpen = true;
+   signToSend(){
+      var detail = {raw: "raw message"};
+      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
     }
   }
   window.customElements.define(PageTransfer.is, PageTransfer);
