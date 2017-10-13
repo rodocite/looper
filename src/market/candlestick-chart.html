@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
+<dom-module id="candlestick-chart" fit>
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+
+    </style>
+   candlestick-chart
+  </template>
+  <script>
+  class CandleStickChart extends Polymer.Element {
+    static get is() { return 'candlestick-chart'; }
+
+    static get properties() {
+      return {
+
+      };
+    }
+  }
+
+  window.customElements.define(CandleStickChart.is, CandleStickChart);
+  </script>
+</dom-module>

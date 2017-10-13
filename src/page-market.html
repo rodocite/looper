@@ -9,26 +9,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="market/candlestick-chart.html">
+<link rel="import" href="market/depth-chart.html">
+<link rel="import" href="market/operation-panel.html">
+<link rel="import" href="market/order-book.html">
+<link rel="import" href="market/recent-fills.html">
+<link rel="import" href="market/recent-orders.html">
 <dom-module id="page-market">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
       display: block;
+
+      --paper-card-header-text: {
+        font-size: 18px;
+        color: rgba(0, 0, 0, .54);
+      }
+
+      --paper-tabs-selection-bar-color: var(--google-green-500);
+      --paper-tab-ink: transparent;
+      --paper-tab-content: {
+        /*background-color: var(--google-green-500);*/
+        /*color: var(--google-green-500);*/
+      }
+
+      --paper-tab-content-unselected: {
+        /*background-color: transparent;*/
+        color: rgba(0,0,0,.54);
+      }
+    }
+
+    paper-card {
+      padding: 16px
+    }
+    paper-tabs {
+      margin-bottom: 8px;
     }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Market" id="[[marketId()]]" back-link="#/markets"></simple-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <div class="vertical layout">
+            <paper-tabs selected="{{chartSelection}}" attr-for-selected="name">
+              <paper-tab name="candle">Candle Chart</paper-tab>
+              <paper-tab name="depth">Depth Chart</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="{{chartSelection}}" attr-for-selected="name">
+              <candlestick-chart name="candle"></candlestick-chart>
+              <depth-chart name="depth"></depth-chart>
+            </iron-pages>
           </div>
         </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <operation-panel></operation-panel>
+        </paper-card>
+        <paper-card>
+          <div class="vertical layout">
+            <paper-tabs selected="{{dataSelection}}" attr-for-selected="name">
+              <paper-tab name="fills">Trades</paper-tab>
+              <paper-tab name="orders">Orders</paper-tab>
+              <paper-tab name="myfills">My Trades</paper-tab>
+              <paper-tab name="myorders">My Orders</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="{{dataSelection}}" attr-for-selected="name">
+              <recent-fills name="fills"></recent-fills>
+              <recent-orders name="orders"></recent-orders>
+              <recent-fills filter-mine name="myfills"></recent-fills>
+              <recent-orders filter-mine name="myorders"></recent-orders>
+            </iron-pages>
           </div>
         </paper-card>
       </div>
@@ -41,7 +91,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     static get properties() {
       return {
-        id: String
+        id: String,
+        chartSelection: {
+          type: String,
+          value: "candle"
+        },
+        dataSelection: {
+          type: String,
+          value: "fills"
+        }
       };
     }
 
