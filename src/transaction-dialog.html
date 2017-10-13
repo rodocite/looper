@@ -1,0 +1,132 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/mixins/gesture-event-listeners.html">
+<dom-module id="transaction-dialog" fit>
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+            }
+            .container {
+                @apply(--layout-vertical);
+                @apply(--layout-center-justified);
+                margin: 50px;
+            }
+            .content {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+            }
+            .content .flexleft {
+                @apply(--layout-vertical);
+                width:400px;
+            }
+            .content .flexright {
+                @apply(--layout-vertical);
+                width:400px;
+                padding-left: 40px;
+                margin-left: 100px;
+            }
+            .footerButtons {
+                @apply(--layout-horizontal);
+                @apply(--layout-end-justified);
+                margin-top: 30px;
+                padding-bottom: -50px;
+            }
+            .lineHoriziontal {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+            }
+            .lineStart {
+                @apply(--layout-horizontal);
+                @apply(--layout-start-justified);
+            }
+        </style>
+
+
+        <paper-dialog id="generateTransaction">
+            <h2>Send Transaction</h2>
+
+            <div class="container">
+                <div class="content">
+                    <div class="flexleft">
+                        <div class="lineStart">
+                            Raw Transaction
+                        </div>
+                        <div class="line">
+                            <iron-autogrow-textarea style="height: 100px;" value={{raw}} readonly="true"></iron-autogrow-textarea>
+                        </div>
+                    </div>
+
+                    <div class="flexright">
+                        <div class="lineStart">
+                            Signed Transaction
+                        </div>
+                        <div class="lineHoriziontal">
+                            <iron-autogrow-textarea style="height: 100px;" value={{signed}} readonly="true"></iron-autogrow-textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footerButtons">
+                    <paper-button on-click="_close">Decline</paper-button>
+                    <paper-button dialog-confirm autofocus on-click="_submit">Submit Transaction</paper-button>
+                </div>
+            </div>
+        </paper-dialog>
+
+    </template>
+    <script>
+        class TransactionDialog extends Polymer.Element {
+            static get is() { return 'transaction-dialog'; }
+
+            static get properties() {
+                return {
+                    opened: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: '_change'
+                    },
+                    raw: {
+                        type: String
+                    },
+                    signed: {
+                        type: String
+                    },
+                };
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+                this.$.generateTransaction.close();
+            }
+
+            _close() {
+                this.opened = false;
+                this.$.generateTransaction.close();
+            }
+
+            _change() {
+                if(this.opened) {
+                    this.$.generateTransaction.open();
+                } else {
+                    this.$.generateTransaction.close();
+                }
+            }
+
+            _submit() {
+                this.opened = false;
+                this.$.generateTransaction.close();
+                //todo: send transaction
+            }
+        }
+
+        window.customElements.define(TransactionDialog.is, TransactionDialog);
+    </script>
+</dom-module>

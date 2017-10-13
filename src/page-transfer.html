@@ -62,13 +62,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        border: 1px solid red;
        background-color: #FFCDD2;
      }
-     paper-button {
-       font-family: 'Roboto', 'Noto', sans-serif;
-       font-weight: normal;
-       font-size: 20px;
-       -webkit-font-smoothing: antialiased;
+     .line {
+       @apply(--layout-horizontal);
+       @apply(--layout-start-justified);
+       margin-top: 10px;
      }
-     .line paper-button {
+     .lineHoriziontal {
+       @apply(--layout-horizontal);
+       @apply(--layout-center-justified);
        margin-top: 20px;
      }
 
@@ -140,11 +141,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
           </div>
 
-          <div class="line">
-            <paper-button>Generate Transaction</paper-button>
+          <div class="lineHoriziontal">
+            <paper-button raised on-click="openDialog">Generate Transaction</paper-button>
           </div>
-
-
 
         </div>
 
@@ -179,7 +178,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </div>
 
+        <transaction-dialog opened={{isOpen}} raw={{raw}} signed={{signed}} id="dialog"></transaction-dialog>
+
       </div>
+
     </looper-page>
   </template>
   <script>
@@ -192,6 +194,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        }else{
           extData.style.display='block';
        }
+    }
+    openDialog(){
+       //test datas
+       this.raw = "raw111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111rawdatas";
+       this.signed = "signed222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222signeddatas";
+       this.isOpen = true;
     }
   }
   window.customElements.define(PageTransfer.is, PageTransfer);

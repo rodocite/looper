@@ -30,7 +30,9 @@
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
     "nebula-dialog": "arsnebula/nebula-dialog#^2.0.2",
     "paper-input": "PolymerElements/paper-input#^2.0.2",
-    "iron-icon": "PolymerElements/iron-icon#^2.0.1"
+    "iron-icon": "PolymerElements/iron-icon#^2.0.1",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.1.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",
