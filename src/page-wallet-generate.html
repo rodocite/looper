@@ -1,131 +1,206 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="page-wallet-generate" fit>
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-      --paper-card-actions: {
-        background-color: var(--paper-grey-50);
-      }
-      --paper-card-header-text: {
-        font-size: 18px;
-        color: rgba(0, 0, 0, .54);
-      }
-    }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                --paper-card-actions: {
+                    background-color: var(--paper-grey-50);
+                } --paper-card-header-text: {
+                font-size: 18px;
+                color: rgba(0, 0, 0, .54);
+            }
+            }
 
-    .input-wrapper {
-      padding-top: 24px;
-      padding-bottom: 24px;
-    }
+            .input-wrapper {
+                padding-top: 24px;
+                padding-bottom: 24px;
+            }
 
-    iron-input input {
-      width: 400px;
-    }
+            iron-input input {
+                width: 400px;
+            }
 
-    #visibleBtn {
-      height: 39px;
-      width: 39px;
-      background-color: var(--google-grey-300);
-    }
+            #visibleBtn {
+                height: 39px;
+                width: 39px;
+                background-color: var(--google-grey-300);
+            }
 
-    .card-actions {
-      text-align: center;
-    }
+            .card-actions {
+                text-align: center;
+            }
 
-    .card-actions paper-button {
-      min-width: 360px;
-      /*margin:8px 0 8px 0;*/
-      /*color: var(--google-green-700);*/
-    }
+            .card-actions paper-button {
+                min-width: 360px;
+                /*margin:8px 0 8px 0;*/
+                /*color: var(--google-green-700);*/
+            }
 
-    .card-actions paper-button:hover {
-      color: var(--google-green-700);
-    }
+            .card-actions paper-button:hover {
+                color: var(--google-green-700);
+            }
 
-    .warning iron-icon {
-      height: 18px;
-      margin-bottom: 5px;
-      color: var(--paper-amber-700);
-    }
+            .warning iron-icon {
+                height: 18px;
+                margin-bottom: 5px;
+                color: var(--paper-amber-700);
+            }
 
-    paper-button[primary] {
-      min-width: 280px;
-    }
+            paper-button[primary] {
+                min-width: 280px;
+            }
 
-    paper-button[primary]>iron-icon {
-      padding-right: 8px;
-    }
+            paper-button[primary] > iron-icon {
+                padding-right: 8px;
+            }
 
-    strong {
-      color: var(--google-green-700);
-      padding-right: 8px;
-    }
-    </style>
-    <div class="sections">
-      <paper-card heading="Generate Ethereum Walelt">
-        <div class="card-content">
-          <div class="vertical center layout ">
-            <div secondary-text> Provide a very strong password:</div>
-            <div class="input-wrapper horizontal layout center-justified">
-              <iron-input bind-value="{{password}}" auto-validate>
-                <input type="password">
-              </iron-input>
-              <paper-icon-button id="visibleBtn" on-click="toggleVisible" icon="visibility"></paper-icon-button>
-            </div>
-          </div>
+            strong {
+                color: var(--google-green-700);
+                padding-right: 8px;
+            }
+        </style>
+        <div class="sections">
+            <paper-card heading="Generate Ethereum Walelt">
+                <div class="card-content">
+                    <div class="vertical center layout ">
+                        <div secondary-text> Provide a very strong password:</div>
+                        <div class="input-wrapper horizontal layout center-justified">
+                            <iron-input bind-value="{{password}}" auto-validate>
+                                <input type$="{{inputType}}">
+                            </iron-input>
+                            <paper-icon-button id="visibleBtn" on-click="toggleVisible"
+                                               icon="{{visibility}}"></paper-icon-button>
+                        </div>
+                        <div><p style="color: red">{{passwordCheck(password)}}</p></div>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <paper-button on-click="unlockClicked">Generate wallet for me.</paper-button>
+                </div>
+            </paper-card>
+            <paper-card transparent elevation=0>
+                <div class="horiziontal center layout">
+                    <!-- <div class="flex"></div> -->
+                </div>
+            </paper-card>
+            <paper-card heading="Save Keystore File" style$="visibility:{{unlock}}">
+                <div class="card-content">
+                    <div class="vertical center layout ">
+                        <div class="vertical layout warning" secondary-text>
+                            <div>
+                                <iron-icon icon="warning"></iron-icon>
+                                <strong>Do not lose it!</strong> It cannot be recovered if you lose it.
+                            </div>
+                            <div>
+                                <iron-icon icon="warning"></iron-icon>
+                                <strong>Do not share it!</strong> Your funds will be stolen if you use this file on a
+                                malicious/phishing site.
+                            </div>
+                            <div>
+                                <iron-icon icon="warning"></iron-icon>
+                                <strong>Make a backup!</strong> Secure it like the millions of dollars it may one day be
+                                worth.
+                            </div>
+                        </div>
+                        <div class="input-wrapper horizontal layout center-justified">
+                            <paper-button primary on-click="downloadKeystore" id="downloadButton" style$="background-color:{{disableColor}}">
+                                <iron-icon icon="file-download"></iron-icon>
+                                Download Keystore File
+                            </paper-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <paper-button id="proceedButton" on-click="proceedClicked">I saved my keystore file. Proceed to
+                        unlock my wallet.
+                    </paper-button>
+                </div>
+            </paper-card>
         </div>
-        <div class="card-actions">
-          <paper-button on-click="unlockClicked">Generate wallet for me.</paper-button>
-        </div>
-      </paper-card>
-      <paper-card transparent elevation=0>
-        <div class="horiziontal center layout">
-          <!-- <div class="flex"></div> -->
-        </div>
-      </paper-card>
-      <paper-card heading="Save Keystore File">
-        <div class="card-content">
-          <div class="vertical center layout ">
-            <div class="vertical layout warning" secondary-text>
-              <div>
-                <iron-icon icon="warning"></iron-icon><strong>Do not lose it!</strong> It cannot be recovered if you lose it.</div>
-              <div>
-                <iron-icon icon="warning"></iron-icon><strong>Do not share it!</strong> Your funds will be stolen if you use this file on a malicious/phishing site.</div>
-              <div>
-                <iron-icon icon="warning"></iron-icon><strong>Make a backup!</strong> Secure it like the millions of dollars it may one day be worth.</div>
-            </div>
-            <div class="input-wrapper horizontal layout center-justified">
-              <paper-button primary on-click="downloadKeystore" id="downloadButton">
-                <iron-icon icon="file-download"></iron-icon> Download Keystore File</paper-button>
-            </div>
-          </div>
-        </div>
-        <div class="card-actions">
-          <paper-button id="proceedButton" on-click="proceedClicked">I saved my keystore file. Proceed to unlock my wallet.</paper-button>
-        </div>
-      </paper-card>
-    </div>
-  </template>
-  <script>
-  class PageMyWalletGenerate extends Polymer.Element {
-    static get is() { return 'page-wallet-generate'; }
+    </template>
+    <script>
+        class PageMyWalletGenerate extends Polymer.Element {
+            static get is() {
+                return 'page-wallet-generate';
+            }
 
-    static get properties() {
-      return {};
-    }
+            static get properties() {
+                return {
+                    visibility: {
+                        type: String,
+                        value: 'visibility-off',
+                        notify: true,
+                    },
+                    inputType: {
+                        type: String,
+                        value: 'password',
+                    },
+                    unlock: {
+                        type: String,
+                        value: 'hidden',
+                        notify: true,
+                    },
 
-    toggleVisible() {
-      this.$.visibleBtn.icon = "visibility-off";
-    }
+                    primary: {
+                        type: Boolean,
+                        value: true,
+                    },
 
+                    disabled: {
+                        type: Boolean,
+                        value: false,
+                    },
+                };
+            }
 
-    proceedClicked() {
-      this.password = "";
-      this.dispatchEvent(new CustomEvent('reset-wallet', { bubbles: true, composed: true }));
-    }
-  }
+            static get observers() {
+                return ['passwordInput(password)'];
+            }
 
-  window.customElements.define(PageMyWalletGenerate.is, PageMyWalletGenerate);
-  </script>
+            passwordInput(password) {
+                if (password !== '') {
+                    this.unlock = 'hidden';
+                }
+            }
+
+            unlockClicked() {
+                if (this.password.length >= 9) {
+                    this.unlock = 'visible';
+                    this.password = '';
+                    this.$.downloadButton.disabled = false;
+                    this.disableColor = '';
+                }
+            }
+
+            passwordCheck(string) {
+                return string.length >= 9 || string === '' ? '' : 'please input at least 9 characters';
+            }
+
+            toggleVisible() {
+                this.visibility = this.$.visibleBtn.icon !== 'visibility' ? 'visibility' : 'visibility-off';
+                this.inputType = this.visibility !== 'visibility' ? 'password' : 'text';
+            }
+
+            proceedClicked() {
+                this.password = '';
+                this.dispatchEvent(new CustomEvent('reset-wallet', {bubbles: true, composed: true}));
+            }
+
+            downloadKeystore(e) {
+                this.$.downloadButton.disabled = true;
+                this.disableColor = 'var(--paper-grey-400)';
+                const element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('test'));
+                element.setAttribute('download', 'UTC.json');
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+        }
+
+        window.customElements.define(PageMyWalletGenerate.is, PageMyWalletGenerate);
+    </script>
 </dom-module>
