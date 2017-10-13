@@ -42,7 +42,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href="#/ring">Link to a Ring</a>
           </div>
           <div>
-            <paper-button raised on-click="showWarning">show a warning</paper-button>
+            <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
+            <paper-button raised on-click="showError">show a error(10s)</paper-button>
           </div>
         </paper-card>
       </div>
@@ -56,7 +57,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     showWarning() {
-      var detail = { msg: "this is a warning", category: "warning", closable: true, timeout: 10 }
+      var detail = { message: "this is a warning", category: "warning", closable: true, timeout: 3000 }
+      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    showError() {
+      var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
     }
   }

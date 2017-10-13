@@ -3,64 +3,125 @@
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
-     :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
 
-    app-toolbar {
-      height: 36px;
-      color: black;
-    }
+      app-toolbar {
+        height: 36px;
+        color: black;
+        -webkit-transition:all 0.5s linear;
+        -moz-transition:all 0.5s linear;
+        -ms-transition:all 0.5s linear;
+        -o-transition:all 0.5s linear;
+        transition:all 0.5s linear;
+      }
 
-    .inner {
-      width: 100%;
-      color: rgba(255, 255, 255, .78);
-      font-size: 16px;
-      text-align: center;
-      font-weight: 400;
-    }
+      .inner {
+        width: 100%;
+        color: rgba(255, 255, 255, .78);
+        font-size: 16px;
+        text-align: center;
+        font-weight: 400;
+      }
 
-    app-toolbar.notice {
-      background-color: rgba(0, 0, 0, .78);
-    }
+      .innerLeft {
+        width: 98%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
 
-    app-toolbar.warning {
-      background-color: var(--paper-amber-500);
-    }
+      app-toolbar.notice {
+        background-color: rgba(0, 0, 0, .78);
+      }
 
-    app-toolbar.error {
-      background-color: var(--paper-red-500);
-    }
+      app-toolbar.warning {
+        background-color: var(--paper-amber-500);
+      }
 
-    iron-icon {
-      padding-right: 16px;
-    }
+      app-toolbar.error {
+        background-color: var(--paper-red-500);
+      }
+
+      app-toolbar.visible {
+        visibility:visible;
+        opacity:10;
+      }
+
+      app-toolbar.hidden {
+        visibility:hidden;
+        opacity:0;
+      }
+
+      iron-icon {
+        padding-right: 16px;
+      }
     </style>
+
     <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/notification.json" handle-as="json" last-response="{{notification}}" debounce-duration="300"></iron-ajax>
-    <app-toolbar class$="[[notification.category]]">
-      <div class="inner horizontal end center-justified flex layout">
-        <iron-icon icon="social:notifications-none"></iron-icon>
-        <div>[[notification.message]]</div>
+
+    <iron-ajax url="http://127.0.0.1:8081/test1.json" last-response="{{notification}}" auto></iron-ajax>
+
+    <app-toolbar class$="[[notification.category]] [[show]]">
+      <div class="inner horizontal layout">
+        <div class="innerLeft">
+          <iron-icon icon="social:notifications-none"></iron-icon>
+          <div>[[notification.message]]</div>
+        </div>
+        <div>
+          <a href="#" on-click="_close"><iron-icon icon="icons:close"></iron-icon></a>
+        </div>
       </div>
     </app-toolbar>
+
+    [[_load(notification)]]
+
   </template>
   <script>
-  class LooperNotificationBar extends Polymer.Element {
-    static get is() { return 'looper-notification-bar'; }
+      class LooperNotificationBar extends Polymer.Element {
+          static get is() { return 'looper-notification-bar'; }
 
-    static get properties() {
-      return {
-        notification: Object
-      };
-    }
+          static get properties() {
+              return {
+                  notification: Object,
+                  show: {
+                      type: String,
+                      value: "hidden"
+                  }
+              };
+          }
 
-    // Display a notificaiton with a timer.
-    display(e) {
-      console.log("get notificaiton: ");
-      console.log(e);
-    }
-  }
+          _load(notification){
+              console.log(notification)
+              this.notification = notification
+          }
 
-  window.customElements.define(LooperNotificationBar.is, LooperNotificationBar);
+          // Display a notificaiton with a timer.
+          display(e) {
+              if (this.job) {
+                  window.clearTimeout(this.job);
+                  this.job = null;
+              }
+              console.log("get notificaiton: ");
+              console.log(e);
+              this.notification = { category: e.category, message: e.message };
+              this.show = "visible";
+
+              var timeout = 5000; //set default timeout 5s
+              if(e.timeout && e.timeout >0){
+                  timeout = e.timeout;
+              }
+              var x = this;
+              this.job = window.setTimeout(function(){
+                  x.show = "hidden";
+              }, timeout);
+          }
+
+          _close(){
+              this.show = "hidden"
+          }
+      }
+
+      window.customElements.define(LooperNotificationBar.is, LooperNotificationBar);
   </script>
 </dom-module>
