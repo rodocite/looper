@@ -1,8 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="page-wallet-unlock" fit>
   <template>
-    <style include="shared-styles"></style>
-    <style>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+    <style include="shared-styles">
      :host {
       display: block;
 
@@ -11,18 +11,119 @@
       }
       --paper-card-header-text: {
         font-size: 18px;
-        color: var(--paper-grey-500);
+        color: rgba(0, 0, 0, .54);
       }
     }
+
+    .input-wrapper {
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+
+    .card-actions {
+      text-align: center;
+    }
+
+    .card-warning {
+      text-align: center;
+      height: 56px;
+      background-color: var(--paper-red-400);
+      color: white;
+    }
+
+    .card-actions paper-button {
+      min-width: 360px;
+      /*margin:8px 0 8px 0;*/
+      /*color: var(--paper-green-700);*/
+    }
+
+    .card-actions paper-button:hover {
+      color: var(--paper-green-700);
+    }
+
+    iron-input input {
+      width: 280px;
+    }
+
+
+
+    paper-button[primary] {
+      min-width: 280px;
+    }
+
+    paper-button[primary]>iron-icon {
+      padding-right: 8px;
+    }
+
+    #fileInput {
+      visibility: hidden;
+    }
     </style>
-    unlock
+    <input id="fileInput" type="file" id="file-input" />
+    <div class="sections">
+      <paper-card heading="Unlock Your Wallet">
+        <div class="card-content">
+          <div class="vertical center layout ">
+            <div secondary-text> Choose the wallet file to unlock. Your file will never be sent over the network to anyone</div>
+            <div class="input-wrapper horizontal layout center-justified">
+              <paper-button noink primary on-click="chooseFile" id="downloadButton">
+                <iron-icon icon="folder-open"></iron-icon> Select Keystore File (UTC / JSON)</paper-button>
+            </div>
+            <div secondary-text>Great. Your wallet is password protected. Provide provide password:</div>
+            <div class="input-wrapper horizontal layout center-justified">
+              <iron-input bind-value="{{password}}" auto-validate>
+                <input type="password">
+              </iron-input>
+            </div>
+          </div>
+        </div>
+        <div class="card-warning center">
+          <div>
+            abcfdaf
+          </div>
+        </div>
+        <div class="card-actions">
+          <paper-button on-click="unlockClicked">Go ahead and unlock my wallet.</paper-button>
+        </div>
+      </paper-card>
+      <paper-card transparent elevation=0>
+        <div class="horiziontal center layout">
+          <!-- <div class="flex"></div> -->
+        </div>
+      </paper-card>
+    </div>
   </template>
   <script>
   class PageMyWalletUnlock extends Polymer.Element {
     static get is() { return 'page-wallet-unlock'; }
 
     static get properties() {
-      return {};
+      return {
+        walletContent: String
+      };
+    }
+
+    ready() {
+      super.ready();
+      this.$.fileInput.addEventListener('change', this.readFile, false);
+    }
+
+    chooseFile() {
+      this.$.fileInput.click();
+    }
+
+    readFile(e) {
+      var file = e.target.files[0];
+      if (!file) {
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        this.walletContent = e.target.result;
+        console.log("wallet content: " + this.walletContent);
+      };
+      reader.readAsText(file);
     }
   }
 
