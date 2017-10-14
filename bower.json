@@ -34,7 +34,9 @@
     "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
     "highcharts": "highcharts-release#^6.0.1",
     "highstock": "highstock-release#^6.0.1",
-    "marked-element": "PolymerElements/marked-element#^2.3.0"
+    "marked-element": "PolymerElements/marked-element#^2.3.0",
+    "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
+    "vaadin-grid": "vaadin/vaadin-grid#^3.0.2"
   },
   "resolutions": {
     "polymer": "^2.0.0",
