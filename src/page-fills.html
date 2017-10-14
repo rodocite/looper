@@ -11,30 +11,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="market/recent-fills.html">
 <dom-module id="page-fills">
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
+    <template>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+
+        paper-card {
+            padding: 16px
+        }
+        </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Fills" back-link="#/markets"></simple-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <recent-fills></recent-fills>
+                </paper-card>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+    class PageFills extends Polymer.Element {
+        static get is() { return 'page-fills'; }
     }
 
-    paper-card {
-      padding: 16px
-    }
-    </style>
-    <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Fills" back-link="#/markets"></simple-toolbar>
-      <div class="sections">
-        <paper-card>
-          <recent-fills></recent-fills>
-        </paper-card>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageFills extends Polymer.Element {
-    static get is() { return 'page-fills'; }
-  }
-
-  window.customElements.define(PageFills.is, PageFills);
-  </script>
+    window.customElements.define(PageFills.is, PageFills);
+    </script>
 </dom-module>

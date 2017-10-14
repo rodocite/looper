@@ -8,131 +8,69 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/vaadin-material-theme/vaadin-grid.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+
+        paper-card {
+            padding: 16px
+        }
+        </style>
+        <looper-page>
+            <looper-toolbar slot="secondary-toolbar" active-tab="markets">
+            </looper-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+                    <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+                        <vaadin-grid-column>
+                            <template class="header">HASH</template>
+                            <template>[[item.orginalOrder.hash]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column>
+                            <template class="header">ADDRESS</template>
+                            <template>[[item.orginalOrder.address]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">AMOUNT (LRC)</template>
+                            <template>[[item.orginalOrder.amountS]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">PRICE (LRC/ETH)</template>
+                            <template>[[item.orginalOrder.amountB]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">SIZE (ETH)</template>
+                            <template>[[item.orginalOrder.amountB]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">TIMESTAMP</template>
+                            <template>[[item.orginalOrder.timestamp]]</template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="20px">
+                            <template class="header">STATUS</template>
+                            <template>
+                                <iron-icon icon="menu"></iron-icon>
+                            </template>
+                        </vaadin-grid-column>
+                    </vaadin-grid>
+                </paper-card>
+            </div>
+            <looper-footer></looper-footer>
+        </looper-page>
+    </template>
+    <script>
+    class PageMarkets extends Polymer.Element {
+        static get is() { return 'page-markets'; }
     }
 
-    .market-list {
-      --app-grid-columns: 3;
-      /*--app-grid-item-height: 40px;*/
-      --app-grid-gutter: 0px;
-    }
-    /*  .market-list > .item:first-child {
-      @apply --app-grid-expandible-item;
-    }*/
-
-    .item {
-      padding: 10px 5px 10px 5px;
-      border-bottom: solid 1px #eeeeee;
-    }
-
-    ul {
-      padding: 0;
-      list-style: none;
-    }
-    </style>
-    <looper-page>
-      <looper-toolbar slot="secondary-toolbar" active-tab="markets">
-        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-      </looper-toolbar>
-      <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">
-            <a href="#/market/lrc-eth">LRC/ETH</a>
-          </div>
-        </paper-card>
-        <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-
-         <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-
-         <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-
-         <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-
-         <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-
-         <paper-card>
-          <div class="card-content market-list">
-            <ul class="app-grid">
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-              <li class="item">1</li>
-              <li class="item">2</li>
-              <li class="item">3</li>
-            </ul>
-          </div>
-        </paper-card>
-         <looper-footer></looper-footer>
-      </div>
-
-    </looper-page>
-  </template>
-  <script>
-  class PageMarkets extends Polymer.Element {
-    static get is() { return 'page-markets'; }
-  }
-
-  window.customElements.define(PageMarkets.is, PageMarkets);
-  </script>
+    window.customElements.define(PageMarkets.is, PageMarkets);
+    </script>
 </dom-module>
