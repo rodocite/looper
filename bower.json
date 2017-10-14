@@ -32,18 +32,26 @@
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.1.0",
     "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
-    "highcharts": "highcharts-release#^6.0.1",
-    "highstock": "highstock-release#^6.0.1",
     "marked-element": "PolymerElements/marked-element#^2.3.0",
     "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
-    "vaadin-grid": "vaadin/vaadin-grid#^3.0.2"
+    "vaadin-grid": "vaadin/vaadin-grid#^3.0.2",
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.5",
+    "vaadin-combo-box": "vaadin/vaadin-combo-box#^3.0.0",
+    "vaadin-radio-button": "vaadin/vaadin-radio-button#^1.0.0-alpha3",
+    "vaadin-text-field": "vaadin/vaadin-text-field#^1.1.0",
+    "vaadin-charts": "vaadin/vaadin-charts#^5.0.0",
+    "vaadin-checkbox": "vaadin/vaadin-checkbox#^1.0.0",
+    "vaadin-button": "vaadin/vaadin-button#^1.0.4",
+    "vaadin-progress-bar": "vaadin/vaadin-progress-bar#^1.0.0-alpha4"
   },
   "resolutions": {
     "polymer": "^2.0.0",
     "iron-flex-layout": "^2.0.0",
     "webcomponentsjs": "^v1.0.2",
     "iron-selector": "^2.0.0",
-    "paper-styles": "^2.0.0"
+    "paper-styles": "^2.0.0",
+    "iron-resizable-behavior": "^v2.0.0",
+    "iron-a11y-keys-behavior": "^v2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0"
