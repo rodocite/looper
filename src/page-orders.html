@@ -11,30 +11,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="market/recent-orders.html">
 <dom-module id="page-orders">
-    <template>
-        <style include="shared-styles">
-         :host {
-            display: block;
-        }
-
-        paper-card {
-            padding: 16px
-        }
-        </style>
-        <looper-page>
-            <simple-toolbar slot="secondary-toolbar" title="Orders" back-link="#/markets"></simple-toolbar>
-            <div class="sections">
-                <paper-card>
-                    <recent-orders></recent-orders>
-                </paper-card>
-            </div>
-        </looper-page>
-    </template>
-    <script>
-    class PageOrders extends Polymer.Element {
-        static get is() { return 'page-orders'; }
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
     }
 
-    window.customElements.define(PageOrders.is, PageOrders);
-    </script>
+    paper-card {
+      padding: 16px
+    }
+    </style>
+    <looper-page>
+      <simple-toolbar slot="secondary-toolbar" title="Orders" back-link="#/markets"></simple-toolbar>
+      <div class="sections">
+        <paper-card>
+          <recent-orders></recent-orders>
+        </paper-card>
+      </div>
+    </looper-page>
+  </template>
+  <script>
+  class PageOrders extends Polymer.Element {
+    static get is() { return 'page-orders'; }
+  }
+
+  window.customElements.define(PageOrders.is, PageOrders);
+  </script>
 </dom-module>

@@ -1,58 +1,58 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
 <dom-module id="recent-fills" fit>
-    <template>
-        <style include="shared-styles">
-         :host {
-            display: block;
-        }
-        </style>
-        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-        <!-- The array is set as the <vaadin-grid>'s "items" property -->
-        <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
-            <vaadin-grid-column>
-                <template class="header">HASH</template>
-                <template>[[item.orginalOrder.hash]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column>
-                <template class="header">ADDRESS</template>
-                <template>[[item.orginalOrder.address]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">AMOUNT (LRC)</template>
-                <template>[[item.orginalOrder.amountS]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">PRICE (LRC/ETH)</template>
-                <template>[[item.orginalOrder.amountB]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">SIZE (ETH)</template>
-                <template>[[item.orginalOrder.amountB]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">TIMESTAMP</template>
-                <template>[[item.orginalOrder.timestamp]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="20px">
-                <template class="header">STATUS</template>
-                <template>
-                    <iron-icon icon="menu"></iron-icon>
-                </template>
-            </vaadin-grid-column>
-        </vaadin-grid>
-    </template>
-    <script>
-    class RecentFills extends Polymer.Element {
-        static get is() { return 'recent-fills'; }
-
-        static get properties() {
-            return {
-
-            };
-        }
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
     }
+    </style>
+    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+    <!-- The array is set as the <vaadin-grid>'s "items" property -->
+    <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+      <vaadin-grid-column>
+        <template class="header">HASH</template>
+        <template>[[item.orginalOrder.hash]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column>
+        <template class="header">ADDRESS</template>
+        <template>[[item.orginalOrder.address]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="50px">
+        <template class="header">AMOUNT (LRC)</template>
+        <template>[[item.orginalOrder.amountS]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="50px">
+        <template class="header">PRICE (LRC/ETH)</template>
+        <template>[[item.orginalOrder.amountB]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="50px">
+        <template class="header">SIZE (ETH)</template>
+        <template>[[item.orginalOrder.amountB]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="50px">
+        <template class="header">TIMESTAMP</template>
+        <template>[[item.orginalOrder.timestamp]]</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="20px">
+        <template class="header">STATUS</template>
+        <template>
+          <iron-icon icon="menu"></iron-icon>
+        </template>
+      </vaadin-grid-column>
+    </vaadin-grid>
+  </template>
+  <script>
+  class RecentFills extends Polymer.Element {
+    static get is() { return 'recent-fills'; }
 
-    window.customElements.define(RecentFills.is, RecentFills);
-    </script>
+    static get properties() {
+      return {
+
+      };
+    }
+  }
+
+  window.customElements.define(RecentFills.is, RecentFills);
+  </script>
 </dom-module>

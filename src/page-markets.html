@@ -12,65 +12,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
-    <template>
-        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-        <style include="shared-styles">
-         :host {
-            display: block;
-        }
-
-        paper-card {
-            padding: 16px
-        }
-        </style>
-        <looper-page>
-            <looper-toolbar slot="secondary-toolbar" active-tab="markets">
-            </looper-toolbar>
-            <div class="sections">
-                <paper-card>
-                    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-                    <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
-                        <vaadin-grid-column>
-                            <template class="header">HASH</template>
-                            <template>[[item.orginalOrder.hash]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column>
-                            <template class="header">ADDRESS</template>
-                            <template>[[item.orginalOrder.address]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column width="50px">
-                            <template class="header">AMOUNT (LRC)</template>
-                            <template>[[item.orginalOrder.amountS]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column width="50px">
-                            <template class="header">PRICE (LRC/ETH)</template>
-                            <template>[[item.orginalOrder.amountB]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column width="50px">
-                            <template class="header">SIZE (ETH)</template>
-                            <template>[[item.orginalOrder.amountB]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column width="50px">
-                            <template class="header">TIMESTAMP</template>
-                            <template>[[item.orginalOrder.timestamp]]</template>
-                        </vaadin-grid-column>
-                        <vaadin-grid-column width="20px">
-                            <template class="header">STATUS</template>
-                            <template>
-                                <iron-icon icon="menu"></iron-icon>
-                            </template>
-                        </vaadin-grid-column>
-                    </vaadin-grid>
-                </paper-card>
-            </div>
-            <looper-footer></looper-footer>
-        </looper-page>
-    </template>
-    <script>
-    class PageMarkets extends Polymer.Element {
-        static get is() { return 'page-markets'; }
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+    <style include="shared-styles">
+     :host {
+      display: block;
     }
 
-    window.customElements.define(PageMarkets.is, PageMarkets);
-    </script>
+    paper-card {
+      padding: 16px
+    }
+    </style>
+    <looper-page>
+      <looper-toolbar slot="secondary-toolbar" active-tab="markets">
+      </looper-toolbar>
+      <div class="sections">
+        <paper-card>
+          <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+          <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+            <vaadin-grid-column>
+              <template class="header">HASH</template>
+              <template>[[item.orginalOrder.hash]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">ADDRESS</template>
+              <template>[[item.orginalOrder.address]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">AMOUNT (LRC)</template>
+              <template>[[item.orginalOrder.amountS]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">PRICE (LRC/ETH)</template>
+              <template>[[item.orginalOrder.amountB]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">SIZE (ETH)</template>
+              <template>[[item.orginalOrder.amountB]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">TIMESTAMP</template>
+              <template>[[item.orginalOrder.timestamp]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="20px">
+              <template class="header">STATUS</template>
+              <template>
+                <iron-icon icon="menu"></iron-icon>
+              </template>
+            </vaadin-grid-column>
+          </vaadin-grid>
+        </paper-card>
+      </div>
+      <looper-footer></looper-footer>
+    </looper-page>
+  </template>
+  <script>
+  class PageMarkets extends Polymer.Element {
+    static get is() { return 'page-markets'; }
+  }
+
+  window.customElements.define(PageMarkets.is, PageMarkets);
+  </script>
 </dom-module>
