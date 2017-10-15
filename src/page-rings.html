@@ -10,35 +10,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-rings">
-    <template>
-        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-        <style include="shared-styles">
-         :host {
-            display: block;
-        }
-
-        paper-card {
-            padding: 16px
-        }
-        </style>
-        <looper-page>
-            <looper-toolbar slot="secondary-toolbar" active-tab="rings">
-                <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            </looper-toolbar>
-            <div class="sections">
-                <paper-card>
-                    <div class="card-content">
-                        <a href="#/ring">Link to a Ring</a>
-                    </div>
-                </paper-card>
-            </div>
-        </looper-page>
-    </template>
-    <script>
-    class PageRings extends Polymer.Element {
-        static get is() { return 'page-rings'; }
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style include="shared-styles">
+     :host {
+      display: block;
     }
 
-    window.customElements.define(PageRings.is, PageRings);
-    </script>
+    paper-card {
+      padding: 16px
+    }
+    </style>
+    <looper-page>
+      <looper-toolbar slot="secondary-toolbar" active-tab="rings"></looper-toolbar>
+      <div class="sections">
+        <paper-card>
+          <div class="card-content">
+            <a href="#/ring">Link to a Ring</a>
+          </div>
+        </paper-card>
+      </div>
+      <looper-footer></looper-footer>
+    </looper-page>
+  </template>
+  <script>
+  class PageRings extends Polymer.Element {
+    static get is() { return 'page-rings'; }
+  }
+
+  window.customElements.define(PageRings.is, PageRings);
+  </script>
 </dom-module>

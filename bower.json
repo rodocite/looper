@@ -39,11 +39,13 @@
     "vaadin-combo-box": "vaadin/vaadin-combo-box#^3.0.0",
     "vaadin-radio-button": "vaadin/vaadin-radio-button#^1.0.0-alpha3",
     "vaadin-text-field": "vaadin/vaadin-text-field#^1.1.0",
-    "vaadin-charts": "vaadin/vaadin-charts#^5.0.0",
     "vaadin-checkbox": "vaadin/vaadin-checkbox#^1.0.0",
     "vaadin-button": "vaadin/vaadin-button#^1.0.4",
     "vaadin-progress-bar": "vaadin/vaadin-progress-bar#^1.0.0-alpha4",
-    "vaadin-icons": "vaadin/vaadin-icons#^4.1.2"
+    "highstock": "highstock-release#^6.0.1",
+    "highstock": "highstock-release#^6.0.1",
+    "global-variable": "trofrigo/global-variable#^0.1.4",
+    "paper-spinner": "PolymerElements/paper-spinner#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",

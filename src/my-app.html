@@ -41,6 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link ref="import" href="../bower_components/polymer/lib/elements/dom-if.html">
@@ -58,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/vaadin-radio-button/vaadin-radio-button.html">
 <link rel="import" href="../bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="../bower_components/vaadin-date-picker/vaadin-date-picker.html">
-<link rel="import" href="../bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="../bower_components/global-variable/global-variable.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="looper-page/looper-toolbar.html">
 <link rel="import" href="looper-page/looper-notification-bar.html">
@@ -89,7 +90,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      :host {
       --app-primary-color: #4285f4;
       --app-secondary-color: black;
-
+      --paper-spinner-color: var(--google-green-500);
+      --paper-spinner-stroke-width: 1px;
       display: block;
     }
 
@@ -130,6 +132,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-weight: bold;
     }
 
+    #pages {
+      display: none;
+    }
+
+    #loading {
+      padding-top: 30vh;
+      color: var(--google-green-500);
+      font-weight: 200;
+    }
+
+    #loading paper-spinner-lite {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+
+    #loading iron-icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      top: 60px;
+    }
 
     paper-icon-button:not([narrow]) [drawer-toggle] {
       display: none;
@@ -142,6 +166,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
     </app-route>
     <signtosend-dialog id="signtosend"></signtosend-dialog>
+    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
+    <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+    <global-variable key="wallet" value="{{wallet}}"></global-variable>
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
         <a name="markets" href="#/markets">
@@ -159,12 +186,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div spacer></div>
             <iron-icon icon="menu"></iron-icon>
             <div main-title>Looper</div>
+            <div>[[wallet.address]]</div>
           </app-toolbar>
         </app-header>
-        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
+        <div id="loading" class="vertical layout center center-justified">
+          <iron-icon id="loading-icon" icon="menu"></iron-icon>
+          <paper-spinner-lite alt="Loading configuration..." active class="thick"></paper-spinner-lite>
+          <div>Loading configuration...</div>
+        </div>
+        <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
           <page-market name="market" id={{pageId}}></page-market>
           <page-markets name="markets"></page-markets>
-          <page-wallet name="wallet"> </page-wallet>
+          <page-wallet id="walletPage" name="wallet"> </page-wallet>
           <page-rings name="rings"></page-rings>
           <page-ring name="ring" id={{pageId}}></page-ring>
           <page-orders name="orders"></page-orders>
@@ -190,19 +223,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         page: {
           type: String,
           reflectToAttribute: true,
-          observer: '_pageChanged',
+          observer: '_pageChanged'
         },
         pageId: {
           type: String,
           reflectToAttribute: true
         },
         routeData: Object,
-        // subroute: String,
-        // This shouldn't be neccessary, but the Analyzer isn't picking up
-        // Polymer.Element#rootPath
         rootPath: String,
-        subrouteData: Object
+        subrouteData: Object,
+        wallet: Object,
+        appConfig: {
+          type: Object,
+          observer: '_appConfigLoaded'
+        },
+        wallet: {
+          type: Object,
+          observer: '_walletChanged'
+        }
       };
+    }
+
+    _appConfigLoaded() {
+      this.$.loading.style.display = "none";
+      this.$.pages.style.display = "inherit";
+    }
+
+    _walletChanged(wallet) {
+      if (wallet) {
+        this.$.walletPage.subpage = "ready";
+        if (this.page !== "wallet") {
+          window.location = "/#/wallet";
+        }
+      } else {
+        this.$.walletPage.subpage = "default";
+      }
     }
 
     static get observers() {
@@ -214,7 +269,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _routePageChanged(page) {
       console.log("new page: " + page);
-      this.page = page || 'wallet';
+      this.page = page || 'markets';
     }
 
     _pageChanged(page) {
@@ -239,6 +294,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     ready() {
       super.ready();
+      this.ajax = this.$.ajax;
       this.addEventListener('notification', e => this.$.notification.display(e.detail));
       this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
     }

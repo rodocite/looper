@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     <looper-page>
-
+      <global-variable key="wallet" value="{{wallet}}"></global-variable>
       <app-toolbar slot="secondary-toolbar">
         <div condensed-title></div>
         Settings
@@ -45,6 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
             <paper-button raised on-click="showError">show a error(10s)</paper-button>
             <paper-button raised on-click="signToSend">signToSend</paper-button>
+            <paper-button raised on-click="setWallet">setWallet</paper-button>
           </div>
         </paper-card>
       </div>
@@ -68,8 +69,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     signToSend() {
-      var detail = {raw: "raw message"};
+      var detail = { raw: "raw message" };
       this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    setWallet() {
+      if (this.wallet) {
+        this.wallet = null;
+      } else {
+        this.wallet = {address: "addresssssssssssssssssssssssssss"};
+      }
     }
   }
 

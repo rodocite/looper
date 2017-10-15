@@ -9,10 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="lazy-import" href="page-wallet-default.html">
-<link rel="lazy-import" href="page-wallet-generate.html">
-<link rel="lazy-import" href="page-wallet-unlock.html">
-<link rel="lazy-import" href="page-wallet-ready.html">
+<link rel="lazy-import" href="wallet/subpage-default.html">
+<link rel="lazy-import" href="wallet/subpage-generate.html">
+<link rel="lazy-import" href="wallet/subpage-unlock.html">
+<link rel="lazy-import" href="wallet/subpage-ready.html">
 <dom-module id="page-wallet">
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
@@ -20,18 +20,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      :host {
       display: block;
     }
+
+    iron-pages {
+      /*padding-top: 16px;*/
+    }
     </style>
     <looper-page>
       <looper-toolbar slot="secondary-toolbar" active-tab="wallet"> </looper-toolbar>
-      <app-header-layout>
+      <div class="sections">
         <iron-pages selected="[[subpage]]" attr-for-selected="name" fallback-selection="404" role="main">
-          <page-wallet-default name="default"></page-wallet-default>
-          <page-wallet-unlock name="unlock"></page-wallet-unlock>
-          <page-wallet-generate name="generate"></page-wallet-generate>
-          <page-wallet-ready name="ready"></page-wallet-ready>
+          <subpage-default name="default"></subpage-default>
+          <subpage-unlock name="unlock"></subpage-unlock>
+          <subpage-generate name="generate"></subpage-generate>
+          <subpage-ready name="ready"></subpage-ready>
         </iron-pages>
-        <looper-footer></looper-footer>
-      </app-header-layout>
+      </div>
+      <looper-footer></looper-footer>
     </looper-page>
   </template>
   <script>
@@ -51,14 +55,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     ready() {
       super.ready();
-
       this.addEventListener('generate-wallet', e => this.subpage = 'generate');
       this.addEventListener('unlock-wallet', e => this.subpage = 'unlock');
       this.addEventListener('reset-wallet', e => this.subpage = 'default');
     }
 
     _subpageChanged(subpage) {
-      var resolvedPageUrl = this.resolveUrl('page-wallet-' + subpage + '.html');
+      var resolvedPageUrl = this.resolveUrl('wallet/subpage-' + subpage + '.html');
       Polymer.importHref(
         resolvedPageUrl,
         null,

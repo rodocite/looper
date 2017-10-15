@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="page-wallet-generate" fit>
+<dom-module id="subpage-generate" fit>
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
         <style include="shared-styles">
@@ -121,9 +121,9 @@
         </div>
     </template>
     <script>
-        class PageMyWalletGenerate extends Polymer.Element {
+        class SubpageGenerate extends Polymer.Element {
             static get is() {
-                return 'page-wallet-generate';
+                return 'subpage-generate';
             }
 
             static get properties() {
@@ -201,6 +201,6 @@
             }
         }
 
-        window.customElements.define(PageMyWalletGenerate.is, PageMyWalletGenerate);
+        window.customElements.define(SubpageGenerate.is, SubpageGenerate);
     </script>
 </dom-module>
