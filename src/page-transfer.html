@@ -15,86 +15,97 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
      :host {
       display: block;
-     }
-     .container {
-       @apply(--layout-horizontal);
-       @apply(--layout-center-justified);
-       margin: 50px;
-       #padding: 50px;
-       #width: 800px;
-     }
-     .flexleft {
-       @apply(--layout-vertical);
-       width:400px;
-       #background-color:mediumvioletred;
-     }
-     .flexright {
-       @apply(--layout-vertical);
-       width:500px;
-       padding-left: 40px;
-       margin-left: 100px;
-       #background-color:#b0e0e6;
-     }
-     .flexright > .hr {
-       width: 350px;
-     }
-     .fontTitle {
-       font-family: Georgia, serif;
-       font-size:1.2em;
-     }
-     .fontContent {
-       font-family: Georgia, serif;
-       font-size:0.875em;
-     }
-     iron-list {
-        flex: 1 1 auto;
-     }
-     .hidden {
-       display: none;
-     }
-     iron-input > input {
-       width: 350px;
-     }
-     iron-input > .amount {
-       width: 150px;
-     }
-     iron-input[invalid] > input {
-       border: 1px solid red;
-       background-color: #FFCDD2;
-     }
-     .line {
-       @apply(--layout-horizontal);
-       @apply(--layout-start-justified);
-       margin-top: 10px;
-     }
-     .lineHoriziontal {
-       @apply(--layout-horizontal);
-       @apply(--layout-center-justified);
-       margin-top: 20px;
-     }
+    }
 
-     paper-dropdown-menu.noLable {
-       --paper-input-container-label: {
-         color: var(--paper-pink-500);
-         font-style: italic;
-         text-align: center;
-         font-weight: bold;
-       };
-       --paper-input-container-input: {
-         color: var(--paper-indigo-500);
-         font-style: normal;
-         font-family: serif;
-         text-transform: uppercase;
-       };
+    .container {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+      margin: 50px;
+      #padding: 50px;
+      #width: 800px;
+    }
 
-     }
+    .flexleft {
+      @apply(--layout-vertical);
+      width: 400px;
+      #background-color: mediumvioletred;
+    }
 
+    .flexright {
+      @apply(--layout-vertical);
+      width: 500px;
+      padding-left: 40px;
+      margin-left: 100px;
+      #background-color: #b0e0e6;
+    }
+
+    .flexright>.hr {
+      width: 350px;
+    }
+
+    .fontTitle {
+      font-family: Georgia, serif;
+      font-size: 1.2em;
+    }
+
+    .fontContent {
+      font-family: Georgia, serif;
+      font-size: 0.875em;
+    }
+
+    iron-list {
+      flex: 1 1 auto;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    iron-input>input {
+      width: 350px;
+    }
+
+    iron-input>.amount {
+      width: 150px;
+    }
+
+    iron-input[invalid]>input {
+      border: 1px solid red;
+      background-color: #FFCDD2;
+    }
+
+    .line {
+      @apply(--layout-horizontal);
+      @apply(--layout-start-justified);
+      margin-top: 10px;
+    }
+
+    .lineHoriziontal {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+      margin-top: 20px;
+    }
+
+    paper-dropdown-menu.noLable {
+      --paper-input-container-label: {
+        color: var(--paper-pink-500);
+        font-style: italic;
+        text-align: center;
+        font-weight: bold;
+      }
+      ;
+      --paper-input-container-input: {
+        color: var(--paper-indigo-500);
+        font-style: normal;
+        font-family: serif;
+        text-transform: uppercase;
+      }
+      ;
+    }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
-
       <div class="container">
-
         <div class="flexleft">
           <div class="line">
             Send To:
@@ -126,7 +137,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <input value="{{value::input}}">
             </iron-input>
           </div>
-
           <div class="line">
             <a on-click="handleClick">+Advanced: Add Data</a>
           </div>
@@ -140,13 +150,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </iron-input>
             </div>
           </div>
-
           <div class="lineHoriziontal">
             <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
           </div>
-
         </div>
-
         <div class="flexright">
           <div class="line fontTitle">
             Account Address:
@@ -177,23 +184,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </iron-list>
           </div>
         </div>
+        <div class="footer-spacer"></div>
+        <looper-footer></looper-footer>
       </div>
-
     </looper-page>
   </template>
   <script>
   class PageTransfer extends Polymer.Element {
     static get is() { return 'page-transfer'; }
     handleClick() {
-       var extData = this.$.hiddenExtData;
-       if(extData.style.display=='block'){
-          extData.style.display='none';
-       }else{
-          extData.style.display='block';
-       }
+      var extData = this.$.hiddenExtData;
+      if (extData.style.display == 'block') {
+        extData.style.display = 'none';
+      } else {
+        extData.style.display = 'block';
+      }
     }
-   signToSend(){
-      var detail = {raw: "raw message"};
+    signToSend() {
+      var detail = { raw: "raw message" };
       this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
     }
   }

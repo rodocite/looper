@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
   <template>
@@ -25,6 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-card {
       padding: 16px
     }
+
+ 
     </style>
     <looper-page>
       <looper-toolbar slot="secondary-toolbar" active-tab="markets">
@@ -78,8 +79,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a href="#" on-click="_showAll">View full list</a>
         </div>
         -->
+        <div class="footer-spacer flex"></div>
+        <looper-footer></looper-footer>
       </div>
-      <looper-footer></looper-footer>
     </looper-page>
   </template>
   <script>

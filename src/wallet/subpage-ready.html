@@ -54,6 +54,7 @@
      }
     </style>
     <global-variable key="wallet" value="{{wallet}}"></global-variable>
+    <global-variable key="app-config" value="{{appConfig}}"></global-variable>
     <div class="sections">
 
       <paper-card>
@@ -67,7 +68,7 @@
         <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
           <vaadin-grid-column>
             <template class="header">Ether</template>
-            <template>[[item.contract]]</template>
+            <template>[[_findSymbol(item.contract)]]</template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">Balance</template>
@@ -85,7 +86,7 @@
             <template class="header">Operations</template>
             <template>
               <div class="horizontal layout">
-                <div><a href="#/transfer/[[_toLower(item.symbol)]]">transfer</a></div>
+                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
                 <div style="margin-left: 10px;"><a href="#/convert">convert</a></div>
               </div>
             </template>
@@ -104,7 +105,7 @@
         <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
           <vaadin-grid-column>
             <template class="header">Tokens (ERC20)</template>
-            <template>[[item.contract]]</template>
+            <template>[[_findSymbol(item.contract)]]</template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">Balance</template>
@@ -122,8 +123,23 @@
             <template class="header">Operations</template>
             <template>
               <div class="horizontal layout">
-                <div><a href="#/transfer/[[_toLower(item.symbol)]]">transfer</a></div>
-                <div style="margin-left: 10px;"><a href="#/market/[[_toLower(item.symbol)]]">trade</a></div>
+                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
+                <div style="margin-left: 10px;"><a href="#/market/[[_toLowerSymbol(item.contract)]]">trade</a></div>
+                <div class="horizontal layout" style="margin-left: 10px;">
+                  <div><a href="#/market/[[_toLowerSymbol(item.contract)]]">allowance</a></div>
+                  <template is="dom-if" if="{{_allowanceWarn(item.contract, item.allowance)}}">
+                    <div>
+                      <a href="#" id="warn{{item.contract}}">
+                        <iron-icon icon="icons:error"></iron-icon>
+                      </a>
+                    </div>
+                    <paper-tooltip for="warn{{item.contract}}" position="left">
+                      <p>
+                        allowance left: [[item.allowance]] is lower than [[_getAllowance(item.contract)]]
+                      </p>
+                    </paper-tooltip>
+                  </template>
+                </div>
               </div>
             </template>
           </vaadin-grid-column>
@@ -144,9 +160,50 @@
         return array
     }
 
-    _toLower(value){
-        if(!value) return;
-        return value.toLowerCase()
+    _findTokenConfig(address){
+        var tokens = this.appConfig.tokens;
+        for (var x in tokens){
+           var token = tokens[x];
+           if(token.contract == address){
+               return token;
+           }
+        }
+    }
+
+    _toLowerSymbol(address){
+        var token = this._findTokenConfig(address);
+        if(token){
+            return token.unit.toLowerCase()
+        } else {
+            return "?";
+        }
+    }
+
+    _findSymbol(address){
+        var token = this._findTokenConfig(address);
+        if(token){
+            return token.unit
+        } else {
+            return "?";
+        }
+    }
+
+    _getAllowance(address){
+        var token = this._findTokenConfig(address);
+        if(!token){
+            return 0;
+        }
+        return token.allowanceWarn
+    }
+
+    _allowanceWarn(address, allowance){
+        var token = this._findTokenConfig(address);
+        if(!token){
+            return false;
+        }
+        if(token.allowanceWarn >0 && (!allowance || allowance < token.allowanceWarn)){
+            return true;
+        }
     }
   }
 
