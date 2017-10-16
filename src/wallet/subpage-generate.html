@@ -193,7 +193,9 @@
                 this.disableColor = 'var(--paper-grey-400)';
                 const element = document.createElement('a');
                 element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('test'));
-                element.setAttribute('download', 'UTC.json');
+                const ts = new Date();
+
+                element.setAttribute('download', ['UTC--', ts.toJSON().replace(/:/g, '-')].join(''));
                 element.style.display = 'none';
                 document.body.appendChild(element);
                 element.click();
