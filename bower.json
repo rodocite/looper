@@ -47,7 +47,8 @@
     "paper-spinner": "PolymerElements/paper-spinner#^2.0.0",
     "vaadin-valo-theme": "vaadin/vaadin-valo-theme#^0.3.2",
     "scary-cookie": "Scarygami/scary-cookie#^2.0.0",
-    "scary-cookie-consent": "Scarygami/scary-cookie-consent#^2.0.0"
+    "scary-cookie-consent": "Scarygami/scary-cookie-consent#^2.0.0",
+    "paper-progress": "PolymerElements/paper-progress#^2.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",

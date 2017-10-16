@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="market/recent-orders.html">
+
 <dom-module id="page-ring">
   <template>
     <style include="shared-styles">
@@ -19,16 +21,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <div class="card-content">
+              <paper-item>Ring Hash</paper-item>
+              <paper-item>Miner:</paper-item>
+              <paper-item>Fee Recepient:</paper-item>
+              <paper-item>Transaction Hash:</paper-item>
+              <paper-item>BlockNum:</paper-item>
+
           </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
           <div class="card-actions">
-            <paper-button>Some action</paper-button>
+              <recent-orders></recent-orders>
           </div>
         </paper-card>
         <div class="footer-spacer"></div>

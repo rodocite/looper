@@ -7,7 +7,10 @@
             :host {
                 display: block;
             }
-
+            paper-progress.green {
+                --paper-progress-active-color: var(--paper-light-green-700);
+                --paper-progress-secondary-color: var(--paper-light-green-100);
+            }
         </style>
         <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json"
                    last-response="{{resp}}"></iron-ajax>
@@ -19,7 +22,12 @@
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Type</template>
-                <template ><div class="horizontal layout">[[transtoUppercase(item.orginalOrder.tokenS)]] <iron-icon icon="icons:arrow-forward"></iron-icon> [[transtoUppercase(item.orginalOrder.tokenB)]]</div></template>
+                <template>
+                    <div class="horizontal layout">[[transtoUppercase(item.orginalOrder.tokenS)]]
+                        <iron-icon icon="icons:arrow-forward"></iron-icon>
+                        [[transtoUppercase(item.orginalOrder.tokenB)]]
+                    </div>
+                </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Amount</template>
@@ -37,12 +45,12 @@
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Hash</template>
-                <template>[[item.orginalOrder.hash]]</template>
+                <template><a href="#/order"> [[item.orginalOrder.hash]]</a></template>
             </vaadin-grid-column>
-            <vaadin-grid-column width="20px">
-                <template class="header">Status</template>
+            <vaadin-grid-column width="100px">
+                <template class="header" >Status</template>
                 <template>
-                    <iron-icon icon="menu"></iron-icon>
+                    <paper-progress class="green" value="[[tranHextoNum(item.totalDealedAmountB)]]" max="[[tranHextoNum(item.orginalOrder.amountB)]"></paper-progress>
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>
