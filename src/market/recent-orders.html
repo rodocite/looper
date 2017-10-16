@@ -1,91 +1,120 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<script src="bignumber.js"></script>
 <dom-module id="recent-orders" fit>
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-    </style>
-    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-    <!-- The array is set as the <vaadin-grid>'s "items" property -->
-    <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
-      <vaadin-grid-column>
-        <template class="header">HASH</template>
-        <template>[[item.orginalOrder.hash]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column>
-        <template class="header">ADDRESS</template>
-        <template>[[item.orginalOrder.address]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column width="50px">
-        <template class="header">AMOUNT (LRC)</template>
-        <template>[[item.orginalOrder.amountS]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column width="50px">
-        <template class="header">PRICE (LRC/ETH)</template>
-        <template>[[item.orginalOrder.amountB]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column width="50px">
-        <template class="header">SIZE (ETH)</template>
-        <template>[[item.orginalOrder.amountB]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column width="50px">
-        <template class="header">TIMESTAMP</template>
-        <template>[[traTimeStamp(item.orginalOrder.timestamp)]]</template>
-      </vaadin-grid-column>
-      <vaadin-grid-column width="20px">
-        <template class="header">STATUS</template>
-        <template>
-          <iron-icon icon="menu"></iron-icon>
-        </template>
-      </vaadin-grid-column>
-    </vaadin-grid>
-  </template>
-  <script>
-  class RecentOrders extends Polymer.Element {
-      static get is() {
-          return 'recent-orders';
-      }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
 
-      static get properties() {
-          return {};
-      }
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+        </style>
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json"
+                   last-response="{{resp}}"></iron-ajax>
+        <!-- The array is set as the <vaadin-grid>'s "items" property -->
+        <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+            <vaadin-grid-column width="50px">
+                <template class="header">Time</template>
+                <template>[[traTimeStamp(item.orginalOrder.timestamp)]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Type</template>
+                <template ><div class="horizontal layout">[[transtoUppercase(item.orginalOrder.tokenS)]] <iron-icon icon="icons:arrow-forward"></iron-icon> [[transtoUppercase(item.orginalOrder.tokenB)]]</div></template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Amount</template>
+                <template>[[tranHextoNum(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Price</template>
+                <template>[[getPrice(item.orginalOrder.amountS,item.orginalOrder.amountB)]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Size</template>
+                <template>[[tranHextoNum(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+                <template class="header">Hash</template>
+                <template>[[item.orginalOrder.hash]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="20px">
+                <template class="header">Status</template>
+                <template>
+                    <iron-icon icon="menu"></iron-icon>
+                </template>
+            </vaadin-grid-column>
+        </vaadin-grid>
+    </template>
+    <script>
+        class RecentOrders extends Polymer.Element {
+            static get is() {
+                return 'recent-orders';
+            }
+
+            static get properties() {
+                return {};
+            }
 
 
-      tranHextoNum(hex){
-          if(hex){
-             return Number(parseInt(hex.replace('0x', '').toLowerCase()));
-          }
-          return 'Error';
-      }
+            transtoUppercase(str) {
+                if (str) {
+                    return str.toUpperCase();
+                }
 
-      traTimeStamp(ts) {
+                return '';
+            }
 
-         const timestamp = this.tranHextoNum(ts)
+            tranHextoNum(hex) {
+                if (hex) {
+                    return Number(parseInt(hex.replace('0x', '').toLowerCase()));
+                }
+                return 'Error';
+            }
 
-          if (timestamp) {
-              const date = new Date(ts * 1000);
-              return (
-                  date.getFullYear() +
-                  '-' +
-                  (date.getMonth() < 9
-                      ? '0' + (date.getMonth() + 1)
-                      : date.getMonth() + 1) +
-                  '-' +
-                  (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
-                  ' ' +
-                  (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
-                  ':' +
-                  (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
-                  ':' +
-                  (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
-              );
-          }
-          return 'Error';
-      }
+            numberFormat(num) {
+                const size = this.tranHextoNum(num);
+                return size / 1000000000000000000;
+            }
 
-  }
-  window.customElements.define(RecentOrders.is, RecentOrders);
-  </script>
+
+            getPrice(s, b) {
+
+                const sell = this.tranHextoNum(s);
+                const buy = this.tranHextoNum(b);
+
+                return sell / buy;
+
+            }
+
+            traTimeStamp(ts) {
+
+                const timestamp = this.tranHextoNum(ts)
+
+                if (timestamp) {
+                    const date = new Date(ts * 1000);
+                    return (
+                        date.getFullYear() +
+                        '-' +
+                        (date.getMonth() < 9
+                            ? '0' + (date.getMonth() + 1)
+                            : date.getMonth() + 1) +
+                        '-' +
+                        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
+                        ' ' +
+                        (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
+                        ':' +
+                        (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
+                        ':' +
+                        (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
+                    );
+                }
+                return 'Error';
+            }
+
+        }
+
+        window.customElements.define(RecentOrders.is, RecentOrders);
+    </script>
 </dom-module>
