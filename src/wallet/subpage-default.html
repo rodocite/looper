@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="page-wallet-default" fit>
+<dom-module id="subpage-default" fit>
   <template>
     <style include="shared-styles"></style>
     <style>
@@ -10,7 +10,7 @@
       }
       --paper-card-header-text: {
         font-size: 18px;
-        color: rgba(0,0,0,.54);
+        color: rgba(0, 0, 0, .54);
       }
     }
 
@@ -54,8 +54,8 @@
     </div>
   </template>
   <script>
-  class PageMyWalletDefault extends Polymer.Element {
-    static get is() { return 'page-wallet-default'; }
+  class SubpageDefault extends Polymer.Element {
+    static get is() { return 'subpage-default'; }
 
     static get properties() {
       return {};
@@ -70,6 +70,6 @@
     }
   }
 
-  window.customElements.define(PageMyWalletDefault.is, PageMyWalletDefault);
+  window.customElements.define(SubpageDefault.is, SubpageDefault);
   </script>
 </dom-module>

@@ -17,19 +17,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
     }
 
-
+    paper-card {
+      padding: 16px
+    }
     </style>
     <looper-page>
-      <looper-toolbar slot="secondary-toolbar" active-tab="rings">
-        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-      </looper-toolbar>
+      <looper-toolbar slot="secondary-toolbar" active-tab="rings"></looper-toolbar>
       <div class="sections">
-        <paper-card >
+        <paper-card>
           <div class="card-content">
             <a href="#/ring">Link to a Ring</a>
           </div>
         </paper-card>
       </div>
+      <looper-footer></looper-footer>
     </looper-page>
   </template>
   <script>

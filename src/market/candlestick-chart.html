@@ -11,7 +11,7 @@
       min-width: 1000px;
     }
     </style>
-    <iron-ajax auto handle-as="json" url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/candleTick.json" on-response="handleResponse"></iron-ajax>
+    <iron-ajax auto handle-as="json" url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/candleTick.json" last-response="{{resp}}"></iron-ajax>
     <div class="wrapper">
       <div id="container"></div>
     </div>
@@ -22,13 +22,16 @@
 
     static get properties() {
       return {
-
+        resp: {
+          type: Object,
+          observer: '_respChanged'
+        }
       };
     }
 
-    handleResponse(e) {
+    _respChanged(resp) {
       // console.log(e.detail.response.result);
-      var data = e.detail.response.result;
+      var data = resp.result;
       // split the data set into ohlc and volume
       var ohlc = [],
         volume = [],

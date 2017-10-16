@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="page-wallet-unlock" fit>
+<dom-module id="subpage-unlock" fit>
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
@@ -95,8 +95,8 @@
     </div>
   </template>
   <script>
-  class PageMyWalletUnlock extends Polymer.Element {
-    static get is() { return 'page-wallet-unlock'; }
+  class SubpageUnlock extends Polymer.Element {
+    static get is() { return 'subpage-unlock'; }
 
     static get properties() {
       return {
@@ -127,6 +127,6 @@
     }
   }
 
-  window.customElements.define(PageMyWalletUnlock.is, PageMyWalletUnlock);
+  window.customElements.define(SubpageUnlock.is, SubpageUnlock);
   </script>
 </dom-module>
