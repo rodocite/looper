@@ -7,6 +7,10 @@
       display: block;
     }
 
+     vaadin-grid {
+       height: 100%;
+     }
+
     .card-actions {
       --app-grid-columns: 5;
       /*--app-grid-item-height: 40px;*/
@@ -44,161 +48,86 @@
       padding: 0;
       list-style: none;
     }
+
+     paper-card {
+       padding: 16px
+     }
     </style>
+    <global-variable key="wallet" value="{{wallet}}"></global-variable>
     <div class="sections">
-      <paper-card transparent elevation=0>
-        <div class="wallet-summary vertical center layout">
-          <div class="horizontal layout">
-            <!-- <div class="head">Address:</div> -->
-            <div class="address">0xa3ae668B6239fA3eb1dc26DaAbb03f244d0259f0</div>
-          </div>
-          <div class="horizontal layout">
-            <div class="head">Total value:</div>
-            <div class="value">1331321</div>
-          </div>
-        </div>
-      </paper-card>
+
       <paper-card>
-        <div class="card-actions header">
-          <ul class="app-grid ">
-            <li class="item">Ether</li>
-            <li class="item">Balance</li>
-            <li class="item">Price (USD)</li>
-            <li class="item">Value (USD)</li>
-            <li class="item">Operations</li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">ETH</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/eth">transfer</a>
-              <a href="#/convert">convert</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">WETH</li>
-            <li class="item">2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/weth">transfer</a>
-              <a href="#/convert">convert</a>
-            </li>
-          </ul>
-        </div>
+        <iron-ajax
+                auto
+                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json"
+                handle-as="json"
+                last-response="{{ethers}}"
+                debounce-duration="300">
+        </iron-ajax>
+        <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
+          <vaadin-grid-column>
+            <template class="header">Ether</template>
+            <template>[[item.contract]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">Balance</template>
+            <template>[[item.balance]]([[item.unit]])</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="60px">
+            <template class="header">Price (USD)</template>
+            <template>[[item.priceUSD]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="50px">
+            <template class="header">Value (USD)</template>
+            <template>[[item.valueUSD]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="100px">
+            <template class="header">Operations</template>
+            <template>
+              <div class="horizontal layout">
+                <div><a href="#/transfer/[[_toLower(item.symbol)]]">transfer</a></div>
+                <div style="margin-left: 10px;"><a href="#/convert">convert</a></div>
+              </div>
+            </template>
+          </vaadin-grid-column>
+        </vaadin-grid>
       </paper-card>
+
       <paper-card>
-        <div class="card-actions header">
-          <ul class="app-grid ">
-            <li class="item">Tokens (ERC20)</li>
-            <li class="item">Balance</li>
-            <li class="item">Price (USD)</li>
-            <li class="item">Value (USD)</li>
-            <li class="item">Operations</li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">LRC</li>
-            <li class="item">1291.2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/lrc">transfer</a>
-              <a href="#/market/lrc">trade</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-actions">
-          <ul class="app-grid">
-            <li class="item">ZXT</li>
-            <li class="item">2121</li>
-            <li class="item">2001.12</li>
-            <li class="item">200121.12</li>
-            <li class="item">
-              <a href="#/transfer/zxt">transfer</a>
-              <a href="#/market/zxt">trade</a>
-            </li>
-          </ul>
-        </div>
+        <iron-ajax
+                auto
+                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json"
+                handle-as="json"
+                last-response="{{tokens}}"
+                debounce-duration="300">
+        </iron-ajax>
+        <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
+          <vaadin-grid-column>
+            <template class="header">Tokens (ERC20)</template>
+            <template>[[item.contract]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">Balance</template>
+            <template>[[item.balance]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="60px">
+            <template class="header">Price (USD)</template>
+            <template>[[item.priceUSD]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="50px">
+            <template class="header">Value (USD)</template>
+            <template>[[item.valueUSD]]</template>
+          </vaadin-grid-column>
+          <vaadin-grid-column width="100px">
+            <template class="header">Operations</template>
+            <template>
+              <div class="horizontal layout">
+                <div><a href="#/transfer/[[_toLower(item.symbol)]]">transfer</a></div>
+                <div style="margin-left: 10px;"><a href="#/market/[[_toLower(item.symbol)]]">trade</a></div>
+              </div>
+            </template>
+          </vaadin-grid-column>
+        </vaadin-grid>
       </paper-card>
   </template>
   <script>
@@ -207,6 +136,17 @@
 
     static get properties() {
       return {};
+    }
+
+    _convertToArray(wallet){
+        var array = new Array();
+        array.push(wallet)
+        return array
+    }
+
+    _toLower(value){
+        if(!value) return;
+        return value.toLowerCase()
     }
   }
 

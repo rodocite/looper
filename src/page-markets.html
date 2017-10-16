@@ -18,6 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
     }
 
+    vaadin-grid {
+      height: 100%;
+    }
+
     paper-card {
       padding: 16px
     }
@@ -27,40 +31,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </looper-toolbar>
       <div class="sections">
         <paper-card>
-          <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-          <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+
+          <iron-ajax
+            auto
+            url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json"
+            handle-as="json"
+            last-response="{{data}}"
+            debounce-duration="300">
+          </iron-ajax>
+
+          <vaadin-grid aria-label="Markets" items="[[data.result]]"><!-- items="[[_show(data.result, size)]]" -->
             <vaadin-grid-column>
-              <template class="header">HASH</template>
-              <template>[[item.orginalOrder.hash]]</template>
+              <template class="header">MARKET</template>
+              <template><a href="#/market/[[_a(item.market)]]">[[item.market]]</a></template>
             </vaadin-grid-column>
             <vaadin-grid-column>
-              <template class="header">ADDRESS</template>
-              <template>[[item.orginalOrder.address]]</template>
+              <template class="header">LAST PRICE</template>
+              <template>[[item.last]]</template>
             </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">AMOUNT (LRC)</template>
-              <template>[[item.orginalOrder.amountS]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">PRICE (LRC/ETH)</template>
-              <template>[[item.orginalOrder.amountB]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">SIZE (ETH)</template>
-              <template>[[item.orginalOrder.amountB]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">TIMESTAMP</template>
-              <template>[[item.orginalOrder.timestamp]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="20px">
-              <template class="header">STATUS</template>
+            <vaadin-grid-column width="60px">
+              <template class="header">CHANGE</template>
               <template>
-                <iron-icon icon="menu"></iron-icon>
+                <div class="horizontal layout">
+                  <div><iron-icon icon="{{_icon(item.change)}}"></iron-icon></div>
+                  <div>[[_showChange(item.change)]]</div>
+                </div>
               </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">24HR VOLUME</template>
+              <template>[[item.vol]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">BID</template>
+              <template>[[item.buy]]</template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">ASK</template>
+              <template>[[item.sell]]</template>
             </vaadin-grid-column>
           </vaadin-grid>
         </paper-card>
+
+        <!--
+        <div style="margin-top: 10px; margin-bottom: 10px;">
+          <a href="#" on-click="_showAll">View full list</a>
+        </div>
+        -->
       </div>
       <looper-footer></looper-footer>
     </looper-page>
@@ -68,6 +85,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageMarkets extends Polymer.Element {
     static get is() { return 'page-markets'; }
+
+    ready() {
+      super.ready();
+      this.size = 10;
+    }
+
+    _a(value){
+      if(!value){
+        return "#";
+      }
+      return value.split("/")[0].toLowerCase()
+    }
+
+    _show(data, size){
+      if(!data){
+        return;
+      }
+      return data.slice(0, size)
+    }
+
+    _showAll(){
+      if(!this.data){
+        return;
+      }
+      this.size = this.data.result.size
+    }
+
+    _icon(value){
+      if(value >0) return "icons:arrow-upward"
+      else return "icons:arrow-downward"
+    }
+
+    _showChange(value){
+      return value+"%"
+    }
   }
 
   window.customElements.define(PageMarkets.is, PageMarkets);
