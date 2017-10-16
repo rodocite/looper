@@ -48,8 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-button raised on-click="setWallet">setWallet</paper-button>
           </div>
         </paper-card>
+        <div class="footer-spacer"></div>
+        <looper-footer></looper-footer>
       </div>
-      <looper-footer></looper-footer>
     </looper-page>
   </template>
   <script>
@@ -77,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (this.wallet) {
         this.wallet = null;
       } else {
-        this.wallet = {address: "addresssssssssssssssssssssssssss"};
+        this.wallet = { address: "addresssssssssssssssssssssssssss" };
       }
     }
   }
