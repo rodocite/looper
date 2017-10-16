@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<script src="bignumber.js"></script>
 <dom-module id="recent-orders" fit>
   <template>
     <style include="shared-styles">
@@ -31,7 +32,7 @@
       </vaadin-grid-column>
       <vaadin-grid-column width="50px">
         <template class="header">TIMESTAMP</template>
-        <template>[[item.orginalOrder.timestamp]]</template>
+        <template>[[traTimeStamp(item.orginalOrder.timestamp)]]</template>
       </vaadin-grid-column>
       <vaadin-grid-column width="20px">
         <template class="header">STATUS</template>
@@ -43,15 +44,48 @@
   </template>
   <script>
   class RecentOrders extends Polymer.Element {
-    static get is() { return 'recent-orders'; }
+      static get is() {
+          return 'recent-orders';
+      }
 
-    static get properties() {
-      return {
+      static get properties() {
+          return {};
+      }
 
-      };
-    }
+
+      tranHextoNum(hex){
+          if(hex){
+             return Number(parseInt(hex.replace('0x', '').toLowerCase()));
+          }
+          return 'Error';
+      }
+
+      traTimeStamp(ts) {
+
+         const timestamp = this.tranHextoNum(ts)
+
+          if (timestamp) {
+              const date = new Date(ts * 1000);
+              return (
+                  date.getFullYear() +
+                  '-' +
+                  (date.getMonth() < 9
+                      ? '0' + (date.getMonth() + 1)
+                      : date.getMonth() + 1) +
+                  '-' +
+                  (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
+                  ' ' +
+                  (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
+                  ':' +
+                  (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
+              );
+          }
+          return 'Error';
+      }
+
   }
-
   window.customElements.define(RecentOrders.is, RecentOrders);
   </script>
 </dom-module>
