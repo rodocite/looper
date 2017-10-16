@@ -20,23 +20,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      :host {
       display: block;
     }
-
-    iron-pages {
-      /*padding-top: 16px;*/
-    }
     </style>
     <looper-page>
       <looper-toolbar slot="secondary-toolbar" active-tab="wallet"> </looper-toolbar>
-      <div class="sections">
-        <iron-pages selected="[[subpage]]" attr-for-selected="name" fallback-selection="404" role="main">
-          <subpage-default name="default"></subpage-default>
-          <subpage-unlock name="unlock"></subpage-unlock>
-          <subpage-generate name="generate"></subpage-generate>
-          <subpage-ready name="ready"></subpage-ready>
-        </iron-pages>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
+      <iron-pages selected="[[subpage]]" attr-for-selected="name" fallback-selection="404" role="main">
+        <subpage-default name="default"></subpage-default>
+        <subpage-unlock name="unlock"></subpage-unlock>
+        <subpage-generate name="generate"></subpage-generate>
+        <subpage-ready name="ready"></subpage-ready>
+      </iron-pages>
+      <div class="footer-spacer"></div>
+      <looper-footer></looper-footer>
     </looper-page>
   </template>
   <script>

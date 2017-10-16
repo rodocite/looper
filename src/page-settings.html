@@ -36,15 +36,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       min-width: 200px;
       color: rgba(0, 0, 0, .54);
     }
+
+    vaadin-combo-box {
+      width: 260px;
+    }
     </style>
     <looper-page>
       <global-variable key="wallet" value="{{wallet}}"></global-variable>
       <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <global-variable key="settings-lang" value="{{settingsLang}}"></global-variable>
       <scary-cookie name="settings-lang" value="{{settingsLang}}"></scary-cookie>
-
       <global-variable key="settings-currency" value="{{settingsCurrency}}"></global-variable>
       <scary-cookie name="settings-currency" value="{{settingsCurrency}}"></scary-cookie>
+      <global-variable key="settings-relay" value="{{settingsRelay}}"></global-variable>
+      <scary-cookie name="settings-relay" value="{{settingsRelay}}"></scary-cookie>
       <app-toolbar slot="secondary-toolbar">
         <div condensed-title></div>
         Settings
@@ -55,14 +60,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-toolbar>
       <div class="sections">
         <paper-card>
-          <div class="card-content">
-            <div class="item horizontal center layout">
-              <div class="label">Language</div>
-              <vaadin-combo-box id="lang" placeholder="English" items="{{appConfig.langs}}"></vaadin-combo-box>
-            </div>
-            <div class="item horizontal center layout">
-              <div class="label">Currency</div>
-              <vaadin-combo-box id="currency" placeholder="USD" items="{{appConfig.fiat}}"></vaadin-combo-box>
+          <div class="card-content vertical center layout">
+            <div class="vertical layout">
+              <div class="item horizontal center layout">
+                <div class="label">Language</div>
+                <vaadin-combo-box id="lang" placeholder="English" items="{{appConfig.langs}}"></vaadin-combo-box>
+              </div>
+              <div class="item horizontal center layout">
+                <div class="label">Currency</div>
+                <vaadin-combo-box id="currency" placeholder="USD" items="{{appConfig.fiat}}"></vaadin-combo-box>
+              </div>
+              <div class="item horizontal center layout">
+                <div class="label">Relay</div>
+                <vaadin-combo-box id="relay" placeholder="Default Looper Relay" items="{{appConfig.relays}}"></vaadin-combo-box>
+              </div>
             </div>
           </div>
         </paper-card>
@@ -86,6 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       super.ready();
       this.$.lang.value = this.settingsLang || "en";
       this.$.currency.value = this.settingsCurrency || "usd";
+      this.$.relay.value = this.settingsRelay || "//relay1.loopring.io";
 
       var _this = this;
 
@@ -97,6 +109,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.$.currency.addEventListener('value-changed', function() {
         _this.settingsCurrency = _this.$.currency.value || "usd";
         console.log(_this.settingsCurrency);
+      });
+
+      this.$.relay.addEventListener('value-changed', function() {
+        _this.settingsRelay = _this.$.relay.value || "//relay1.loopring.io";
+        console.log(_this.settingsRelay);
       });
     }
   }
