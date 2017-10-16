@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/scary-cookie/scary-cookie.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-settings">
   <template>
@@ -25,9 +26,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-icon-button {
       color: white;
     }
+
+    .item {
+      /*background-color: red;*/
+      padding: 16px 32px 16px 32px;
+    }
+
+    .label {
+      min-width: 200px;
+      color: rgba(0, 0, 0, .54);
+    }
     </style>
     <looper-page>
       <global-variable key="wallet" value="{{wallet}}"></global-variable>
+      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+      <global-variable key="settings-lang" value="{{settingsLang}}"></global-variable>
+      <scary-cookie name="settings-lang" value="{{settingsLang}}"></scary-cookie>
+
+      <global-variable key="settings-currency" value="{{settingsCurrency}}"></global-variable>
+      <scary-cookie name="settings-currency" value="{{settingsCurrency}}"></scary-cookie>
       <app-toolbar slot="secondary-toolbar">
         <div condensed-title></div>
         Settings
@@ -39,13 +56,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="sections">
         <paper-card>
           <div class="card-content">
-            <a href="#/ring">Link to a Ring</a>
-          </div>
-          <div>
-            <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
-            <paper-button raised on-click="showError">show a error(10s)</paper-button>
-            <paper-button raised on-click="signToSend">signToSend</paper-button>
-            <paper-button raised on-click="setWallet">setWallet</paper-button>
+            <div class="item horizontal center layout">
+              <div class="label">Language</div>
+              <vaadin-combo-box id="lang" placeholder="English" items="{{appConfig.langs}}"></vaadin-combo-box>
+            </div>
+            <div class="item horizontal center layout">
+              <div class="label">Currency</div>
+              <vaadin-combo-box id="currency" placeholder="USD" items="{{appConfig.fiat}}"></vaadin-combo-box>
+            </div>
           </div>
         </paper-card>
         <div class="footer-spacer"></div>
@@ -59,27 +77,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return 'page-settings';
     }
 
-    showWarning() {
-      var detail = { message: "this is a warning", category: "warning", closable: true, timeout: 3000 }
-      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    static get properties() {
+      return {};
     }
 
-    showError() {
-      var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
-      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
-    }
 
-    signToSend() {
-      var detail = { raw: "raw message" };
-      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
-    }
+    ready() {
+      super.ready();
+      this.$.lang.value = this.settingsLang || "en";
+      this.$.currency.value = this.settingsCurrency || "usd";
 
-    setWallet() {
-      if (this.wallet) {
-        this.wallet = null;
-      } else {
-        this.wallet = { address: "addresssssssssssssssssssssssssss" };
-      }
+      var _this = this;
+
+      this.$.lang.addEventListener('value-changed', function() {
+        _this.settingsLang = _this.$.lang.value || "en";
+        console.log(_this.settingsLang);
+      });
+
+      this.$.currency.addEventListener('value-changed', function() {
+        _this.settingsCurrency = _this.$.currency.value || "usd";
+        console.log(_this.settingsCurrency);
+      });
     }
   }
 

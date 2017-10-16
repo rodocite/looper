@@ -17,6 +17,7 @@
     "src/page-settings.html",
     "src/page-doc.html",
     "src/page-404.html",
+    "src/page-dev.html",
     "src/page-wallet-default.html",
     "src/page-wallet-unlock.html",
     "src/page-wallet-generate.html",
