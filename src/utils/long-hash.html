@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="long-hash">
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: inline-block;
+    }
+
+    paper-tooltip {
+      z-index: 10000;
+    }
+    </style>
+    <span id="lh">[[head]][[middle]][[tail]]</span>
+    <paper-tooltip for="lh" position="left">
+      [[tip]]
+    </paper-tooltip>
+  </template>
+  <script>
+  class LongHash extends Polymer.Element {
+    static get is() { return 'long-hash'; }
+
+    static get properties() {
+      return {
+        hash: {
+          type: String,
+          observer: '_update',
+          value: ""
+        },
+        head: String,
+        middle: String,
+        tail: String
+      };
+    }
+
+    _update(hash) {
+      if (hash) {
+        if (hash.length <= 15) {
+          this.head = hash;
+          this.middle = this.tail = "";
+          this.tip = null;
+        } else {
+          this.head = hash.slice(0, 6);
+          this.middle = "...";
+          this.tail = (hash + "-").slice(-7, -1);
+          this.tip = hash;
+        }
+      }
+    }
+  }
+
+  window.customElements.define(LongHash.is, LongHash);
+  </script>
+</dom-module>

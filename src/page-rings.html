@@ -30,19 +30,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
                 <vaadin-grid-column width="50px">
                     <template class="header">Hash</template>
-                    <template><a href="#/ring">[[item.ringhash]]</a> </template>
+                    <template><a href="#/ring"><long-hash hash="[[item.ringhash]]"></long-hash></a> </template>
                 </vaadin-grid-column>
                 <vaadin-grid-column width="50px">
                     <template class="header">Miner</template>
-                    <template>[[item.miner]]</template>
+                    <template><long-hash hash="[[item.miner]]"></long-hash></template>
                 </vaadin-grid-column>
                 <vaadin-grid-column width="50px">
                     <template class="header">Fee Recepient</template>
-                    <template>[[item.feeRecepient]]</template>
+                    <template><long-hash hash="[[item.feeRecepient]]"></long-hash></template>
                 </vaadin-grid-column>
                 <vaadin-grid-column width="50px">
                     <template class="header">Transaction Hash</template>
-                    <template>[[item.transactionHash]]</template>
+                    <template><long-hash hash="[[item.transactionHash]]"></long-hash></template>
                 </vaadin-grid-column>
                 <vaadin-grid-column width="50px">
                     <template class="header">Block Num</template>

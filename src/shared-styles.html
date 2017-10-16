@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .footer-spacer {
       @apply --layout-flex;
-      height: 48px;
+      min-height: 48px;
     }
 
     iron-input input {
@@ -113,6 +113,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: rgba(0, 0, 0, 0.78);
       border: none;
       padding-top: 16px;
+      height: 100%;
+      line-height: 32px;
     }
 
     vaadin-grid-table:focus {
@@ -121,6 +123,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     vaadin-grid iron-icon {
       height: 16px;
+    }
+
+    vaadin-grid-cell-content {
+      text-align: right;
     }
 
     @media(min-width:1024px) {

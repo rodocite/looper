@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="pretty-number">
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: inline-block;
+    }
+
+    .t {
+      opacity: 0.54;
+    }
+    </style>
+    [[head]]<span class="t">[[tail]]</span>[[postfix]]
+  </template>
+  <script>
+  class PrettyNumber extends Polymer.Element {
+    static get is() { return 'pretty-number'; }
+
+    static get properties() {
+      return {
+        v: {
+          type: Number,
+          observer: '_update',
+          value: 0
+        },
+        d: {
+          type: Number,
+          observer: '_update',
+          value: 0
+        },
+        sign: {
+          type: Boolean,
+          observer: '_update',
+          value: false
+        },
+        postfix: {
+          type: String,
+          observer: '_updated',
+          value: ''
+        },
+        head: String,
+        tail: String
+      };
+    }
+
+    _update() {
+      if (this.v) {
+        var sign = "";
+        if (this.sign && this.v > 0) {
+          sign = "+";
+        }
+        var s = sign + this.v.toFixed(this.d);
+        this.head = s.replace(/0+$/, "");
+        var zeros = s.length - this.head.length;
+        this.tail = "0".repeat(zeros);
+      }
+    }
+  }
+
+  window.customElements.define(PrettyNumber.is, PrettyNumber);
+  </script>
+</dom-module>

@@ -17,63 +17,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
     }
 
-    vaadin-grid {
-      height: 100%;
-    }
-
     paper-card {
       padding: 16px
     }
 
- 
+    .decrease {
+      color: var(--app-green-color);
+    }
+
+    .increase {
+      color: var(--app-red-color);
+    }
+
     </style>
     <looper-page>
       <looper-toolbar slot="secondary-toolbar" active-tab="markets">
       </looper-toolbar>
       <div class="sections">
         <paper-card>
-
-          <iron-ajax
-            auto
-            url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json"
-            handle-as="json"
-            last-response="{{data}}"
-            debounce-duration="300">
+          <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json" handle-as="json" last-response="{{data}}" debounce-duration="300">
           </iron-ajax>
-
-          <vaadin-grid aria-label="Markets" items="[[data.result]]"><!-- items="[[_show(data.result, size)]]" -->
+          <vaadin-grid aria-label="Markets" items="[[data.result]]">
+            <!-- items="[[_show(data.result, size)]]" -->
             <vaadin-grid-column>
               <template class="header">MARKET</template>
               <template><a href="#/market/[[_a(item.market)]]">[[item.market]]</a></template>
             </vaadin-grid-column>
             <vaadin-grid-column>
               <template class="header">LAST PRICE</template>
-              <template>[[item.last]]</template>
+              <template><pretty-number v="[[item.last]]" d=4></pretty-number></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="60px">
               <template class="header">CHANGE</template>
               <template>
-                <div class="horizontal layout">
-                  <div><iron-icon icon="{{_icon(item.change)}}"></iron-icon></div>
-                  <div>[[_showChange(item.change)]]</div>
-                </div>
+                <div class$="[[_class(item.change)]]"><pretty-number v="[[item.change]]" d=1 sign=true postfix="%"></pretty-number></div>
               </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
               <template class="header">24HR VOLUME</template>
-              <template>[[item.vol]]</template>
+              <template><pretty-number v="[[item.vol]]" d=2></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
               <template class="header">BID</template>
-              <template>[[item.buy]]</template>
+              <template><pretty-number v="[[item.buy]]" d=2></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
               <template class="header">ASK</template>
-              <template>[[item.sell]]</template>
+              <template><pretty-number v="[[item.sell]]" d=2></template>
             </vaadin-grid-column>
           </vaadin-grid>
         </paper-card>
-
         <!--
         <div style="margin-top: 10px; margin-bottom: 10px;">
           <a href="#" on-click="_showAll">View full list</a>
@@ -93,34 +86,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.size = 10;
     }
 
-    _a(value){
-      if(!value){
+    _a(value) {
+      if (!value) {
         return "#";
       }
       return value.split("/")[0].toLowerCase()
     }
 
-    _show(data, size){
-      if(!data){
+    _show(data, size) {
+      if (!data) {
         return;
       }
       return data.slice(0, size)
     }
 
-    _showAll(){
-      if(!this.data){
+    _showAll() {
+      if (!this.data) {
         return;
       }
       this.size = this.data.result.size
     }
 
-    _icon(value){
-      if(value >0) return "icons:arrow-upward"
-      else return "icons:arrow-downward"
+    _class(value) {
+      if (value > 0) return "increase";
+      else if (value < 0) return "decrease";
+      else return "";
     }
 
-    _showChange(value){
-      return value+"%"
+    _showChange(value) {
+      if (value > 0) {
+        return "+" + value.toFixed(1) + "%";
+      } else if (value < 0) {
+        return value.toFixed(1) + "%";
+      } else { return '-'; }
     }
   }
 

@@ -45,7 +45,7 @@
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Hash</template>
-                <template><a href="#/order"> [[item.orginalOrder.hash]]</a></template>
+                <template><a href="#/order"><long-hash hash="[[item.orginalOrder.hash]]"></long-hash></a></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="100px">
                 <template class="header" >Status</template>
@@ -97,7 +97,6 @@
             }
 
             traTimeStamp(ts) {
-
                 const timestamp = this.tranHextoNum(ts)
 
                 if (timestamp) {
