@@ -1,0 +1,88 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="page-dev">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style include="shared-styles">
+     :host {
+      display: block;
+    }
+
+    app-toolbar {
+      color: white;
+      background-color: var(--google-grey-700);
+    }
+
+    paper-icon-button {
+      color: white;
+    }
+    </style>
+    <looper-page>
+      <global-variable key="wallet" value="{{wallet}}"></global-variable>
+      <app-toolbar slot="secondary-toolbar">
+        <div condensed-title></div>
+        DEV PAGE for quick links
+        <div condensed-title></div>
+        <a href="/#/">
+          <paper-icon-button noink icon="close"></paper-icon-button>
+        </a>
+      </app-toolbar>
+      <div class="sections">
+        <paper-card>
+          <div class="card-content">
+            <a href="#/ring">Link to a Ring</a>
+          </div>
+          <div>
+            <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
+            <paper-button raised on-click="showError">show a error(10s)</paper-button>
+            <paper-button raised on-click="signToSend">signToSend</paper-button>
+            <paper-button raised on-click="setWallet">setWallet</paper-button>
+          </div>
+        </paper-card>
+        <div class="footer-spacer"></div>
+        <looper-footer></looper-footer>
+      </div>
+    </looper-page>
+  </template>
+  <script>
+  class PageDev extends Polymer.Element {
+    static get is() {
+      return 'page-dev';
+    }
+
+    showWarning() {
+      var detail = { message: "this is a warning", category: "warning", closable: true, timeout: 3000 }
+      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    showError() {
+      var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
+      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    signToSend() {
+      var detail = { raw: "raw message" };
+      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    setWallet() {
+      if (this.wallet) {
+        this.wallet = null;
+      } else {
+        this.wallet = { address: "addresssssssssssssssssssssssssss" };
+      }
+    }
+  }
+
+  window.customElements.define(PageDev.is, PageDev);
+  </script>
+</dom-module>
