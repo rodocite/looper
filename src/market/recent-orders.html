@@ -9,7 +9,7 @@
             }
             paper-progress.green {
                 --paper-progress-active-color: var(--paper-light-green-700);
-                --paper-progress-secondary-color: var(--paper-light-green-100);
+                --paper-progress-secondary-color: var(--paper-red-500);
             }
             .container {
                 @apply(--layout-horizontal);
@@ -50,13 +50,15 @@
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Hash</template>
-                <template><a href="#/order"><long-hash hash="[[item.orginalOrder.hash]]"></long-hash></a></template>
+                <template><a href="#/order/[[item.orginalOrder.hash]]"><long-hash hash="[[item.orginalOrder.hash]]"></long-hash></a></template>
             </vaadin-grid-column>
 
-            <vaadin-grid-column width="100px">
-                <template class="header" >Completed Percent</template>
+            <vaadin-grid-column width="50px">
+                <template class="header" >Status</template>
                 <template>
-                    <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]" max="[[numberFormat(item.orginalOrder.amountB)]]"></paper-progress>
+                 <div class="horizontal end-justified layout">
+                     <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]"
+                                     secondary-progress="60"   max="[[numberFormat(item.orginalOrder.amountB)]]" style="width: 50px"></paper-progress></div>
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>

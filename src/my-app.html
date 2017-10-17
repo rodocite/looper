@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-label/iron-label.html">
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../bower_components/marked-element/marked-element.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
@@ -243,23 +244,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         page: {
           type: String,
           reflectToAttribute: true,
-          observer: '_pageChanged'
+          observer: '_pageChanged',
         },
         pageId: {
           type: String,
-          reflectToAttribute: true
+          reflectToAttribute: true,
         },
         routeData: Object,
         rootPath: String,
         subrouteData: Object,
-        wallet: Object,
         appConfig: {
           type: Object,
-          observer: '_appConfigLoaded'
+          observer: '_appConfigLoaded',
         },
         wallet: {
           type: Object,
-          observer: '_walletChanged'
+          observer: '_walletChanged',
         }
       };
     }
