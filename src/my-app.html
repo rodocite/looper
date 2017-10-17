@@ -75,6 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="looper-page/signtosend-dialog.html">
 <link rel="import" href="utils/pretty-number.html">
 <link rel="import" href="utils/long-hash.html">
+<link rel="import" href="utils/notification-panel.html">
 <link rel="lazy-import" href="page-markets.html">
 <link rel="lazy-import" href="page-market.html">
 <link rel="lazy-import" href="page-rings.html">
@@ -165,20 +166,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       top: 60px;
     }
 
+
+
     paper-icon-button:not([narrow]) [drawer-toggle] {
       display: none;
     }
     </style>
+    <!-- routing -->
     <app-location use-hash-as-path route="{{route}}">
     </app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
     <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
     </app-route>
+    <!-- hidden components -->
     <signtosend-dialog id="signtosend"></signtosend-dialog>
+    <notification-panel id="notification"></notification-panel>
+    <!-- ajax -->
     <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
+    <!-- global vars -->
     <global-variable key="app-config" value="{{appConfig}}"></global-variable>
     <global-variable key="wallet" value="{{wallet}}"></global-variable>
+    <!-- main layout -->
     <app-drawer-layout fullbleed force-narrow>
       <app-drawer no-focus-trap slot="drawer">
         <a name="markets" href="#/markets">
@@ -189,7 +198,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </a>
       </app-drawer>
       <app-header-layout has-scrolling-region fullbleed>
-        <app-header fixed slot="header">
+        <app-header fixed slot="header" id="appHeader">
           <!-- <looper-notification-bar id="notification"></looper-notification-bar> -->
           <app-toolbar>
             <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
@@ -255,6 +264,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       };
     }
 
+    ready() {
+      super.ready();
+      this.ajax = this.$.ajax;
+      this.addEventListener('notification', e => this.$.notification.display(e.detail));
+      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
+    }
+
     _appConfigLoaded() {
       this.$.loading.style.display = "none";
       this.$.pages.style.display = "inherit";
@@ -301,13 +317,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _showPage404() {
       this.page = '404';
-    }
-
-    ready() {
-      super.ready();
-      this.ajax = this.$.ajax;
-      this.addEventListener('notification', e => this.$.notification.display(e.detail));
-      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
     }
   }
 

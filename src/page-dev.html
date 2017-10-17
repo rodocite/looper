@@ -42,6 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href="#/ring">Link to a Ring</a>
           </div>
           <div>
+            <paper-button raised on-click="showInfo">show a info(3s)</paper-button>
             <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
             <paper-button raised on-click="showError">show a error(10s)</paper-button>
             <paper-button raised on-click="signToSend">signToSend</paper-button>
@@ -59,13 +60,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return 'page-dev';
     }
 
+    showInfo() {
+      var detail = { text: "this is a info", category: "info", duration: 8000, link: "/#/order", linkText: "Link" }
+      this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
     showWarning() {
-      var detail = { message: "this is a warning", category: "warning", closable: true, timeout: 3000 }
+      var detail = { text: "this is a warning", category: "warning", duration: 8000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
     }
 
     showError() {
-      var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
+      var detail = { text: "this is a error", category: "error", duration: 8000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
     }
 

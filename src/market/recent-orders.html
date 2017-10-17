@@ -11,6 +11,11 @@
                 --paper-progress-active-color: var(--paper-light-green-700);
                 --paper-progress-secondary-color: var(--paper-light-green-100);
             }
+            .container {
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+            }
+
         </style>
         <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json"
                    last-response="{{resp}}"></iron-ajax>
@@ -23,15 +28,15 @@
             <vaadin-grid-column width="50px">
                 <template class="header">Type</template>
                 <template>
-                    <div class="horizontal layout">[[transtoUppercase(item.orginalOrder.tokenS)]]
-                        <iron-icon icon="icons:arrow-forward"></iron-icon>
+                    <div class="horizontal end-justified layout">[[transtoUppercase(item.orginalOrder.tokenS)]]
+                        <div class="container"><iron-icon icon="icons:arrow-forward"></iron-icon></div>
                         [[transtoUppercase(item.orginalOrder.tokenB)]]
                     </div>
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Amount</template>
-                <template>[[tranHextoNum(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
+                <template>[[numberFormat(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
@@ -40,17 +45,18 @@
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Size</template>
-                <template>[[tranHextoNum(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
+                <template>[[numberFormat(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Hash</template>
                 <template><a href="#/order"><long-hash hash="[[item.orginalOrder.hash]]"></long-hash></a></template>
             </vaadin-grid-column>
+
             <vaadin-grid-column width="100px">
-                <template class="header" >Status</template>
+                <template class="header" >Completed Percent</template>
                 <template>
-                    <paper-progress class="green" value="[[tranHextoNum(item.totalDealedAmountB)]]" max="[[tranHextoNum(item.orginalOrder.amountB)]"></paper-progress>
+                    <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]" max="[[numberFormat(item.orginalOrder.amountB)]]"></paper-progress>
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>
@@ -65,34 +71,30 @@
                 return {};
             }
 
-
             transtoUppercase(str) {
                 if (str) {
                     return str.toUpperCase();
                 }
-
                 return '';
             }
 
             tranHextoNum(hex) {
                 if (hex) {
-                    return Number(parseInt(hex.replace('0x', '').toLowerCase()));
+                    return Number(hex);
                 }
                 return 'Error';
             }
 
             numberFormat(num) {
                 const size = this.tranHextoNum(num);
-                return size / 1000000000000000000;
+                return (size / 1000000000000000000).toFixed(4);
             }
-
 
             getPrice(s, b) {
 
-                const sell = this.tranHextoNum(s);
-                const buy = this.tranHextoNum(b);
-
-                return sell / buy;
+                const sell = this.numberFormat(s);
+                const buy = this.numberFormat(b);
+                return (sell / buy).toFixed(8);
 
             }
 
