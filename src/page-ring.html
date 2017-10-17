@@ -9,48 +9,120 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="market/recent-orders.html">
+<link rel="import" href="market/recent-fills.html">
 
 <dom-module id="page-ring">
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-    </style>
-    <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
-      <div class="sections">
-        <paper-card>
-          <div class="card-content">
-              <paper-item>Ring Hash</paper-item>
-              <paper-item>Miner:</paper-item>
-              <paper-item>Fee Recepient:</paper-item>
-              <paper-item>Transaction Hash:</paper-item>
-              <paper-item>BlockNum:</paper-item>
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
 
-          </div>
-          <div class="card-actions">
-              <recent-orders></recent-orders>
-          </div>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageRing extends Polymer.Element {
-    static get is() {
-      return 'page-ring';
-    }
-    static get properties() {
-      return {
-        id: String
-      };
-    }
-  }
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
 
-  window.customElements.define(PageRing.is, PageRing);
-  </script>
+            a.decorations {
+                text-decoration: none
+            }
+
+            paper-item.position {
+                padding-top: 6px;
+                padding-bottom: 6px;
+
+            }
+
+            div.title{
+                font-size: 1em;
+                font-weight: 500;
+            }
+            div.font{
+                font-size: 14px;
+
+            }
+
+
+        </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <div class="card-content font" >
+                        <div class="horizontal  layout">
+                            <paper-item class="position">
+                                <paper-item-body two-line>
+                                    <div class="title"> Ring Hash</div>
+                                    <div secondary>[[id]]</div>
+                                </paper-item-body>
+                            </paper-item>
+                        </div>
+                        <div class="horizontal  layout">
+                            <paper-item class="position" style="width: 575px">
+                                <paper-item-body two-line>
+                                    <div class="title"> Miner</div>
+                                    <div secondary><a
+                                            href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1"
+                                            class="decorations">0x8888f1f195afa192cfee860698584c030f4c9db1 </a></div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="position">
+                                <paper-item-body two-line>
+                                    <div class="title"> Fee Recepient</div>
+                                    <div secondary><a
+                                            href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1"
+                                            class="decorations"> 0x8888f1f195afa192cfee860698584c030f4c9db1</a></div>
+                                </paper-item-body>
+                            </paper-item>
+                        </div>
+                        <div class="horizontal  layout">
+                            <paper-item class="position" style="width: 575px">
+                                <paper-item-body two-line>
+                                    <div class="title"> Transaction Hash</div>
+                                    <div secondary><a
+                                            href="https://etherscan.io/tx/0x1394052c8bee23dedd103fe7d5dbb3dc3f6fd519c5f60215e20ea5eb3da327d0"
+                                            class="decorations">0x8862c0b0886d019bad1fc00581c79b187121e4aee62de4b7b074422db4b6a555</a>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="position">
+                                <paper-item-body two-line>
+                                    <div class="title"> BlockNum</div>
+                                    <div secondary><a class="decorations"
+                                                      href="https://etherscan.io/block/[[tranHextoNum('0x42afe2')]]">
+                                        [[tranHextoNum('0x42afe2')]]</a></div>
+                                </paper-item-body>
+                            </paper-item>
+                        </div>
+
+                    </div>
+                    <div class="card-actions">
+                        <recent-fills></recent-fills>
+                    </div>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+        class PageRing extends Polymer.Element {
+            static get is() {
+                return 'page-ring';
+            }
+
+            static get properties() {
+                return {
+                    id: String,
+                };
+            }
+
+
+            tranHextoNum(hex) {
+                if (hex) {
+                    return Number(hex);
+                }
+                return '-1';
+            }
+        }
+
+        window.customElements.define(PageRing.is, PageRing);
+    </script>
 </dom-module>

@@ -16,10 +16,10 @@
                 <template>[[traTimeStamp(item.ts)]]</template>
             </vaadin-grid-column>
             <vaadin-grid-column width="20px">
-            <template class="header">Type</template>
-            <template ><span style$ ="color:[[typeStyle(item.isBuy)]]"> [[getType(item.isBuy)]]</span></template>
-        </vaadin-grid-column>
-            <vaadin-grid-column width="40px" >
+                <template class="header">Type</template>
+                <template><span style$="color:[[typeStyle(item.isBuy)]]"> [[getType(item.isBuy)]]</span></template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="40px">
                 <template class="header">Amount (LRC)</template>
                 <template>[[item.fillAmountS]]</template>
             </vaadin-grid-column>
@@ -31,9 +31,11 @@
                 <template class="header">Size (ETH)</template>
                 <template>[[item.fillAmountB]]</template>
             </vaadin-grid-column>
-            <vaadin-grid-column >
+            <vaadin-grid-column>
                 <template class="header">Hash</template>
-                <template><a href="#/fill"><long-hash hash="[[item.txHash]]"></long-hash></a></template>
+                <template><a href="#/fill">
+                    <long-hash hash="[[item.txHash]]"></long-hash>
+                </a></template>
             </vaadin-grid-column>
 
         </vaadin-grid>
@@ -79,10 +81,10 @@
 
             typeStyle(isBuy) {
 
-               return isBuy ? 'var(--paper-green-500)' : 'var(--paper-red-500)';
+                return isBuy ? 'var(--paper-green-500)' : 'var(--paper-red-500)';
             }
 
-            getType(isBuy){
+            getType(isBuy) {
                 return isBuy ? 'Buy' : 'Sell';
             }
         }
