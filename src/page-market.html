@@ -77,8 +77,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-tab name="myorders">My Orders</paper-tab>
             </paper-tabs>
             <iron-pages selected="{{dataSelection}}" attr-for-selected="name">
-              <recent-fills name="fills"></recent-fills>
-              <recent-orders name="orders"></recent-orders>
+              <recent-fills name="fills" token="{{id}}"></recent-fills>
+              <recent-orders name="orders" token="{{id}}"></recent-orders>
               <recent-fills filter-mine name="myfills"></recent-fills>
               <recent-orders filter-mine name="myorders"></recent-orders>
             </iron-pages>
@@ -99,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         id: String,
         chartSelection: {
           type: String,
-          value: "depth"
+          value: "depth",
         },
         dataSelection: {
           type: String,

@@ -23,7 +23,7 @@
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="50px">
                 <template class="header">Time</template>
-                <template>[[traTimeStamp(item.orginalOrder.timestamp)]]</template>
+                <template><time-str second= "[[item.orginalOrder.timestamp]]"></time-str></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Type</template>
@@ -101,9 +101,7 @@
             }
 
             traTimeStamp(ts) {
-                const timestamp = this.tranHextoNum(ts)
-
-                if (timestamp) {
+                if (ts) {
                     const date = new Date(ts * 1000);
                     return (
                         date.getFullYear() +
