@@ -12,25 +12,123 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="page-order">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
+
+      .container {
+        @apply(--layout-vertical);
+        @apply(--layout-center-justified);
+        margin-top: 50px;
+        width: 100%;
+      }
+
+      .line {
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+      }
+
+      .summary{
+        @apply(--layout-vertical);
+        @apply(--layout-center-justified);
+      }
+
+      .summary .line{
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+
+      .summary .line .column1 {
+         width: 100px;
+      }
+      .summary .line .column2 {
+        width: 100px;
+      }
+      .summary .line .column3 {
+        width: 100px;
+      }
+
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Order" id="[[id]]" back-link="#/orders"></simple-toolbar>
+      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <div style="padding-top: 10px; padding-top: 10px;">fills show</div>
+        <paper-card>
+          <div>order</div>
+        </paper-card>
+
+        <iron-ajax
+                auto
+                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/order.json"
+                handle-as="json"
+                last-response="{{order}}"
+                debounce-duration="300">
+        </iron-ajax>
+
+        <div style="padding-top: 10px;">Summary</div>
+        <paper-card>
+          <div class="summary">
+            <div class="line">
+              <div class="column1"></div>
+              <div class="column2">[[_formatValue(order.result.orginalOrder.tokenS)]]</div>
+              <div class="column3">[[_formatValue(order.result.orginalOrder.tokenB)]]</div>
+            </div>
+            <div class="line">
+              <div class="column1">Original</div>
+              <div class="column2">[[order.result.orginalOrder.amountS]]</div>
+              <div class="column3">[[order.result.orginalOrder.amountB]]</div>
+            </div>
+            <div class="line">
+              <div class="column1">Filled</div>
+              <div class="column2">[[order.result.totalDealedAmountS]]</div>
+              <div class="column3">[[order.result.totalDealedAmountB]]</div>
+            </div>
+            <div class="line">
+              <div class="column1">Status</div>
+              <div class="column2"></div>
+              <div class="column3">[[order.result.status]]</div>
+            </div>
           </div>
         </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
+
+        <div style="padding-top: 10px;">Fills</div>
+        <paper-card>
+          <vaadin-grid aria-label="Markets" items="[[order.result.matchList.data]]">
+            <vaadin-grid-column width="40px">
+              <template class="header">Tx Hash</template>
+              <template><a href="#/order"><long-hash hash="[[item.txHash]]"></long-hash></a></template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="40px">
+              <template class="header">Ring Hash</template>
+              <template><a href="#/order"><long-hash hash="[[item.ringHash]]"></long-hash></a></template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="100px">
+              <template class="header">Filled</template>
+              <template>
+                <div class="line">
+                  <div style="font-size: small">[[item.amountS]]</div>
+                  <div><strong>{{_formatValue(order.result.orginalOrder.tokenS)}}</strong></div>
+                  <div><iron-icon icon="icons:swap-horiz"></iron-icon></div>
+                  <div style="font-size: small">[[item.amountB]]</div>
+                  <div><strong>{{_formatValue(order.result.orginalOrder.tokenB)}}</strong></div>
+                </div>
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="40px">
+              <template class="header">Fee</template>
+              <template>
+                <template is="dom-if" if="{{_above0(item.lrcFee)}}">
+                  lrc:{{item.lrcFee}}
+                </template>
+                <template is="dom-if" if="{{_above0(item.marginSplitPercentage)}}">
+                  marginSplitPercentage:{{item.marginSplitPercentage}}
+                </template>
+              </template>
+            </vaadin-grid-column>
+          </vaadin-grid>
         </paper-card>
+
         <div class="footer-spacer"></div>
         <looper-footer></looper-footer>
       </div>
@@ -45,6 +143,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return {
         id: String
       };
+    }
+    ready(){
+        super.ready();
+        console.log("order:"+this.id)
+    }
+    _fillInArray(data){
+        let array = new Array();
+        array.push({'c1': '', 'c2': this._formatValue(data.orginalOrder.tokenS), 'c3': this._formatValue(data.orginalOrder.tokenB)});
+        array.push({'c1': 'Original', 'c2': data.orginalOrder.amountS, 'c3': data.orginalOrder.amountB});
+        array.push({'c1': 'Filled', 'c2': data.totalDealedAmountS, 'c3': data.totalDealedAmountB});
+        array.push({'c1': 'Status', 'c2': '', 'c3': data.status});
+        return array;
+    }
+    _findTokenConfig(address){
+      var tokens = this.appConfig.tokens;
+      for (var x in tokens){
+        var token = tokens[x];
+          if(token.contract == address){
+            return token;
+        }
+      }
+    }
+    _formatValue(address){
+        if(!address) return;
+        let token = this._findTokenConfig(address)
+        if(!token) return "?";
+        return token.unit
+    }
+    _number(value){
+        if(!value) return 0
+        return new Number(value)
+    }
+    _above0(value){
+        if(!value) return false
+        return this._number(value) > 0
     }
   }
 
