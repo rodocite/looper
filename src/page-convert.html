@@ -105,9 +105,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div>
                   <div class="left">
                     <div class="tokenImage">
-                      <iron-icon src="[[leftTokenIcon]]" id="leftTokenIcon"></iron-icon>
+                      <iron-icon src="[[leftTokenIcon]]"></iron-icon>
                     </div>
-                    <div class="tokenName" id="leftTokenName">[[leftTokenName]]</div>
+                    <div class="tokenName">[[leftTokenName]]</div>
                   </div>
                 </div>
               </div>
@@ -125,15 +125,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div>
                   <div class="right">
                     <div class="tokenImage">
-                      <iron-icon src="[[rightTokenIcon]]" id="rightTokenIcon"></iron-icon>
+                      <iron-icon src="[[rightTokenIcon]]"></iron-icon>
                     </div>
-                    <div class="tokenName" id="rightTokenName">[[rightTokenName]]</div>
+                    <div class="tokenName">[[rightTokenName]]</div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="choseLine">
-              <paper-input always-float-label label="Amount to convert" id="leftInput">
+              <paper-input always-float-label label="Amount to convert">
                 <div slot="suffix">[[leftTokenName]]</div>
               </paper-input>
             </div>
@@ -150,6 +150,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageConvert extends Polymer.Element {
     static get is() { return 'page-convert'; }
+    static get properties() {
+      return {
+        id: String
+      };
+    }
     constructor() {
       super();
       this.configData = {
@@ -163,6 +168,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.leftTokenIcon = this.configData.ETH.icon;
       this.rightTokenName = this.configData.WETH.name;
       this.rightTokenIcon = this.configData.WETH.icon;
+      if(this.id.toLowerCase() == "weth"){
+          this.leftTokenName = this.configData.WETH.name;
+          this.leftTokenIcon = this.configData.WETH.icon;
+          this.rightTokenName = this.configData.ETH.name;
+          this.rightTokenIcon = this.configData.ETH.icon;
+      }
     }
     signToSend() {
       var detail = { raw: "raw message" };
