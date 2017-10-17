@@ -52,12 +52,13 @@
     <global-variable key="wallet" value="{{wallet}}"></global-variable>
     <global-variable key="app-config" value="{{appConfig}}"></global-variable>
     <div class="sections">
+      <paper-card transparent>Ether</paper-card>
       <paper-card>
         <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json" handle-as="json" last-response="{{ethers}}" debounce-duration="300">
         </iron-ajax>
         <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
           <vaadin-grid-column>
-            <template class="header">Ether</template>
+            <template class="header">Name</template>
             <template>[[_findSymbol(item.contract)]]</template>
           </vaadin-grid-column>
           <vaadin-grid-column>
@@ -83,12 +84,13 @@
           </vaadin-grid-column>
         </vaadin-grid>
       </paper-card>
+      <paper-card transparent>ERC20 Tokens</paper-card>
       <paper-card>
         <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" handle-as="json" last-response="{{tokens}}" debounce-duration="300">
         </iron-ajax>
         <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
           <vaadin-grid-column>
-            <template class="header">Tokens (ERC20)</template>
+            <template class="header">Name</template>
             <template>[[_findSymbol(item.contract)]]</template>
           </vaadin-grid-column>
           <vaadin-grid-column>
