@@ -13,7 +13,7 @@
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="60px">
                 <template class="header">Time</template>
-                <template>[[traTimeStamp(item.ts)]]</template>
+                <template><time-str seconds="[[item.ts]]"></time-str></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="20px">
                 <template class="header">Type</template>
@@ -47,7 +47,12 @@
             }
 
             static get properties() {
-                return {};
+                return {
+                    token: {
+                        type: String,
+                    },
+
+                };
             }
 
             calPrice(b, s) {
@@ -56,29 +61,6 @@
                 }
                 return 'Error';
             }
-
-            traTimeStamp(ts) {
-                if (ts) {
-                    const date = new Date(ts * 1000);
-                    return (
-                        date.getFullYear() +
-                        '-' +
-                        (date.getMonth() < 9
-                            ? '0' + (date.getMonth() + 1)
-                            : date.getMonth() + 1) +
-                        '-' +
-                        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
-                        ' ' +
-                        (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
-                        ':' +
-                        (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
-                        ':' +
-                        (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
-                    );
-                }
-                return 'Error';
-            }
-
             typeStyle(isBuy) {
 
                 return isBuy ? 'var(--paper-green-500)' : 'var(--paper-red-500)';

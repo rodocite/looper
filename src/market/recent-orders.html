@@ -7,10 +7,12 @@
             :host {
                 display: block;
             }
+
             paper-progress.green {
                 --paper-progress-active-color: var(--paper-light-green-700);
                 --paper-progress-secondary-color: var(--paper-red-500);
             }
+
             .container {
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
@@ -23,15 +25,13 @@
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="50px">
                 <template class="header">Time</template>
-                <template>[[traTimeStamp(item.orginalOrder.timestamp)]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">Type</template>
                 <template>
-                    <div class="horizontal end-justified layout">[[transtoUppercase(item.orginalOrder.tokenS)]]
-                        <div class="container"><iron-icon icon="icons:arrow-forward"></iron-icon></div>
-                        [[transtoUppercase(item.orginalOrder.tokenB)]]
-                    </div>
+                    <time-str seconds="[[item.orginalOrder.timestamp]]"></time-str>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="20px">
+                <template class="header">Type</template>
+                <template><span style$="color:[[typeStyle(item.orginalOrder.tokenB)]]"> [[getType(item.orginalOrder.tokenB)]]</span>
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
@@ -50,15 +50,19 @@
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Hash</template>
-                <template><a href="#/order/[[item.orginalOrder.hash]]"><long-hash hash="[[item.orginalOrder.hash]]"></long-hash></a></template>
+                <template><a href="#/order/[[item.orginalOrder.hash]]">
+                    <long-hash hash="[[item.orginalOrder.hash]]"></long-hash>
+                </a></template>
             </vaadin-grid-column>
 
             <vaadin-grid-column width="50px">
-                <template class="header" >Status</template>
+                <template class="header">Status</template>
                 <template>
-                 <div class="horizontal end-justified layout">
-                     <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]"
-                                     secondary-progress="60"   max="[[numberFormat(item.orginalOrder.amountB)]]" style="width: 50px"></paper-progress></div>
+                    <div class="horizontal end-justified layout">
+                        <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]"
+                                        secondary-progress="60" max="[[numberFormat(item.orginalOrder.amountB)]]"
+                                        style="width: 50px"></paper-progress>
+                    </div>
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>
@@ -70,7 +74,9 @@
             }
 
             static get properties() {
-                return {};
+                return {
+                    token: String
+                };
             }
 
             transtoUppercase(str) {
@@ -84,7 +90,7 @@
                 if (hex) {
                     return Number(hex);
                 }
-                return 'Error';
+                return '';
             }
 
             numberFormat(num) {
@@ -100,28 +106,13 @@
 
             }
 
-            traTimeStamp(ts) {
-                const timestamp = this.tranHextoNum(ts)
+            typeStyle(tokenB) {
 
-                if (timestamp) {
-                    const date = new Date(ts * 1000);
-                    return (
-                        date.getFullYear() +
-                        '-' +
-                        (date.getMonth() < 9
-                            ? '0' + (date.getMonth() + 1)
-                            : date.getMonth() + 1) +
-                        '-' +
-                        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
-                        ' ' +
-                        (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
-                        ':' +
-                        (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
-                        ':' +
-                        (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
-                    );
-                }
-                return 'Error';
+                return tokenB === this.token ? 'var(--paper-green-500)' : 'var(--paper-red-500)';
+            }
+
+            getType(tokenB) {
+                return tokenB === this.token ? 'Buy' : 'Sell';
             }
 
         }
