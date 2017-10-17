@@ -165,6 +165,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       top: 60px;
     }
 
+    paper-toast {
+      width: 100%;
+      text-align: center;
+    }
+
+    paper-toast.error {
+      background-color: var(--google-red-500);
+    }
+
+    paper-toast.warning {
+      background-color: var(--paper-amber-700);
+    }
+
+    paper-toast.warning {
+      /*background-color: var(--google-blue-500);*/
+    }
+
     paper-icon-button:not([narrow]) [drawer-toggle] {
       display: none;
     }
@@ -176,6 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
     </app-route>
     <signtosend-dialog id="signtosend"></signtosend-dialog>
+    <paper-toast id="toast" class$="{{toastClass}}"></paper-toast>
     <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
     <global-variable key="app-config" value="{{appConfig}}"></global-variable>
     <global-variable key="wallet" value="{{wallet}}"></global-variable>
@@ -255,6 +273,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       };
     }
 
+    ready() {
+      super.ready();
+      this.ajax = this.$.ajax;
+      this.addEventListener('notification', e => this._displayToast(e.detail));
+      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
+    }
+
+    _displayToast(detail) {
+      this.$.toast.close();
+      this.$.toast.text = detail.text;
+      this.$.toast.duration = detail.duration;
+      this.toastClass = detail.category;
+      this.$.toast.open();
+    }
+
     _appConfigLoaded() {
       this.$.loading.style.display = "none";
       this.$.pages.style.display = "inherit";
@@ -301,13 +334,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _showPage404() {
       this.page = '404';
-    }
-
-    ready() {
-      super.ready();
-      this.ajax = this.$.ajax;
-      this.addEventListener('notification', e => this.$.notification.display(e.detail));
-      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
     }
   }
 

@@ -60,12 +60,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     showWarning() {
-      var detail = { message: "this is a warning", category: "warning", closable: true, timeout: 3000 }
+      var detail = { text: "this is a warning", category: "warning", duration: 3000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
     }
 
     showError() {
-      var detail = { message: "this is a error", category: "error", closable: true, timeout: 10000 }
+      var detail = { text: "this is a error", category: "error", duration: 10000 }
       this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
     }
 
