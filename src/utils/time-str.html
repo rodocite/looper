@@ -1,15 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
 <dom-module id="time-str">
-    <templte>
-
-        <style include="shared-styles">
-            :host {
-                display: inline-block;
-            }
-        </style>
+    <template>
         <span>[[time]]</span>
-    </templte>
+    </template>
 
     <script>
         class TimeStr extends Polymer.Element {
@@ -19,7 +12,7 @@
 
             static get properties() {
                 return {
-                    second: {
+                    seconds: {
                         type: String,
                         observer: '_update',
                         value: '',
@@ -28,30 +21,20 @@
                 };
             }
 
-            _update(second) {
-                if (second) {
-                    const date = new Date(second * 1000);
+            _update(seconds) {
+                if (seconds) {
+                    const date = new Date(seconds * 1000);
                     this.time = (
-                        date.getFullYear() +
-                        '-' +
-                        (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) +
-                        '-' +
-                        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
-                        ' ' +
-                        (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
-                        ':' +
-                        (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
-                        ':' +
-                        (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
+                        `${date.getFullYear()}-${date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()} ${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}:${date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()}`
                     );
-                    console.log(this.time);
                 } else {
-                    this.time = 'Error';
+                    this.time = '';
                 }
+                console.log(this.time);
             }
         }
 
-        window.customElements.define(TimeStr.is, TimeStr);
+      customElements.define(TimeStr.is, TimeStr);
     </script>
 
 </dom-module>
