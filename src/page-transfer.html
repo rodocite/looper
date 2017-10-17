@@ -103,6 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
+      <global-variable key="wallet" value="{{wallet}}"></global-variable>
       <div class="sections">
         <paper-card>
           <div class="container">
@@ -159,7 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 Account Address:
               </div>
               <div class="line fontContent">
-                0xd736Fa4EcC72e84fE482B1673E8081ed8C39C94c
+                [[wallet.address]]
               </div>
               <div class="line fontTitle">
                 Account Balance:
