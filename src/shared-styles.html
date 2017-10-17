@@ -42,15 +42,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       width: 100%;
       font-weight: 400;
       padding-top: 32px;
+      font-size: 14px;
     }
 
-    .sections>paper-card {
+    .sections > paper-card {
       width: 100%;
-      margin: 16px 0 8px 0;
+      margin-bottom: 32px;
+      padding: 32px 16px;
     }
 
-    .sections>paper-card[transparent] {
+
+    .sections > paper-card[transparent] {
+      color: rgba(0, 0, 0, .54);
+      text-transform: uppercase;
+      text-align: left;
       background-color: transparent;
+      /*height: 36px;*/
+      padding: 0;
+      margin-bottom: 8px;
     }
 
     .footer-spacer {
@@ -112,7 +121,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 14px;
       color: rgba(0, 0, 0, 0.78);
       border: none;
-      padding-top: 16px;
       height: 100%;
       line-height: 32px;
     }

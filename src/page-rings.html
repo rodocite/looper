@@ -16,39 +16,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      :host {
       display: block;
     }
-
-    paper-card {
-      padding: 16px
-    }
     </style>
     <looper-page>
       <looper-toolbar slot="secondary-toolbar" active-tab="rings"></looper-toolbar>
       <div class="sections">
         <paper-card>
-            <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json"
-                       last-response="{{resp}}"></iron-ajax>
-            <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
-                <vaadin-grid-column width="50px">
-                    <template class="header">Hash</template>
-                    <template><a href="#/ring/[[item.ringhash]]"><long-hash hash="[[item.ringhash]]"></long-hash></a> </template>
-                </vaadin-grid-column>
-                <vaadin-grid-column width="50px">
-                    <template class="header">Miner</template>
-                    <template><long-hash hash="[[item.miner]]"></long-hash></template>
-                </vaadin-grid-column>
-                <vaadin-grid-column width="50px">
-                    <template class="header">Fee Recepient</template>
-                    <template><long-hash hash="[[item.feeRecepient]]"></long-hash></template>
-                </vaadin-grid-column>
-                <vaadin-grid-column width="50px">
-                    <template class="header">Transaction Hash</template>
-                    <template><long-hash hash="[[item.transactionHash]]"></long-hash></template>
-                </vaadin-grid-column>
-                <vaadin-grid-column width="50px">
-                    <template class="header">Block Num</template>
-                    <template>[[tranHextoNum(item.blockNum)]]</template>
-                </vaadin-grid-column>
-            </vaadin-grid>
+          <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+          <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+            <vaadin-grid-column width="50px">
+              <template class="header">Hash</template>
+              <template>
+                <a href="#/ring/[[item.ringhash]]">
+                  <long-hash hash="[[item.ringhash]]"></long-hash>
+                </a>
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">Miner</template>
+              <template>
+                <long-hash hash="[[item.miner]]"></long-hash>
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">Fee Recepient</template>
+              <template>
+                <long-hash hash="[[item.feeRecepient]]"></long-hash>
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">Transaction Hash</template>
+              <template>
+                <long-hash hash="[[item.transactionHash]]"></long-hash>
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+              <template class="header">Block Num</template>
+              <template>[[tranHextoNum(item.blockNum)]]</template>
+            </vaadin-grid-column>
+          </vaadin-grid>
         </paper-card>
         <div class="footer-spacer"></div>
         <looper-footer></looper-footer>
@@ -58,12 +63,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageRings extends Polymer.Element {
     static get is() { return 'page-rings'; }
-      tranHextoNum(hex) {
-          if (hex) {
-              return Number(hex);
-          }
-          return 'Error';
+    tranHextoNum(hex) {
+      if (hex) {
+        return Number(hex);
       }
+      return 'Error';
+    }
   }
 
   window.customElements.define(PageRings.is, PageRings);

@@ -7,9 +7,9 @@
       display: block;
     }
 
-     vaadin-grid {
-       height: 100%;
-     }
+    vaadin-grid {
+      height: 100%;
+    }
 
     .card-actions {
       --app-grid-columns: 5;
@@ -48,22 +48,12 @@
       padding: 0;
       list-style: none;
     }
-
-     paper-card {
-       padding: 16px
-     }
     </style>
     <global-variable key="wallet" value="{{wallet}}"></global-variable>
     <global-variable key="app-config" value="{{appConfig}}"></global-variable>
     <div class="sections">
-
       <paper-card>
-        <iron-ajax
-                auto
-                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json"
-                handle-as="json"
-                last-response="{{ethers}}"
-                debounce-duration="300">
+        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json" handle-as="json" last-response="{{ethers}}" debounce-duration="300">
         </iron-ajax>
         <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
           <vaadin-grid-column>
@@ -93,14 +83,8 @@
           </vaadin-grid-column>
         </vaadin-grid>
       </paper-card>
-
       <paper-card>
-        <iron-ajax
-                auto
-                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json"
-                handle-as="json"
-                last-response="{{tokens}}"
-                debounce-duration="300">
+        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" handle-as="json" last-response="{{tokens}}" debounce-duration="300">
         </iron-ajax>
         <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
           <vaadin-grid-column>
@@ -154,56 +138,56 @@
       return {};
     }
 
-    _convertToArray(wallet){
-        var array = new Array();
-        array.push(wallet)
-        return array
+    _convertToArray(wallet) {
+      var array = new Array();
+      array.push(wallet)
+      return array
     }
 
-    _findTokenConfig(address){
-        var tokens = this.appConfig.tokens;
-        for (var x in tokens){
-           var token = tokens[x];
-           if(token.contract == address){
-               return token;
-           }
+    _findTokenConfig(address) {
+      var tokens = this.appConfig.tokens;
+      for (var x in tokens) {
+        var token = tokens[x];
+        if (token.contract == address) {
+          return token;
         }
+      }
     }
 
-    _toLowerSymbol(address){
-        var token = this._findTokenConfig(address);
-        if(token){
-            return token.unit.toLowerCase()
-        } else {
-            return "?";
-        }
+    _toLowerSymbol(address) {
+      var token = this._findTokenConfig(address);
+      if (token) {
+        return token.unit.toLowerCase()
+      } else {
+        return "?";
+      }
     }
 
-    _findSymbol(address){
-        var token = this._findTokenConfig(address);
-        if(token){
-            return token.unit
-        } else {
-            return "?";
-        }
+    _findSymbol(address) {
+      var token = this._findTokenConfig(address);
+      if (token) {
+        return token.unit
+      } else {
+        return "?";
+      }
     }
 
-    _getAllowance(address){
-        var token = this._findTokenConfig(address);
-        if(!token){
-            return 0;
-        }
-        return token.allowanceWarn
+    _getAllowance(address) {
+      var token = this._findTokenConfig(address);
+      if (!token) {
+        return 0;
+      }
+      return token.allowanceWarn
     }
 
-    _allowanceWarn(address, allowance){
-        var token = this._findTokenConfig(address);
-        if(!token){
-            return false;
-        }
-        if(token.allowanceWarn >0 && (!allowance || allowance < token.allowanceWarn)){
-            return true;
-        }
+    _allowanceWarn(address, allowance) {
+      var token = this._findTokenConfig(address);
+      if (!token) {
+        return false;
+      }
+      if (token.allowanceWarn > 0 && (!allowance || allowance < token.allowanceWarn)) {
+        return true;
+      }
     }
   }
 
