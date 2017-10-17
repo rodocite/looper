@@ -46,13 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </vaadin-grid-column>
                 <vaadin-grid-column width="50px">
                     <template class="header">Block Num</template>
-                    <template>[[item.blockNum]]</template>
-                </vaadin-grid-column>
-                <vaadin-grid-column width="20px">
-                    <template class="header">Detail</template>
-                    <template>
-                        <iron-icon icon="menu"></iron-icon>
-                    </template>
+                    <template>[[tranHextoNum(item.blockNum)]]</template>
                 </vaadin-grid-column>
             </vaadin-grid>
         </paper-card>
@@ -64,6 +58,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageRings extends Polymer.Element {
     static get is() { return 'page-rings'; }
+      tranHextoNum(hex) {
+          if (hex) {
+              return Number(hex);
+          }
+          return 'Error';
+      }
   }
 
   window.customElements.define(PageRings.is, PageRings);
