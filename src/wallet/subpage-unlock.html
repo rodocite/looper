@@ -56,17 +56,13 @@
       padding-right: 8px;
     }
 
-    .sections>paper-card {
-      padding: 0;
-    }
-
     #fileInput {
       visibility: hidden;
     }
     </style>
     <input id="fileInput" type="file" id="file-input" />
     <div class="sections">
-      <paper-card heading="Unlock Your Wallet">
+      <paper-card nopadding heading="Unlock Your Wallet">
         <div class="card-content">
           <div class="vertical center layout ">
             <div secondary-text> Choose the wallet file to unlock. Your file will never be sent over the network to anyone</div>
@@ -88,11 +84,6 @@
         </div>
         <div class="card-actions">
           <paper-button on-click="unlockClicked">Go ahead and unlock my wallet.</paper-button>
-        </div>
-      </paper-card>
-      <paper-card transparent elevation=0>
-        <div class="horiziontal center layout">
-          <!-- <div class="flex"></div> -->
         </div>
       </paper-card>
     </div>
