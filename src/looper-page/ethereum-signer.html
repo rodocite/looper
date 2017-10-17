@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="ethereum-signer" fit>
+<script src="../../bower_components/bignumber.js/bignumber.js"></script>
+<script src="../../bower_components/ethereum.js/dist/ethereum.min.js"></script>
+<script src="../../bower_components/wallet-address-validator/dist/wallet-address-validator.min.js"></script>
+<dom-module id="ethereum-signer">
   <script>
   class EthreumSigner extends Polymer.Element {
     static get is() { return 'ethereum-signer'; }
