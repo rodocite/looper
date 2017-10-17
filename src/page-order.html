@@ -9,18 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="market/recent-fills.html">
+<link rel="import" href="market/recent-orders.html">
 <dom-module id="page-order">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-      }
-
-      .container {
-        @apply(--layout-vertical);
-        @apply(--layout-center-justified);
-        margin-top: 50px;
-        width: 100%;
       }
 
       .line {
@@ -36,6 +31,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .summary .line{
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
+        text-align: right;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.78);
+        border: none;
+        padding-top: 16px;
+        height: 100%;
+        line-height: 32px;
+      }
+
+      .summary .line .title {
+        width: 100px;
+        font-weight: 500;
       }
 
       .summary .line .column1 {
@@ -53,9 +60,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <simple-toolbar slot="secondary-toolbar" title="Order" id="[[id]]" back-link="#/orders"></simple-toolbar>
       <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <div class="sections">
-        <div style="padding-top: 10px; padding-top: 10px;">fills show</div>
+        <div style="padding-top: 10px; padding-top: 10px;">Order</div>
         <paper-card>
-          <div>order</div>
+          <recent-orders filter-mine name="myorders"></recent-orders>
         </paper-card>
 
         <iron-ajax
@@ -70,22 +77,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-card>
           <div class="summary">
             <div class="line">
-              <div class="column1"></div>
-              <div class="column2">[[_formatValue(order.result.orginalOrder.tokenS)]]</div>
-              <div class="column3">[[_formatValue(order.result.orginalOrder.tokenB)]]</div>
+              <div class="title"></div>
+              <div class="title">[[_formatValue(order.result.orginalOrder.tokenS)]]</div>
+              <div class="title">[[_formatValue(order.result.orginalOrder.tokenB)]]</div>
             </div>
             <div class="line">
-              <div class="column1">Original</div>
+              <div class="title">Original</div>
               <div class="column2">[[order.result.orginalOrder.amountS]]</div>
               <div class="column3">[[order.result.orginalOrder.amountB]]</div>
             </div>
             <div class="line">
-              <div class="column1">Filled</div>
+              <div class="title">Filled</div>
               <div class="column2">[[order.result.totalDealedAmountS]]</div>
               <div class="column3">[[order.result.totalDealedAmountB]]</div>
             </div>
             <div class="line">
-              <div class="column1">Status</div>
+              <div class="title">Status</div>
               <div class="column2"></div>
               <div class="column3">[[order.result.status]]</div>
             </div>
@@ -94,39 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div style="padding-top: 10px;">Fills</div>
         <paper-card>
-          <vaadin-grid aria-label="Markets" items="[[order.result.matchList.data]]">
-            <vaadin-grid-column width="40px">
-              <template class="header">Tx Hash</template>
-              <template><a href="#/order"><long-hash hash="[[item.txHash]]"></long-hash></a></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="40px">
-              <template class="header">Ring Hash</template>
-              <template><a href="#/order"><long-hash hash="[[item.ringHash]]"></long-hash></a></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="100px">
-              <template class="header">Filled</template>
-              <template>
-                <div class="line">
-                  <div style="font-size: small">[[item.amountS]]</div>
-                  <div><strong>{{_formatValue(order.result.orginalOrder.tokenS)}}</strong></div>
-                  <div><iron-icon icon="icons:swap-horiz"></iron-icon></div>
-                  <div style="font-size: small">[[item.amountB]]</div>
-                  <div><strong>{{_formatValue(order.result.orginalOrder.tokenB)}}</strong></div>
-                </div>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="40px">
-              <template class="header">Fee</template>
-              <template>
-                <template is="dom-if" if="{{_above0(item.lrcFee)}}">
-                  lrc:{{item.lrcFee}}
-                </template>
-                <template is="dom-if" if="{{_above0(item.marginSplitPercentage)}}">
-                  marginSplitPercentage:{{item.marginSplitPercentage}}
-                </template>
-              </template>
-            </vaadin-grid-column>
-          </vaadin-grid>
+          <recent-fills filter-mine name="myfills"></recent-fills>
         </paper-card>
 
         <div class="footer-spacer"></div>

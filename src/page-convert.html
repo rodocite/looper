@@ -92,52 +92,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Ether ERC20 Conversion" back-link="#/wallet"></simple-toolbar>
-      <div class="container">
-        <div class="choseLine">
-          <div class="side">
-            <div>
-              <label class="lable">
-                Convert
-              </label>
-            </div>
-            <div>
-              <div class="left">
-                <div class="tokenImage">
-                  <iron-icon src="[[leftTokenIcon]]" id="leftTokenIcon"></iron-icon>
+      <div class="sections">
+        <paper-card>
+          <div class="container">
+            <div class="choseLine">
+              <div class="side">
+                <div>
+                  <label class="lable">
+                    Convert
+                  </label>
                 </div>
-                <div class="tokenName" id="leftTokenName">[[leftTokenName]]</div>
+                <div>
+                  <div class="left">
+                    <div class="tokenImage">
+                      <iron-icon src="[[leftTokenIcon]]" id="leftTokenIcon"></iron-icon>
+                    </div>
+                    <div class="tokenName" id="leftTokenName">[[leftTokenName]]</div>
+                  </div>
+                </div>
+              </div>
+              <div class="swap">
+                <a href="#" on-click="swap">
+                  <iron-icon icon="icons:swap-horiz"></iron-icon>
+                </a>
+              </div>
+              <div class="side">
+                <div>
+                  <label class="lable">
+                    To
+                  </label>
+                </div>
+                <div>
+                  <div class="right">
+                    <div class="tokenImage">
+                      <iron-icon src="[[rightTokenIcon]]" id="rightTokenIcon"></iron-icon>
+                    </div>
+                    <div class="tokenName" id="rightTokenName">[[rightTokenName]]</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="swap">
-            <a href="#" on-click="swap">
-              <iron-icon icon="icons:swap-horiz"></iron-icon>
-            </a>
-          </div>
-          <div class="side">
-            <div>
-              <label class="lable">
-                To
-              </label>
+            <div class="choseLine">
+              <paper-input always-float-label label="Amount to convert" id="leftInput">
+                <div slot="suffix">[[leftTokenName]]</div>
+              </paper-input>
             </div>
-            <div>
-              <div class="right">
-                <div class="tokenImage">
-                  <iron-icon src="[[rightTokenIcon]]" id="rightTokenIcon"></iron-icon>
-                </div>
-                <div class="tokenName" id="rightTokenName">[[rightTokenName]]</div>
-              </div>
+            <div class="buttonLine">
+              <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
             </div>
           </div>
-        </div>
-        <div class="choseLine">
-          <paper-input always-float-label label="Amount to convert" id="leftInput">
-            <div slot="suffix">[[leftTokenName]]</div>
-          </paper-input>
-        </div>
-        <div class="buttonLine">
-          <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
-        </div>
+        </paper-card>
         <div class="footer-spacer"></div>
         <looper-footer></looper-footer>
       </div>

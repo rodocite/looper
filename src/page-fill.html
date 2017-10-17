@@ -9,18 +9,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="market/recent-fills.html">
 <dom-module id="page-fill">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
+      .container{
+        @apply(--layout-vertical);
+        @apply(--layout-center-justified);
+      }
+      .container .line{
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
+        text-align: left;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.78);
+        padding-top: 16px;
+        height: 100%;
+        line-height: 32px;
+      }
+      .container .line .column1 {
+        width: 100px;
+      }
+      .container .line .column2 {
+        width: 100px;
+      }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Fill" id="[[id]]" back-link="#/fills"></simple-toolbar>
       <div class="sections">
+        <div style="padding-top: 10px; padding-top: 10px;">Fill</div>
         <paper-card>
-          <recent-fills></recent-fills>
+          <recent-fills filter-mine name="myfills"></recent-fills>
+        </paper-card>
+        <iron-ajax
+                auto
+                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/fill.json"
+                handle-as="json"
+                last-response="{{order}}"
+                debounce-duration="300">
+        </iron-ajax>
+
+        <div style="padding-top: 10px; padding-top: 10px;">Orders</div>
+        <paper-card>
+          <div class="container">
+            <div class="line">
+              <div class="column1">Tx Hash</div>
+              <div class="column2"><a href="#">[[order.result.txHash]]</a></div>
+            </div>
+            <div class="line">
+              <div class="column1">Ring Hash</div>
+              <div class="column2"><a href="#/ring/[[order.result.ringHash]]">[[order.result.ringHash]]</a></div>
+            </div>
+            <div class="line">
+              <div class="column1">Orders</div>
+              <div class="column2">
+                <ul>
+                  <template is="dom-repeat" items="[[order.result.orders]]" as="order">
+                    <li class="item"><a href="#/order/[[order]]">[[order]]</a></li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </paper-card>
         <div class="footer-spacer"></div>
         <looper-footer></looper-footer>
