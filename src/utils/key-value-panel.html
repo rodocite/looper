@@ -1,0 +1,145 @@
+<!--
+
+1.keyValueArray = [
+    {key1: value1},
+    {key2: value2},
+    {key3: value3}
+  ]
+  <key-value-panel datas="{{keyValueArray}}"></key-value-panel>
+
+  Render as:
+  <div class="item">
+    <div class='key'>key1</div>
+    <div class='value'>value1</div>
+  </div>
+  <div class="item">
+    <div class='key'>key2</div>
+    <div class='value'>value2</div>
+  </div>
+  <div class="item">
+    <div class='key'>key3</div>
+    <div class='value'>value3</div>
+  </div>
+
+2.keyValueArray = [
+    {key1: value1},
+    {key2: value2},
+    {key3: [subValue1, subValue2]}
+  ]
+  <key-value-panel datas="{{keyValueArray}}"></key-value-panel>
+
+  Render as:
+  <div class="item">
+    <div class='key'>key1</div>
+    <div class='value'>value1</div>
+  </div>
+  <div class="item">
+    <div class='key'>key2</div>
+    <div class='value'>value2</div>
+  </div>
+  <div class="item">
+    <div class='key'>key3</div>
+    <div class='array'>
+      <div>subValue1</div>
+      <div>subValue2</div>
+    </div>
+  </div>
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="key-value-panel">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: inline-block;
+      }
+      paper-card {
+        width: 1024px;
+      }
+      paper-card .item{
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
+        text-align: left;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.78);
+        padding-top: 16px;
+        height: 100%;
+        line-height: 32px;
+      }
+      paper-card .item .key {
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        width:50%;
+        padding-right: 10px;
+        font-weight: 500;
+      }
+      paper-card .item .value {
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
+        width:50%;
+        padding-left: 10px;
+      }
+      paper-card .item .array{
+        @apply(--layout-vertical);
+        @apply(--layout-start-justified);
+        width:50%;
+        padding-left: 10px;
+      }
+    </style>
+    <paper-card>
+      <template is="dom-repeat" items="[[datas]]" as="item">
+        <div class="item">
+          <template is="dom-repeat" items="[[_toArray(item)]]" as="value" index-as="key">
+            <div class='key'>[[value.name]]</div>
+            <template is="dom-if" if="{{_isString(value.value)}}">
+              <div class='value'>[[value.value]]</div>
+            </template>
+            <template is="dom-if" if="{{_isArray(value.value)}}">
+              <div class='array'>
+                <ul>
+                  <template is="dom-repeat" items="[[value.value]]" as="valueItem">
+                    <li>[[valueItem]]</li>
+                  </template>
+                </ul>
+              </div>
+            </template>
+          </template>
+        </div>
+      </template>
+    </paper-card>
+
+  </template>
+  <script>
+  class KeyValuePanel extends Polymer.Element {
+    static get is() { return 'key-value-panel'; }
+
+    static get properties() {
+      return {
+        datas: {
+          type: Array,
+          value: []
+        }
+      };
+    }
+
+    _isString(obj){
+        return typeof(obj) === "string"
+    }
+
+    _isArray(obj){
+        return Array.isArray(obj)
+    }
+
+    _toArray(obj) {
+       return Object.keys(obj).map(function(key) {
+          return {
+             name: key,
+             value: obj[key]
+          };
+       });
+    }
+  }
+
+  window.customElements.define(KeyValuePanel.is, KeyValuePanel);
+  </script>
+</dom-module>

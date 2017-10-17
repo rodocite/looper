@@ -74,30 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-ajax>
 
         <div style="padding-top: 10px;">Summary</div>
-        <paper-card>
-          <div class="summary">
-            <div class="line">
-              <div class="title"></div>
-              <div class="title">[[_formatValue(order.result.orginalOrder.tokenS)]]</div>
-              <div class="title">[[_formatValue(order.result.orginalOrder.tokenB)]]</div>
-            </div>
-            <div class="line">
-              <div class="title">Original</div>
-              <div class="column2">[[order.result.orginalOrder.amountS]]</div>
-              <div class="column3">[[order.result.orginalOrder.amountB]]</div>
-            </div>
-            <div class="line">
-              <div class="title">Filled</div>
-              <div class="column2">[[order.result.totalDealedAmountS]]</div>
-              <div class="column3">[[order.result.totalDealedAmountB]]</div>
-            </div>
-            <div class="line">
-              <div class="title">Status</div>
-              <div class="column2"></div>
-              <div class="column3">[[order.result.status]]</div>
-            </div>
-          </div>
-        </paper-card>
+        [[_fillInArray(order)]]
+        <key-value-panel datas="{{keyValueArray}}"></key-value-panel>
 
         <div style="padding-top: 10px;">Fills</div>
         <paper-card>
@@ -116,7 +94,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     static get properties() {
       return {
-        id: String
+        id: String,
+        keyValueArray: Array
       };
     }
     ready(){
@@ -124,12 +103,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log("order:"+this.id)
     }
     _fillInArray(data){
+        if(!data) return [];
         let array = new Array();
-        array.push({'c1': '', 'c2': this._formatValue(data.orginalOrder.tokenS), 'c3': this._formatValue(data.orginalOrder.tokenB)});
-        array.push({'c1': 'Original', 'c2': data.orginalOrder.amountS, 'c3': data.orginalOrder.amountB});
-        array.push({'c1': 'Filled', 'c2': data.totalDealedAmountS, 'c3': data.totalDealedAmountB});
-        array.push({'c1': 'Status', 'c2': '', 'c3': data.status});
-        return array;
+        array.push({"Original Sell Amount": data.result.orginalOrder.amountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"})
+        array.push({"Original Buy Amount": data.result.orginalOrder.amountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"})
+        array.push({"Filled Sell Amount": data.result.totalDealedAmountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"})
+        array.push({"Filled Buy Amount": data.result.totalDealedAmountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"})
+        array.push({"Status": data.result.status})
+        this.keyValueArray = array
     }
     _findTokenConfig(address){
       var tokens = this.appConfig.tokens;
