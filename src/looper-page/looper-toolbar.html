@@ -1,65 +1,66 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="looper-toolbar" fit>
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-
-    paper-button {
-      height: 64px;
-    }
-
-    app-toolbar {
-      color: #fff;
-      background-color: var(--app-primary-color);
-    }
-
-    app-toolbar[active="settings"] {
-      background-color: var(--google-grey-500);
-    }
-
-    a[active]>paper-button {
-      background-color: var(--app-primary-color-dark);
-    }
-
-    </style>
-    <app-toolbar active="[[activeTab]]">
-      <paper-icon-button disabled noink></paper-icon-button>
-      <div condensed-title></div>
-      <a href="#/markets" active$="[[isActiveTab('markets')]]" styleless>
-        <paper-button noink>Markets</paper-button>
-      </a>
-      <a id="walletlink" href="#/wallet" active$="[[isActiveTab('wallet')]]" styleless>
-        <paper-button noink>Wallet</paper-button>
-      </a>
-      <a href="#/rings" active$="[[isActiveTab('rings')]]" styleless>
-        <paper-button noink>Rings</paper-button>
-      </a>
-      <div condensed-title></div>
-      <a styleless href="#/settings">
-        <paper-icon-button noink icon="settings"></paper-icon-button>
-      </a>
-    </app-toolbar>
-  </template>
-  <script>
-  class LooperToolbar extends Polymer.Element {
-    static get is() { return 'looper-toolbar'; }
-
-    static get properties() {
-      return {
-        activeTab: {
-          type: String,
-          reflectToAttribute: true
+    <template>
+        <style include="shared-styles">
+         :host {
+            display: block;
         }
-      };
+
+        paper-button {
+            height: 64px;
+            min-width: 80px;
+        }
+
+        app-toolbar {
+            color: #fff;
+            background-color: var(--app-primary-color);
+        }
+
+        app-toolbar[active="settings"] {
+            background-color: var(--google-grey-500);
+        }
+
+        a[active]>paper-button {
+            background-color: var(--app-primary-color-dark);
+        }
+        </style>
+        <app-toolbar active="[[activeTab]]">
+            <paper-icon-button disabled noink></paper-icon-button>
+            <div condensed-title></div>
+            <a href="#/markets" active$="[[isActiveTab('markets')]]" styleless>
+                <paper-button noink>Markets</paper-button>
+            </a>
+            <a id="walletlink" href="#/wallet" active$="[[isActiveTab('wallet')]]" styleless>
+                <paper-button noink>Wallet</paper-button>
+            </a>
+            <a href="#/rings" active$="[[isActiveTab('rings')]]" styleless>
+                <paper-button noink>Rings</paper-button>
+            </a>
+            <a href="#/settings" active$="[[isActiveTab('settings')]]" styleless>
+                <paper-button noink>Settings</paper-button>
+            </a>
+            <div condensed-title></div>
+            <paper-icon-button noink on-click="resetWallet"></paper-icon-button>
+        </app-toolbar>
+    </template>
+    <script>
+    class LooperToolbar extends Polymer.Element {
+        static get is() { return 'looper-toolbar'; }
+
+        static get properties() {
+            return {
+                activeTab: {
+                    type: String,
+                    reflectToAttribute: true
+                }
+            };
+        }
+
+        isActiveTab(a) {
+            return this.activeTab === a;
+        }
     }
 
-    isActiveTab(a) {
-      return this.activeTab === a;
-    }
-  }
-
-  window.customElements.define(LooperToolbar.is, LooperToolbar);
-  </script>
+    window.customElements.define(LooperToolbar.is, LooperToolbar);
+    </script>
 </dom-module>
