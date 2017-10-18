@@ -10,7 +10,7 @@
 
             paper-progress.green {
                 --paper-progress-active-color: var(--paper-light-green-700);
-                --paper-progress-secondary-color: var(--paper-red-500);
+                --paper-progress-secondary-color: var(--app-red-color);
             }
 
             .container {
@@ -108,7 +108,7 @@
 
             typeStyle(tokenB) {
 
-                return tokenB === this.token ? 'var(--paper-green-500)' : 'var(--paper-red-500)';
+                return tokenB === this.token ? 'var(--app-green-color)' : 'var(--app-red-color)';
             }
 
             getType(tokenB) {

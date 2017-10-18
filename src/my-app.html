@@ -78,7 +78,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="utils/long-hash.html">
 <link rel="import" href="utils/time-str.html">
 <link rel="import" href="utils/notification-panel.html">
-<link rel="import" href="utils/key-value-panel.html">
 <link rel="import" href="market/recent-fills.html">
 <link rel="lazy-import" href="page-markets.html">
 <link rel="lazy-import" href="page-market.html">
@@ -96,18 +95,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-doc.html">
 <link rel="lazy-import" href="page-404.html">
 <link rel="lazy-import" href="page-dev.html">
-
 <dom-module id="my-app">
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
      :host {
-      --app-primary-color: #4285f4;
+      --app-primary-color: var(--google-blue-500);
+      --app-primary-color-dark: var(--google-blue-700);
       --app-secondary-color: black;
-      --paper-spinner-color: var(--google-blue-500);
+      --paper-spinner-color: var(--app-primary-color);
       --paper-spinner-stroke-width: 1px;
       --app-red-color: var(--paper-red-500);
       --app-green-color: var(--paper-green-500);
+      --app-text-color: rgba(0, 0, 0, .78);
+      --app-text-color-light: rgba(0, 0, 0, .54);
       display: block;
     }
 
@@ -154,7 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     #loading {
       padding-top: 30vh;
-      color: var(--google-blue-500);
+      color: var(--app-primary-color);
       font-weight: 200;
     }
 

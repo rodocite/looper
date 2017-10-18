@@ -19,11 +19,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     a {
-      color: var(--google-blue-500);
+      color: var(--app-primary-color);
     }
 
     a:hover {
-      color: var(--google-blue-700);
+      color: var(--app-primary-color-dark);
     }
 
     a[styleless] {
@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     div[secondary-text] {
-      color: rgba(0, 0, 0, 0.78);
+      color: var(--app-text-color);
     }
 
     .sections {
@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     .sections>paper-card[transparent] {
-      color: rgba(0, 0, 0, .54);
+      color: var(--app-text-color-light)
       text-transform: uppercase;
       text-align: left;
       background-color: transparent;
@@ -86,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     iron-input input:focus {
       padding-bottom: 0;
-      border-bottom: solid 2px var(--google-blue-500);
+      border-bottom: solid 2px var(--app-primary-color);
     }
 
 
@@ -111,12 +111,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     paper-button[primary] {
-      background-color: var(--google-blue-500);
+      background-color: var(--app-primary-color);
       color: white;
     }
 
     paper-button[primary]:hover {
-      background-color: var(--google-blue-700);
+      background-color: var(--app-primary-color-dark);
     }
 
     paper-button {
@@ -140,12 +140,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-item div.title {
       /*font-size: 1em;*/
       font-weight: 500;
-      color: rgba(0, 0, 0, .54);
+      color: var(--app-text-color-light)
     }
 
     vaadin-grid {
       font-size: 14px;
-      color: rgba(0, 0, 0, 0.78);
+      color: var(--app-text-color);
       border: none;
       height: 100%;
       line-height: 32px;
