@@ -30,22 +30,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             }
 
-            div.title{
+            div.title {
                 font-size: 1em;
                 font-weight: 500;
             }
-            div.font{
+
+            div.font {
                 font-size: 14px;
 
             }
 
 
         </style>
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json"
+                   handle-as="json"
+                   last-response="{{resp}}"></iron-ajax>
+
         <looper-page>
             <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
             <div class="sections">
                 <paper-card>
-                    <div class="card-content font" >
+                    <div class="card-content font">
                         <div class="horizontal  layout">
                             <paper-item class="position">
                                 <paper-item-body two-line>
@@ -59,16 +64,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <paper-item-body two-line>
                                     <div class="title"> Miner</div>
                                     <div secondary><a
-                                            href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1"
-                                            class="decorations">0x8888f1f195afa192cfee860698584c030f4c9db1 </a></div>
+                                            href="https://etherscan.io/address/[[ring.miner]]"
+                                            class="decorations">[[ring.miner]]</a></div>
                                 </paper-item-body>
                             </paper-item>
                             <paper-item class="position">
                                 <paper-item-body two-line>
                                     <div class="title"> Fee Recepient</div>
                                     <div secondary><a
-                                            href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1"
-                                            class="decorations"> 0x8888f1f195afa192cfee860698584c030f4c9db1</a></div>
+                                            href="https://etherscan.io/address/[[ring.feeRecepient]]"
+                                            class="decorations">[[ring.feeRecepient]]</a></div>
                                 </paper-item-body>
                             </paper-item>
                         </div>
@@ -77,8 +82,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <paper-item-body two-line>
                                     <div class="title"> Transaction Hash</div>
                                     <div secondary><a
-                                            href="https://etherscan.io/tx/0x1394052c8bee23dedd103fe7d5dbb3dc3f6fd519c5f60215e20ea5eb3da327d0"
-                                            class="decorations">0x8862c0b0886d019bad1fc00581c79b187121e4aee62de4b7b074422db4b6a555</a>
+                                            href="https://etherscan.io/tx/[[ring.transactionHash]]"
+                                            class="decorations">[[ring.transactionHash]]</a>
                                     </div>
                                 </paper-item-body>
                             </paper-item>
@@ -86,8 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <paper-item-body two-line>
                                     <div class="title"> BlockNum</div>
                                     <div secondary><a class="decorations"
-                                                      href="https://etherscan.io/block/[[tranHextoNum('0x42afe2')]]">
-                                        [[tranHextoNum('0x42afe2')]]</a></div>
+                                                      href="https://etherscan.io/block/[[tranHextoNum(ring.blockNum)]]">
+                                        [[tranHextoNum(ring.blockNum)]]</a></div>
                                 </paper-item-body>
                             </paper-item>
                         </div>
@@ -111,15 +116,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             static get properties() {
                 return {
                     id: String,
+                    resp: {
+                        type: Object,
+                        observer: '_update',
+                    },
+                    ring: Object,
                 };
             }
-
 
             tranHextoNum(hex) {
                 if (hex) {
                     return Number(hex);
                 }
                 return '-1';
+            }
+
+            _update(resp) {
+                if (resp && resp.result.data && resp.result.length !== 0) {
+                    return this.ring = resp.result.data[0];
+                }
             }
         }
 
