@@ -3,17 +3,22 @@
 <dom-module id="recent-fills" fit>
     <template>
         <style include="shared-styles">
-            :host {
-                display: block;
-            }
+         :host {
+            display: block;
+        }
         </style>
-        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orderFills.json"
-                   handle-as="json" last-response="{{resp}}"></iron-ajax>
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orderFills.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
         <!-- The array is set as the <vaadin-grid>'s "items" property -->
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="60px">
-                <template class="header">Time</template>
-                <template><time-str seconds="[[item.ts]]"></time-str></template>
+                <template class="header">
+                    <div class="left-aligned">Time</div>
+                </template>
+                <template>
+                    <div class="left-aligned">
+                        <time-str seconds="[[item.ts]]"></time-str>
+                    </div>
+                </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="20px">
                 <template class="header">Type</template>
@@ -32,45 +37,50 @@
                 <template>[[item.fillAmountB]]</template>
             </vaadin-grid-column>
             <vaadin-grid-column>
-                <template class="header">Hash</template>
-                <template><a href="#/fill">
-                    <long-hash hash="[[item.txHash]]"></long-hash>
-                </a></template>
+                <template class="header">
+                    <div class="left-aligned">Hash</div>
+                </template>
+                <template>
+                    <div class="left-aligned">
+                        <a href="#/fill">
+                            <long-hash hash="[[item.txHash]]"></long-hash>
+                        </a>
+                </template>
+                </div>
             </vaadin-grid-column>
-
         </vaadin-grid>
     </template>
     <script>
-        class RecentFills extends Polymer.Element {
-            static get is() {
-                return 'recent-fills';
-            }
-
-            static get properties() {
-                return {
-                    token: {
-                        type: String,
-                    },
-
-                };
-            }
-
-            calPrice(b, s) {
-                if (b && s && s !== 0) {
-                    return (b / s);
-                }
-                return 'Error';
-            }
-            typeStyle(isBuy) {
-
-                return isBuy ? 'var(--app-green-color)' : 'var(--app-red-color)';
-            }
-
-            getType(isBuy) {
-                return isBuy ? 'Buy' : 'Sell';
-            }
+    class RecentFills extends Polymer.Element {
+        static get is() {
+            return 'recent-fills';
         }
 
-        window.customElements.define(RecentFills.is, RecentFills);
+        static get properties() {
+            return {
+                token: {
+                    type: String,
+                },
+
+            };
+        }
+
+        calPrice(b, s) {
+            if (b && s && s !== 0) {
+                return (b / s);
+            }
+            return 'Error';
+        }
+        typeStyle(isBuy) {
+
+            return isBuy ? 'var(--app-green-color)' : 'var(--app-red-color)';
+        }
+
+        getType(isBuy) {
+            return isBuy ? 'Buy' : 'Sell';
+        }
+    }
+
+    window.customElements.define(RecentFills.is, RecentFills);
     </script>
 </dom-module>
