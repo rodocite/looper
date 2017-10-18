@@ -12,8 +12,6 @@
             --paper-progress-active-color: var(--paper-light-green-700);
             --paper-progress-secondary-color: var(--app-red-color);
         }
-
-      
         </style>
         <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
         <!-- The array is set as the <vaadin-grid>'s "items" property -->
@@ -54,7 +52,7 @@
                 <template>
                     <div class="left-aligned">
                         <a href="#/order/[[item.orginalOrder.hash]]">
-                            <long-hash hash="[[item.orginalOrder.hash]]"></long-hash>
+                            <div class="long-hash"> [[item.orginalOrder.hash]]</div>
                         </a>
                     </div>
                 </template>

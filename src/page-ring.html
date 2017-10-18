@@ -11,103 +11,111 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="market/recent-fills.html">
 <dom-module id="page-ring">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-
-    </style>
-    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-    <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
-      <div class="sections">
-        <paper-card transparent>Ring Details</paper-card>
-        <paper-card>
-          <div class="card-content">
-            <div class="horizontal layout">
-              <paper-item class="position">
-                <paper-item-body two-line>
-                  <div class="title"> Ring Hash</div>
-                  <div secondary>[[id]]</div>
-                </paper-item-body>
-              </paper-item>
-            </div>
-            <div class="horizontal layout">
-              <paper-item class="position" style="width: 575px">
-                <paper-item-body two-line>
-                  <div class="title"> Miner</div>
-                  <div secondary><a href="https://etherscan.io/address/[[ring.miner]]" class="decorations">[[ring.miner]]</a></div>
-                </paper-item-body>
-              </paper-item>
-              <paper-item class="position">
-                <paper-item-body two-line>
-                  <div class="title"> Fee Recepient</div>
-                  <div secondary><a href="https://etherscan.io/address/[[ring.feeRecepient]]" class="decorations">[[ring.feeRecepient]]</a></div>
-                </paper-item-body>
-              </paper-item>
-            </div>
-            <div class="horizontal layout">
-              <paper-item class="position" style="width: 575px">
-                <paper-item-body two-line>
-                  <div class="title"> Transaction Hash</div>
-                  <div secondary><a href="https://etherscan.io/tx/[[ring.transactionHash]]" class="decorations">[[ring.transactionHash]]</a>
-                  </div>
-                </paper-item-body>
-              </paper-item>
-              <paper-item class="position">
-                <paper-item-body two-line>
-                  <div class="title"> BlockNum</div>
-                  <div secondary><a class="decorations" href="https://etherscan.io/block/[[tranHextoNum(ring.blockNum)]]">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+        </style>
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
+            <div class="sections">
+                <paper-card transparent>Ring Details</paper-card>
+                <paper-card>
+                    <div class="card-content">
+                        <div class="horizontal wrap layout">
+                            <paper-item class="long flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Ring Hash</div>
+                                    <div secondary>
+                                        <div class="long-hash">[[id]]</div>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Miner</div>
+                                    <div secondary>
+                                        <a href="https://etherscan.io/address/[[ring.miner]]" class="decorations">
+                                            <div class="long-hash">[[ring.miner]]</div>
+                                        </a>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Fee Recepient</div>
+                                    <div secondary>
+                                        <a href="https://etherscan.io/address/[[ring.feeRecepient]]" class="decorations">
+                                            <div class="long-hash">[[ring.feeRecepient]]</div>
+                                        </a>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Transaction Hash</div>
+                                    <div secondary>
+                                        <a href="https://etherscan.io/tx/[[ring.transactionHash]]" class="decorations">
+                                            <div class="long-hash">[[ring.transactionHash]]</div>
+                                        </a>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> BlockNum</div>
+                                    <div secondary><a class="decorations" href="https://etherscan.io/block/[[tranHextoNum(ring.blockNum)]]">
                                         [[tranHextoNum(ring.blockNum)]]</a></div>
-                </paper-item-body>
-              </paper-item>
+                                </paper-item-body>
+                            </paper-item>
+                        </div>
+                    </div>
+                </paper-card>
+                <paper-card transparent>Recent Fills</paper-card>
+                <paper-card>
+                    <div class="card-content">
+                        <recent-fills></recent-fills>
+                    </div>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
             </div>
-          </div>
-        </paper-card>
-        <paper-card transparent>Recent Fills</paper-card>
-        <paper-card>
-          <div class="card-content">
-            <recent-fills></recent-fills>
-          </div>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageRing extends Polymer.Element {
-    static get is() {
-      return 'page-ring';
+        </looper-page>
+    </template>
+    <script>
+    class PageRing extends Polymer.Element {
+        static get is() {
+            return 'page-ring';
+        }
+
+        static get properties() {
+            return {
+                id: String,
+                resp: {
+                    type: Object,
+                    observer: '_update',
+                },
+                ring: Object,
+            };
+        }
+
+        tranHextoNum(hex) {
+            if (hex) {
+                return Number(hex);
+            }
+            return '-1';
+        }
+
+        _update(resp) {
+            if (resp && resp.result.data && resp.result.length !== 0) {
+                return this.ring = resp.result.data[0];
+            }
+        }
     }
 
-    static get properties() {
-      return {
-        id: String,
-        resp: {
-          type: Object,
-          observer: '_update',
-        },
-        ring: Object,
-      };
-    }
-
-    tranHextoNum(hex) {
-      if (hex) {
-        return Number(hex);
-      }
-      return '-1';
-    }
-
-    _update(resp) {
-      if (resp && resp.result.data && resp.result.length !== 0) {
-        return this.ring = resp.result.data[0];
-      }
-    }
-  }
-
-  window.customElements.define(PageRing.is, PageRing);
-  </script>
+    window.customElements.define(PageRing.is, PageRing);
+    </script>
 </dom-module>

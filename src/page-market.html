@@ -47,6 +47,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-tabs {
       margin-bottom: 8px;
     }
+
+    .tables {
+      min-height: 400px;
+    }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Market" id="[[marketId()]]" back-link="#/markets"></simple-toolbar>
@@ -66,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-card>
           <operation-panel></operation-panel>
         </paper-card>
-        <paper-card>
+        <paper-card class="tables">
           <div class="vertical layout">
             <paper-tabs selected="{{dataSelection}}" attr-for-selected="name">
               <paper-tab name="fills">Trades</paper-tab>

@@ -72,6 +72,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             min-height: 48px;
         }
 
+        div.long-hash {
+            width: 160px;
+            display: inline-block;
+            vertical-align: bottom;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
         app-toolbar {
             font-size: 18px;
         }
@@ -129,7 +137,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-item {
             padding-top: 8px;
             padding-bottom: 8px;
+            min-width: 300px;
         }
+
+
+        paper-item.long {
+            min-width: 800px;
+        }
+
+
 
         paper-item:hover {
             background-color: var(--paper-grey-100);

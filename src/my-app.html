@@ -74,7 +74,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="looper-page/signtosend-dialog.html">
 <link rel="import" href="looper-page/signtosend-dialog.html">
 <link rel="import" href="utils/pretty-number.html">
-<link rel="import" href="utils/long-hash.html">
 <link rel="import" href="utils/time-str.html">
 <link rel="import" href="utils/global-variable.html">
 <link rel="import" href="utils/notification-panel.html">
@@ -175,10 +174,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             top: 60px;
         }
 
+        #lockButton {
+            background-color: transparent;
+            color: inherit;
+            border-radius: 50%;
+        }
+
         #lockButton.openned {
             background-color: var(--app-red-color);
             color: white;
-            border-radius: 50%;
         }
 
         paper-icon-button:not([narrow]) [drawer-toggle] {
