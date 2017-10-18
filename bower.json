@@ -51,7 +51,9 @@
     "paper-progress": "PolymerElements/paper-progress#^2.0.1",
     "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.1",
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
-    "iron-label": "PolymerElements/iron-label#^2.0.0"
+    "web3": "^0.19.0",
+    "ethereum.js": "^0.0.15",
+    "wallet-address-validator": "crypto-wallet-address-validator#^0.2.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",
