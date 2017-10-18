@@ -26,36 +26,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <div class="sections">
         <paper-card transparent>Order Detail</paper-card>
-        [[_fillInArray(order)]]
         <paper-card>
          <div class="horizontal layout">
             <div class="vertical layout flex">
               <paper-item class="flex">
                 <paper-item-body two-line>
-                  <div class="title"> Miner</div>
-                  <div secondary><a target="_blank" href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1 ">0x8888f1f195afa192cfee860698584c030f4c9db1 </a></div>
+                  <div class="title"> Original Sell Amount</div>
+                  <div secondary>[[_orginalSell(order)]]</div>
                 </paper-item-body>
               </paper-item>
               <paper-item class="flex">
                 <paper-item-body two-line>
-                  <div class="title "> Fee Recepient</div>
-                  <div secondary><a target="_blank" href="https://etherscan.io/address/0x8888f1f195afa192cfee860698584c030f4c9db1 "> 0x8888f1f195afa192cfee860698584c030f4c9db1</a></div>
-                </paper-item-body>
-              </paper-item>
-            </div>
-            <div class="vertical layout flex">
-              <paper-item class="flex">
-                <paper-item-body two-line>
-                  <div class="title "> Transaction Hash</div>
-                  <div secondary><a target="_blank" href="https://etherscan.io/tx/0x1394052c8bee23dedd103fe7d5dbb3dc3f6fd519c5f60215e20ea5eb3da327d0 ">0x8862c0b0886d019bad1fc00581c79b187121e4aee62de4b7b074422db4b6a555</a>
-                  </div>
+                  <div class="title "> Original Buy Amount</div>
+                  <div secondary>[[_originalBuy(order)]]</div>
                 </paper-item-body>
               </paper-item>
               <paper-item class="flex">
                 <paper-item-body two-line>
-                  <div class="title "> BlockNum</div>
-                  <div secondary><a target="_blank" href="https://etherscan.io/block/[[tranHextoNum( '0x42afe2')]] ">
-                                        [[tranHextoNum('0x42afe2')]]</a></div>
+                  <div class="title "> Filled Sell Amount</div>
+                  <div secondary>[[_filledSell(order)]]</div>
+                </paper-item-body>
+              </paper-item>
+              <paper-item class="flex">
+                <paper-item-body two-line>
+                  <div class="title "> Filled Buy Amount</div>
+                  <div secondary>[[_filledBuy(order)]]</div>
+                </paper-item-body>
+              </paper-item>
+              <paper-item class="flex">
+                <paper-item-body two-line>
+                  <div class="title "> Status</div>
+                  <div secondary>[[order.result.status]]</div>
                 </paper-item-body>
               </paper-item>
             </div>
@@ -84,6 +85,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ready() {
       super.ready();
       console.log("order:" + this.id)
+    }
+    _orginalSell(data){
+       return data.result.orginalOrder.amountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"
+    }
+    _originalBuy(data){
+       return data.result.orginalOrder.amountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"
+    }
+    _filledSell(data){
+       return data.result.totalDealedAmountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"
+    }
+    _filledBuy(data){
+       return data.result.totalDealedAmountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"
     }
     _fillInArray(data) {
       if (!data) return [];

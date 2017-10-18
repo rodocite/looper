@@ -16,40 +16,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .item{
-        @apply(--layout-horizontal);
-        @apply(--layout-start-justified);
-        text-align: left;
-        font-size: 14px;
-        color: var(--app-text-color);
-        padding-top: 16px;
-        height: 100%;
-        line-height: 32px;
+      .hash {
+        width: 400px;
+        display: inline-block;
+        vertical-align: bottom;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
-      .item .key {
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-        width:50%;
-        padding-right: 10px;
-        font-weight: 500;
-      }
-      .item .value {
-        @apply(--layout-horizontal);
-        @apply(--layout-start-justified);
-        width:50%;
-        padding-left: 10px;
-      }
-      .item .array{
-        @apply(--layout-vertical);
-        @apply(--layout-start-justified);
-        width:50%;
-        padding-left: 10px;
+      a:link {
+        text-decoration: none;
       }
     </style>
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Fill" id="[[id]]" back-link="#/fills"></simple-toolbar>
       <div class="sections">
-        <div style="padding-top: 10px; padding-top: 10px;">Fill</div>
+        <paper-card transparent>Fill</paper-card>
         <paper-card>
           <recent-fills filter-mine name="myfills"></recent-fills>
         </paper-card>
@@ -60,25 +41,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 last-response="{{order}}"
                 debounce-duration="300">
         </iron-ajax>
-
-        <div style="padding-top: 10px; padding-top: 10px;">Orders</div>
+        <paper-card transparent>Orders</paper-card>
         <paper-card>
-          <div class="item">
-            <div class='key'>Tx Hash</div>
-            <div class='value'><a href="#">[[order.result.txHash]]</a></div>
-          </div>
-          <div class="item">
-            <div class='key'>Ring Hash</div>
-            <div class='value'><a href="#/ring/[[order.result.ringHash]]">[[order.result.ringHash]]</a></div>
-          </div>
-          <div class="item">
-            <div class='key'>Orders</div>
-            <div class='array'>
-              <ul>
-                <template is="dom-repeat" items="[[order.result.orders]]" as="order">
-                  <li><a href="#/order/[[order]]">[[order]]</a></li>
-                </template>
-              </ul>
+          <div class="horizontal layout">
+            <div class="vertical layout flex">
+              <paper-item class="flex">
+                <paper-item-body two-line>
+                  <div class="title"> Tx Hash</div>
+                  <div secondary><a href="#">[[order.result.txHash]]</a></div>
+                </paper-item-body>
+              </paper-item>
+              <paper-item class="flex">
+                <paper-item-body two-line>
+                  <div class="title "> Ring Hash</div>
+                  <div secondary><a href="#/ring/[[order.result.ringHash]]">[[order.result.ringHash]]</a></div>
+                </paper-item-body>
+              </paper-item>
+              <paper-item class="flex">
+                <paper-item-body two-line>
+                  <div class="title "> Orders</div>
+                  <div secondary>
+                    <template is="dom-repeat" items="[[order.result.orders]]" as="orderItem">
+                      <div><a href="#/order/[[orderItem]]">[[orderItem]]</a></div>
+                    </template>
+                  </div>
+                </paper-item-body>
+              </paper-item>
             </div>
           </div>
         </paper-card>
