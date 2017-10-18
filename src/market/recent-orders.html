@@ -11,6 +11,7 @@
             paper-progress.green {
                 --paper-progress-active-color: var(--paper-light-green-700);
                 --paper-progress-secondary-color: var(--app-red-color);
+                width: 50px;
             }
 
             .container {
@@ -55,13 +56,13 @@
                 </a></template>
             </vaadin-grid-column>
 
-            <vaadin-grid-column width="50px">
+            <vaadin-grid-column width="50px" >
                 <template class="header">Status</template>
-                <template>
+                <template >
                     <div class="horizontal end-justified layout">
                         <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]"
-                                        secondary-progress="60" max="[[numberFormat(item.orginalOrder.amountB)]]"
-                                        style="width: 50px"></paper-progress>
+                                        secondary-progress="60"
+                                        max="[[numberFormat(item.orginalOrder.amountB)]]"></paper-progress>
                     </div>
                 </template>
             </vaadin-grid-column>
@@ -75,7 +76,7 @@
 
             static get properties() {
                 return {
-                    token: String
+                    token: String,
                 };
             }
 
@@ -99,15 +100,12 @@
             }
 
             getPrice(s, b) {
-
                 const sell = this.numberFormat(s);
                 const buy = this.numberFormat(b);
                 return (sell / buy).toFixed(8);
-
             }
 
             typeStyle(tokenB) {
-
                 return tokenB === this.token ? 'var(--app-green-color)' : 'var(--app-red-color)';
             }
 
