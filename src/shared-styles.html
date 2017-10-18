@@ -19,11 +19,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     a {
-      color: var(--google-blue-500);
+      color: var(--app-primary-color);
     }
 
     a:hover {
-      color: var(--google-blue-700);
+      color: var(--app-primary-color-dark);
     }
 
     a[styleless] {
@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     div[secondary-text] {
-      color: rgba(0, 0, 0, 0.78);
+      color: var(--app-text-color);
     }
 
     .sections {
@@ -42,20 +42,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       width: 100%;
       font-weight: 400;
       padding-top: 32px;
+      font-size: 14px;
     }
 
     .sections>paper-card {
       width: 100%;
-      margin: 16px 0 8px 0;
+      margin-bottom: 32px;
+      padding: 32px 16px;
+    }
+
+    .sections>paper-card[nopadding] {
+      padding: 0;
     }
 
     .sections>paper-card[transparent] {
+      color: var(--app-text-color-light)
+      text-transform: uppercase;
+      text-align: left;
       background-color: transparent;
+      /*height: 36px;*/
+      padding: 0;
+      margin-bottom: 8px;
     }
 
     .footer-spacer {
       @apply --layout-flex;
       min-height: 48px;
+    }
+
+    app-toolbar {
+      font-size: 16px;
     }
 
     iron-input input {
@@ -70,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     iron-input input:focus {
       padding-bottom: 0;
-      border-bottom: solid 2px var(--google-blue-500);
+      border-bottom: solid 2px var(--app-primary-color);
     }
 
 
@@ -95,12 +111,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     paper-button[primary] {
-      background-color: var(--google-blue-500);
+      background-color: var(--app-primary-color);
       color: white;
     }
 
     paper-button[primary]:hover {
-      background-color: var(--google-blue-700);
+      background-color: var(--app-primary-color-dark);
     }
 
     paper-button {
@@ -108,11 +124,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       border-radius: 0;
     }
 
+    paper-item {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    paper-item:hover {
+      background-color: var(--paper-grey-100);
+    }
+
+    paper-item a {
+      text-decoration: none
+    }
+
+    paper-item div.title {
+      /*font-size: 1em;*/
+      font-weight: 500;
+      color: var(--app-text-color-light)
+    }
+
     vaadin-grid {
       font-size: 14px;
-      color: rgba(0, 0, 0, 0.78);
+      color: var(--app-text-color);
       border: none;
-      padding-top: 16px;
       height: 100%;
       line-height: 32px;
     }

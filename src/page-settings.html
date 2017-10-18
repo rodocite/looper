@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     app-toolbar {
       color: white;
-      background-color: var(--paper-amber-700);
+      background-color: var(--app-primary-color);
     }
 
     paper-icon-button {
@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .label {
       min-width: 200px;
-      color: rgba(0, 0, 0, .54);
+      color: var(--app-text-color-light)
     }
 
     vaadin-combo-box {
@@ -51,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <global-variable key="settings-relay" value="{{settingsRelay}}"></global-variable>
       <scary-cookie name="settings-relay" value="{{settingsRelay}}"></scary-cookie>
       <app-toolbar slot="secondary-toolbar">
+        <paper-icon-button noink disabled></paper-icon-button>
         <div condensed-title></div>
         Settings
         <div condensed-title></div>
