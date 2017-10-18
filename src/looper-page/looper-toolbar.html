@@ -8,7 +8,8 @@
 
         paper-button {
             height: 64px;
-            min-width: 80px;
+            min-width: 120px;
+            margin: 0;
         }
 
         app-toolbar {
@@ -16,11 +17,15 @@
             background-color: var(--app-primary-color);
         }
 
-        app-toolbar[active="settings"] {
-            background-color: var(--google-grey-500);
+        a[active]>paper-button {
+            background-color: var(--app-primary-color-dark);
         }
 
-        a[active]>paper-button {
+        a>paper-button:hover {
+            background-color: rgba(255, 255, 255, .2);
+        }
+
+        a[active]>paper-button:hover {
             background-color: var(--app-primary-color-dark);
         }
         </style>
