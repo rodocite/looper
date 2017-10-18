@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <vaadin-grid-column width="60px">
               <template class="header">Change</template>
               <template>
-                <div class$="[[_class(item.change)]]"><pretty-number v="[[item.change]]" d=1 sign=true postfix="%"></pretty-number></div>
+                <div class$="[[_class(item.change)]]">[[_showChange(item.change)]]</pretty-number></div>
               </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
