@@ -17,8 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
     }
 
-
-
     .decrease {
       color: var(--app-green-color);
     }
@@ -29,13 +27,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <looper-page>
+      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <looper-toolbar slot="secondary-toolbar" active-tab="markets">
       </looper-toolbar>
       <div class="sections">
         <paper-card>
           <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json" handle-as="json" last-response="{{data}}" debounce-duration="300">
           </iron-ajax>
-          <vaadin-grid aria-label="Markets" items="[[data.result]]">
+          <vaadin-grid aria-label="Markets" items="[[_filterMarkets(data.result)]]">
             <!-- items="[[_show(data.result, size)]]" -->
             <vaadin-grid-column>
               <template class="header">Market</template>
@@ -65,11 +64,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </vaadin-grid-column>
           </vaadin-grid>
         </paper-card>
-        <!--
-        <div style="margin-top: 10px; margin-bottom: 10px;">
-          <a href="#" on-click="_showAll">View full list</a>
-        </div>
-        -->
         <div class="footer-spacer flex"></div>
         <looper-footer></looper-footer>
       </div>
@@ -84,11 +78,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.size = 10;
     }
 
+    _filter(datas){
+        let onShowMarkets = this.appConfig.markets
+        let newArray = new Array()
+        for (var x in datas){
+            let item = datas[x]
+            var market = item.market.toUpperCase()
+            if(onShowMarkets.indexOf(market) >-1){
+                newArray.push(item)
+            }
+        }
+        return newArray
+    }
+
+    _filterMarkets(datas){
+        if(!datas) return;
+        return this._filter(datas)
+    }
+
     _a(value) {
       if (!value) {
         return "#";
       }
-      return value.split("/")[0].toLowerCase()
+      let array = value.split("/")
+      return array[0].toLowerCase()+"-"+array[1].toLowerCase()
     }
 
     _show(data, size) {
