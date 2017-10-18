@@ -10,67 +10,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-rings">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+        </style>
+        <looper-page>
+            <looper-toolbar slot="secondary-toolbar" active-tab="rings"></looper-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+                    <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+                        <vaadin-grid-column width="50px">
+                            <template class="header">
+                                <div class="left-aligned">Hash</div>
+                            </template>
+                            <template>
+                                <div class="left-aligned">
+                                    <a href="#/ring/[[item.ringhash]]">
+                                        <long-hash hash="[[item.ringhash]]"></long-hash>
+                                    </a>
+                                </div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">
+                                <div class="left-aligned">Miner</div>
+                            </template>
+                            <template>
+                                <div class="left-aligned">
+                                    <long-hash hash="[[item.miner]]"></long-hash>
+                                </div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">
+                                <div class="left-aligned">Fee Recepient</div>
+                            </template>
+                            <template>
+                                <div class="left-aligned">
+                                    <long-hash hash="[[item.feeRecepient]]"></long-hash>
+                                </div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">
+                                <div class="left-aligned">Transaction Hash</div>
+                            </template>
+                            <template>
+                                <div class="left-aligned">
+                                    <long-hash hash="[[item.transactionHash]]"></long-hash>
+                                </div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">Block Num</template>
+                            <template>[[tranHextoNum(item.blockNum)]]</template>
+                        </vaadin-grid-column>
+                    </vaadin-grid>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+    class PageRings extends Polymer.Element {
+        static get is() { return 'page-rings'; }
+        tranHextoNum(hex) {
+            if (hex) {
+                return Number(hex);
+            }
+            return 'Error';
+        }
     }
-    </style>
-    <looper-page>
-      <looper-toolbar slot="secondary-toolbar" active-tab="rings"></looper-toolbar>
-      <div class="sections">
-        <paper-card>
-          <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
-          <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
-            <vaadin-grid-column width="50px">
-              <template class="header">Hash</template>
-              <template>
-                <a href="#/ring/[[item.ringhash]]">
-                  <long-hash hash="[[item.ringhash]]"></long-hash>
-                </a>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Miner</template>
-              <template>
-                <long-hash hash="[[item.miner]]"></long-hash>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Fee Recepient</template>
-              <template>
-                <long-hash hash="[[item.feeRecepient]]"></long-hash>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Transaction Hash</template>
-              <template>
-                <long-hash hash="[[item.transactionHash]]"></long-hash>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Block Num</template>
-              <template>[[tranHextoNum(item.blockNum)]]</template>
-            </vaadin-grid-column>
-          </vaadin-grid>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageRings extends Polymer.Element {
-    static get is() { return 'page-rings'; }
-    tranHextoNum(hex) {
-      if (hex) {
-        return Number(hex);
-      }
-      return 'Error';
-    }
-  }
 
-  window.customElements.define(PageRings.is, PageRings);
-  </script>
+    window.customElements.define(PageRings.is, PageRings);
+    </script>
 </dom-module>

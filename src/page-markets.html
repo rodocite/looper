@@ -38,29 +38,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <vaadin-grid aria-label="Markets" items="[[data.result]]">
             <!-- items="[[_show(data.result, size)]]" -->
             <vaadin-grid-column>
-              <template class="header">MARKET</template>
+              <template class="header">Market</template>
               <template><a href="#/market/[[_a(item.market)]]">[[item.market]]</a></template>
             </vaadin-grid-column>
             <vaadin-grid-column>
-              <template class="header">LAST PRICE</template>
+              <template class="header">Last Price</template>
               <template><pretty-number v="[[item.last]]" d=4></pretty-number></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="60px">
-              <template class="header">CHANGE</template>
+              <template class="header">Change</template>
               <template>
                 <div class$="[[_class(item.change)]]"><pretty-number v="[[item.change]]" d=1 sign=true postfix="%"></pretty-number></div>
               </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
-              <template class="header">24HR VOLUME</template>
+              <template class="header">24Hr Volume</template>
               <template><pretty-number v="[[item.vol]]" d=2></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
-              <template class="header">BID</template>
+              <template class="header">Bid</template>
               <template><pretty-number v="[[item.buy]]" d=2></template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
-              <template class="header">ASK</template>
+              <template class="header">Ask</template>
               <template><pretty-number v="[[item.sell]]" d=2></template>
             </vaadin-grid-column>
           </vaadin-grid>

@@ -10,164 +10,170 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
-  <template>
-    <style>
-    h1 {
-      margin: 16px 0;
-      color: #212121;
-      font-size: 22px;
-    }
+    <template>
+        <style>
+        h1 {
+            margin: 16px 0;
+            color: #212121;
+            font-size: 22px;
+        }
 
-    a {
-      color: var(--app-primary-color);
-    }
+        a {
+            color: var(--app-primary-color);
+        }
 
-    a:hover {
-      color: var(--app-primary-color-dark);
-    }
+        a:hover {
+            color: var(--app-primary-color-dark);
+        }
 
-    a[styleless] {
-      color: inherit;
-      text-decoration: none;
-    }
+        a[styleless] {
+            color: inherit;
+            text-decoration: none;
+        }
 
-    div[secondary-text] {
-      color: var(--app-text-color);
-    }
+        div[secondary-text] {
+            color: var(--app-text-color);
+        }
 
-    .sections {
-      @apply --layout-center;
-      @apply --layout-vertical;
-      @apply --layout-flex;
-      width: 100%;
-      font-weight: 400;
-      padding-top: 32px;
-      font-size: 14px;
-    }
+        .sections {
+            @apply --layout-center;
+            @apply --layout-vertical;
+            @apply --layout-flex;
+            width: 100%;
+            font-weight: 400;
+            padding-top: 32px;
+            font-size: 14px;
+        }
 
-    .sections>paper-card {
-      width: 100%;
-      margin-bottom: 32px;
-      padding: 32px 16px;
-    }
+        .sections>paper-card {
+            width: 100%;
+            margin-bottom: 32px;
+            padding: 32px 16px;
+        }
 
-    .sections>paper-card[nopadding] {
-      padding: 0;
-    }
+        .sections>paper-card[nopadding] {
+            padding: 0;
+        }
 
-    .sections>paper-card[transparent] {
-      color: var(--app-text-color-light)
-      text-transform: uppercase;
-      text-align: left;
-      background-color: transparent;
-      /*height: 36px;*/
-      padding: 0;
-      margin-bottom: 8px;
-    }
+        .sections>paper-card[transparent] {
+            color: var(--app-text-color-light);
+            text-transform: uppercase;
+            text-align: left;
+            background-color: transparent;
+            /*height: 36px;*/
+            padding: 0;
+            margin-bottom: 8px;
+            font-size: 1em;
+            font-weight: 500;
+        }
 
-    .footer-spacer {
-      @apply --layout-flex;
-      min-height: 48px;
-    }
+        .footer-spacer {
+            @apply --layout-flex;
+            min-height: 48px;
+        }
 
-    app-toolbar {
-      font-size: 16px;
-    }
+        app-toolbar {
+            font-size: 16px;
+        }
 
-    iron-input input {
-      height: 28px;
-      font-size: 16px;
-      outline: none;
-      border: solid 1px var(--paper-grey-300);
-      -webkit-appearance: none;
-      padding: 0 8px 1px 8px;
-    }
-
-
-    iron-input input:focus {
-      padding-bottom: 0;
-      border-bottom: solid 2px var(--app-primary-color);
-    }
+        iron-input input {
+            height: 28px;
+            font-size: 16px;
+            outline: none;
+            border: solid 1px var(--paper-grey-300);
+            -webkit-appearance: none;
+            padding: 0 8px 1px 8px;
+        }
 
 
-    iron-input input {
-      height: 36px;
-    }
+        iron-input input:focus {
+            padding-bottom: 0;
+            border-bottom: solid 2px var(--app-primary-color);
+        }
 
-    paper-icon-button {
-      text-transform: none;
-    }
 
-    paper-icon-button:hover {
-      background-color: rgba(0, 0, 0, .1);
-    }
+        iron-input input {
+            height: 36px;
+        }
 
-    paper-icon-button[disabled]:hover {
-      background-color: transparent;
-    }
+        paper-icon-button {
+            text-transform: none;
+        }
 
-    paper-button[uppercase] {
-      text-transform: uppercase;
-    }
+        paper-icon-button:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
 
-    paper-button[primary] {
-      background-color: var(--app-primary-color);
-      color: white;
-    }
+        paper-icon-button[disabled]:hover {
+            background-color: transparent;
+        }
 
-    paper-button[primary]:hover {
-      background-color: var(--app-primary-color-dark);
-    }
+        paper-button[uppercase] {
+            text-transform: uppercase;
+        }
 
-    paper-button {
-      text-transform: none;
-      border-radius: 0;
-    }
+        paper-button[primary] {
+            background-color: var(--app-primary-color);
+            color: white;
+        }
 
-    paper-item {
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
+        paper-button[primary]:hover {
+            background-color: var(--app-primary-color-dark);
+        }
 
-    paper-item:hover {
-      background-color: var(--paper-grey-100);
-    }
+        paper-button {
+            text-transform: none;
+            border-radius: 0;
+        }
 
-    paper-item a {
-      text-decoration: none
-    }
+        paper-item {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
 
-    paper-item div.title {
-      /*font-size: 1em;*/
-      font-weight: 500;
-      color: var(--app-text-color-light)
-    }
+        paper-item:hover {
+            background-color: var(--paper-grey-100);
+        }
 
-    vaadin-grid {
-      font-size: 14px;
-      color: var(--app-text-color);
-      border: none;
-      height: 100%;
-      line-height: 32px;
-    }
+        paper-item a {
+            text-decoration: none
+        }
 
-    vaadin-grid-table:focus {
-      outline: none;
-    }
+        paper-item div.title {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--app-text-color-light);
+        }
 
-    vaadin-grid iron-icon {
-      height: 16px;
-    }
+        vaadin-grid {
+            font-size: 14px;
+            color: var(--app-text-color);
+            border: none;
+            height: 100%;
+            line-height: 32px;
+        }
 
-    vaadin-grid-cell-content {
-      text-align: right;
-    }
+        vaadin-grid .left-aligned {
+            text-align: left;
+        }
 
-    @media(min-width:1024px) {
-      .sections>paper-card {
-        width: 1024px;
-      }
-    }
-    </style>
-  </template>
+        vaadin-grid-table:focus {
+            outline: none;
+        }
+
+        vaadin-grid iron-icon {
+            height: 16px;
+        }
+
+        vaadin-grid-cell-content {
+            text-align: right;
+        }
+
+        @media(min-width:1024px) {
+            .sections>paper-card {
+                width: 1024px;
+            }
+        }
+        </style>
+    </template>
 </dom-module>
