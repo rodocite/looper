@@ -11,24 +11,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-authorize">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
-     :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
+      .left {
+        width:60%;
+      }
+      .right {
+        width:40%;
+      }
+      .item {
+        width: 50%;
+        @apply(--layout-start-justified);
+      }
     </style>
     <looper-page>
+      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
       <simple-toolbar slot="secondary-toolbar" title="ERC20 Authorize" back-link="#/wallet"></simple-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <div class="horizontal layout flex">
+            <div class="left">
+              <div class="vertical layout start-justified">
+                <div class="horizontal layout start-justified">
+                  <div class="item">
+                    <iron-input bind-value="{{bindValue}}">
+                      <input value="{{value::input}}" class="amount">
+                    </iron-input>
+                  </div>
+                  <div class="item">
+
+                    <template is="dom-repeat" items="[[appConfig.tokens]]">
+
+                    </template>
+
+                    <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
+                      <paper-listbox slot="dropdown-content" selected="0">
+                        <paper-item>LRC</paper-item>
+                        <paper-item>EOS</paper-item>
+                      </paper-listbox>
+                    </paper-dropdown-menu>
+                  </div>
+                </div>
+                <div class="flex">Allowance</div>
+                <div class="flex">Waring</div>
+                <div class="flex">Generate Transaction</div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="vertical layout start-justified">
+                <div class="horizontal layout start-justified">
+                  <div class="item">Address:</div>
+                  <div class="item">111</div>
+                </div>
+                <div class="horizontal layout start-justified">
+                  <div class="item">
+                    Available Allowance
+                  </div>
+                  <div class="item">
+                    10
+                  </div>
+                </div>
+                <div class="flex">Allowance</div>
+                <div class="flex">Waring</div>
+                <div class="flex">Generate Transaction</div>
+              </div>
+            </div>
           </div>
         </paper-card>
       </div>
