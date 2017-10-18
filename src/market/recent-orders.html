@@ -2,31 +2,30 @@
 <dom-module id="recent-orders" fit>
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-
         <style include="shared-styles">
-            :host {
-                display: block;
-            }
+         :host {
+            display: block;
+        }
 
-            paper-progress.green {
-                --paper-progress-active-color: var(--paper-light-green-700);
-                --paper-progress-secondary-color: var(--app-red-color);
-            }
+        paper-progress {
+            width: 50%;
+            --paper-progress-active-color: var(--paper-light-green-700);
+            --paper-progress-secondary-color: var(--app-red-color);
+        }
 
-            .container {
-                @apply(--layout-horizontal);
-                @apply(--layout-center);
-            }
-
+      
         </style>
-        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json"
-                   last-response="{{resp}}"></iron-ajax>
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
         <!-- The array is set as the <vaadin-grid>'s "items" property -->
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="50px">
-                <template class="header">Time</template>
+                <template class="header">
+                    <div class="left-aligned">Time</div>
+                </template>
                 <template>
-                    <time-str seconds="[[item.orginalOrder.timestamp]]"></time-str>
+                    <div class="left-aligned">
+                        <time-str seconds="[[item.orginalOrder.timestamp]]"></time-str>
+                    </div>
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="20px">
@@ -49,74 +48,77 @@
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column>
-                <template class="header">Hash</template>
-                <template><a href="#/order/[[item.orginalOrder.hash]]">
-                    <long-hash hash="[[item.orginalOrder.hash]]"></long-hash>
-                </a></template>
+                <template class="header">
+                    <div class="left-aligned">Hash</div>
+                </template>
+                <template>
+                    <div class="left-aligned">
+                        <a href="#/order/[[item.orginalOrder.hash]]">
+                            <long-hash hash="[[item.orginalOrder.hash]]"></long-hash>
+                        </a>
+                    </div>
+                </template>
             </vaadin-grid-column>
-
             <vaadin-grid-column width="50px">
                 <template class="header">Status</template>
                 <template>
                     <div class="horizontal end-justified layout">
-                        <paper-progress class="green" value="[[numberFormat(item.totalDealedAmountB)]]"
-                                        secondary-progress="60" max="[[numberFormat(item.orginalOrder.amountB)]]"
-                                        style="width: 50px"></paper-progress>
+                        <paper-progress value="[[numberFormat(item.totalDealedAmountB)]]" secondary-progress="60" max="[[numberFormat(item.orginalOrder.amountB)]]"></paper-progress>
                     </div>
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>
     </template>
     <script>
-        class RecentOrders extends Polymer.Element {
-            static get is() {
-                return 'recent-orders';
+    class RecentOrders extends Polymer.Element {
+        static get is() {
+            return 'recent-orders';
+        }
+
+        static get properties() {
+            return {
+                token: String
+            };
+        }
+
+        transtoUppercase(str) {
+            if (str) {
+                return str.toUpperCase();
             }
+            return '';
+        }
 
-            static get properties() {
-                return {
-                    token: String
-                };
+        tranHextoNum(hex) {
+            if (hex) {
+                return Number(hex);
             }
+            return '';
+        }
 
-            transtoUppercase(str) {
-                if (str) {
-                    return str.toUpperCase();
-                }
-                return '';
-            }
+        numberFormat(num) {
+            const size = this.tranHextoNum(num);
+            return (size / 1000000000000000000).toFixed(4);
+        }
 
-            tranHextoNum(hex) {
-                if (hex) {
-                    return Number(hex);
-                }
-                return '';
-            }
+        getPrice(s, b) {
 
-            numberFormat(num) {
-                const size = this.tranHextoNum(num);
-                return (size / 1000000000000000000).toFixed(4);
-            }
-
-            getPrice(s, b) {
-
-                const sell = this.numberFormat(s);
-                const buy = this.numberFormat(b);
-                return (sell / buy).toFixed(8);
-
-            }
-
-            typeStyle(tokenB) {
-
-                return tokenB === this.token ? 'var(--app-green-color)' : 'var(--app-red-color)';
-            }
-
-            getType(tokenB) {
-                return tokenB === this.token ? 'Buy' : 'Sell';
-            }
+            const sell = this.numberFormat(s);
+            const buy = this.numberFormat(b);
+            return (sell / buy).toFixed(8);
 
         }
 
-        window.customElements.define(RecentOrders.is, RecentOrders);
+        typeStyle(tokenB) {
+
+            return tokenB === this.token ? 'var(--app-green-color)' : 'var(--app-red-color)';
+        }
+
+        getType(tokenB) {
+            return tokenB === this.token ? 'Buy' : 'Sell';
+        }
+
+    }
+
+    window.customElements.define(RecentOrders.is, RecentOrders);
     </script>
 </dom-module>

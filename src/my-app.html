@@ -96,235 +96,239 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-404.html">
 <link rel="lazy-import" href="page-dev.html">
 <dom-module id="my-app">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      --app-primary-color: var(--google-blue-500);
-      --app-primary-color-dark: var(--google-blue-700);
-      --app-secondary-color: black;
-      --paper-spinner-color: var(--app-primary-color);
-      --paper-spinner-stroke-width: 1px;
-      --app-red-color: var(--paper-red-500);
-      --app-green-color: var(--paper-green-500);
-      --app-text-color: rgba(0, 0, 0, .78);
-      --app-text-color-light: rgba(0, 0, 0, .54);
-      display: block;
-    }
-
-    app-drawer-layout:not([narrow]) [drawer-toggle] {
-      display: none;
-    }
-
-    app-header {
-      /*color:var(--app-primary-color);*/
-      background-color: #fff;
-    }
-
-    app-header paper-icon-button {
-      --paper-icon-button-ink-color: white;
-    }
-
-
-    a[styleless] {
-      color: inherit;
-      text-decoration: none;
-    }
-
-
-    .drawer-list {
-      margin: 0 20px;
-    }
-
-    .drawer-list a {
-      display: block;
-      padding: 0 16px;
-      text-decoration: none;
-      color: var(--app-secondary-color);
-      line-height: 40px;
-    }
-
-    .drawer-list a.iron-selected {
-      color: black;
-      font-weight: bold;
-    }
-
-    #pages {
-      display: none;
-    }
-
-    #loading {
-      padding-top: 30vh;
-      color: var(--app-primary-color);
-      font-weight: 200;
-    }
-
-    #loading paper-spinner-lite {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 20px;
-    }
-
-    #loading iron-icon {
-      position: relative;
-      width: 40px;
-      height: 40px;
-      top: 60px;
-    }
-
-
-
-    paper-icon-button:not([narrow]) [drawer-toggle] {
-      display: none;
-    }
-    </style>
-    <!-- routing -->
-    <app-location use-hash-as-path route="{{route}}">
-    </app-location>
-    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}">
-    </app-route>
-    <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
-    </app-route>
-    <!-- hidden components -->
-    <signtosend-dialog id="signtosend"></signtosend-dialog>
-    <notification-panel id="notification"></notification-panel>
-    <!-- ajax -->
-    <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
-    <!-- global vars -->
-    <global-variable key="app-config" value="{{appConfig}}"></global-variable>
-    <global-variable key="wallet" value="{{wallet}}"></global-variable>
-    <!-- main layout -->
-    <app-drawer-layout fullbleed force-narrow>
-      <app-drawer no-focus-trap slot="drawer">
-        <a name="markets" href="#/markets">
-          <paper-item>Item 1</paper-item>
-        </a>
-        <a name="wallet" href="#/wallet">
-          <paper-item>Item 2</paper-item>
-        </a>
-      </app-drawer>
-      <app-header-layout has-scrolling-region fullbleed>
-        <app-header fixed slot="header" id="appHeader">
-          <!-- <looper-notification-bar id="notification"></looper-notification-bar> -->
-          <app-toolbar>
-            <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
-            <div spacer></div>
-            <iron-icon icon="menu"></iron-icon>
-            <div main-title>Looper</div>
-            <div>[[wallet.address]]</div>
-          </app-toolbar>
-        </app-header>
-        <div id="loading" class="vertical layout center center-justified">
-          <iron-icon id="loading-icon" icon="menu"></iron-icon>
-          <paper-spinner-lite alt="Loading configuration..." active class="thick"></paper-spinner-lite>
-          <div>Loading configuration...</div>
-        </div>
-        <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
-          <page-market name="market" id={{pageId}}></page-market>
-          <page-markets name="markets"></page-markets>
-          <page-wallet id="walletPage" name="wallet"> </page-wallet>
-          <page-rings name="rings"></page-rings>
-          <page-ring name="ring" id={{pageId}}></page-ring>
-          <page-orders name="orders"></page-orders>
-          <page-order name="order" id={{pageId}}></page-order>
-          <page-fills name="fills"></page-fills>
-          <page-fill name="fill" id={{pageId}}></page-fill>
-          <page-convert name="convert" id={{pageId}}></page-convert>
-          <page-authorize name="authorize"></page-authorize>
-          <page-transfer name="transfer"></page-transfer>
-          <page-settings name="settings"></page-settings>
-          <page-doc name="doc" markdown={{pageId}}></page-doc>
-          <page-dev name="dev"></page-dev>
-          <page-404 name="404"></page-404>
-        </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout>
-  </template>
-  <script>
-  class MyApp extends Polymer.Element {
-    static get is() { return 'my-app'; }
-
-    static get properties() {
-      return {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
-        pageId: {
-          type: String,
-          reflectToAttribute: true,
-        },
-        routeData: Object,
-        rootPath: String,
-        subrouteData: Object,
-        appConfig: {
-          type: Object,
-          observer: '_appConfigLoaded',
-        },
-        wallet: {
-          type: Object,
-          observer: '_walletChanged',
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {
+            --app-primary-color: var(--google-blue-500);
+            --app-primary-color-dark: var(--google-blue-700);
+            --app-secondary-color: black;
+            --paper-spinner-color: var(--app-primary-color);
+            --paper-spinner-stroke-width: 1px;
+            --app-red-color: var(--paper-red-500);
+            --app-green-color: var(--paper-green-500);
+            --app-text-color: rgba(0, 0, 0, .78);
+            --app-text-color-light: rgba(0, 0, 0, .54);
+            --vaadin-grid-header-cell: {
+                text-transform: uppercase;
+                /*background-color: #e0e0e0;*/
+            }
+            display: block;
         }
-      };
-    }
 
-    ready() {
-      super.ready();
-      this.ajax = this.$.ajax;
-      this.addEventListener('notification', e => this.$.notification.display(e.detail));
-      this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
-    }
-
-    _appConfigLoaded() {
-      this.$.loading.style.display = "none";
-      this.$.pages.style.display = "inherit";
-    }
-
-    _walletChanged(wallet) {
-      if (wallet) {
-        this.$.walletPage.subpage = "ready";
-        if (this.page !== "wallet") {
-          window.location = "/#/wallet";
+        app-drawer-layout:not([narrow]) [drawer-toggle] {
+            display: none;
         }
-      } else {
-        this.$.walletPage.subpage = "default";
-      }
+
+        app-header {
+            /*color:var(--app-primary-color);*/
+            background-color: #fff;
+        }
+
+        app-header paper-icon-button {
+            --paper-icon-button-ink-color: white;
+        }
+
+
+        a[styleless] {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        .drawer-list {
+            margin: 0 20px;
+        }
+
+        .drawer-list a {
+            display: block;
+            padding: 0 16px;
+            text-decoration: none;
+            color: var(--app-secondary-color);
+            line-height: 40px;
+        }
+
+        .drawer-list a.iron-selected {
+            color: black;
+            font-weight: bold;
+        }
+
+        #pages {
+            display: none;
+        }
+
+        #loading {
+            padding-top: 30vh;
+            color: var(--app-primary-color);
+            font-weight: 200;
+        }
+
+        #loading paper-spinner-lite {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        #loading iron-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            top: 60px;
+        }
+
+
+
+        paper-icon-button:not([narrow]) [drawer-toggle] {
+            display: none;
+        }
+        </style>
+        <!-- routing -->
+        <app-location use-hash-as-path route="{{route}}">
+        </app-location>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}">
+        </app-route>
+        <app-route route="{{subroute}}" pattern="/:pageId" data="{{subrouteData}}">
+        </app-route>
+        <!-- hidden components -->
+        <signtosend-dialog id="signtosend"></signtosend-dialog>
+        <notification-panel id="notification"></notification-panel>
+        <!-- ajax -->
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
+        <!-- global vars -->
+        <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+        <global-variable key="wallet" value="{{wallet}}"></global-variable>
+        <!-- main layout -->
+        <app-drawer-layout fullbleed force-narrow>
+            <app-drawer no-focus-trap slot="drawer">
+                <a name="markets" href="#/markets">
+                    <paper-item>Item 1</paper-item>
+                </a>
+                <a name="wallet" href="#/wallet">
+                    <paper-item>Item 2</paper-item>
+                </a>
+            </app-drawer>
+            <app-header-layout has-scrolling-region fullbleed>
+                <app-header fixed slot="header" id="appHeader">
+                    <!-- <looper-notification-bar id="notification"></looper-notification-bar> -->
+                    <app-toolbar>
+                        <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
+                        <div spacer></div>
+                        <iron-icon icon="menu"></iron-icon>
+                        <div main-title>Looper</div>
+                        <div>[[wallet.address]]</div>
+                    </app-toolbar>
+                </app-header>
+                <div id="loading" class="vertical layout center center-justified">
+                    <iron-icon id="loading-icon" icon="menu"></iron-icon>
+                    <paper-spinner-lite alt="Loading configuration..." active class="thick"></paper-spinner-lite>
+                    <div>Loading configuration...</div>
+                </div>
+                <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="404" role="main">
+                    <page-market name="market" id={{pageId}}></page-market>
+                    <page-markets name="markets"></page-markets>
+                    <page-wallet id="walletPage" name="wallet"> </page-wallet>
+                    <page-rings name="rings"></page-rings>
+                    <page-ring name="ring" id={{pageId}}></page-ring>
+                    <page-orders name="orders"></page-orders>
+                    <page-order name="order" id={{pageId}}></page-order>
+                    <page-fills name="fills"></page-fills>
+                    <page-fill name="fill" id={{pageId}}></page-fill>
+                    <page-convert name="convert" id={{pageId}}></page-convert>
+                    <page-authorize name="authorize"></page-authorize>
+                    <page-transfer name="transfer"></page-transfer>
+                    <page-settings name="settings"></page-settings>
+                    <page-doc name="doc" markdown={{pageId}}></page-doc>
+                    <page-dev name="dev"></page-dev>
+                    <page-404 name="404"></page-404>
+                </iron-pages>
+            </app-header-layout>
+        </app-drawer-layout>
+    </template>
+    <script>
+    class MyApp extends Polymer.Element {
+        static get is() { return 'my-app'; }
+
+        static get properties() {
+            return {
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged',
+                },
+                pageId: {
+                    type: String,
+                    reflectToAttribute: true,
+                },
+                routeData: Object,
+                rootPath: String,
+                subrouteData: Object,
+                appConfig: {
+                    type: Object,
+                    observer: '_appConfigLoaded',
+                },
+                wallet: {
+                    type: Object,
+                    observer: '_walletChanged',
+                }
+            };
+        }
+
+        ready() {
+            super.ready();
+            this.ajax = this.$.ajax;
+            this.addEventListener('notification', e => this.$.notification.display(e.detail));
+            this.addEventListener('signtosend', e => this.$.signtosend.show(e.detail));
+        }
+
+        _appConfigLoaded() {
+            this.$.loading.style.display = "none";
+            this.$.pages.style.display = "inherit";
+        }
+
+        _walletChanged(wallet) {
+            if (wallet) {
+                this.$.walletPage.subpage = "ready";
+                if (this.page !== "wallet") {
+                    window.location = "/#/wallet";
+                }
+            } else {
+                this.$.walletPage.subpage = "default";
+            }
+        }
+
+        static get observers() {
+            return [
+                '_routePageChanged(routeData.page)',
+                '_routeIdChanged(subrouteData.pageId)'
+            ];
+        }
+
+        _routePageChanged(page) {
+            console.log("new page: " + page);
+            this.page = page || 'markets';
+        }
+
+        _pageChanged(page) {
+            // Load page import on demand. Show 404 page if fails
+            const resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
+            Polymer.importHref(
+                resolvedPageUrl,
+                null,
+                this._showPage404.bind(this),
+                true);
+        }
+
+        _routeIdChanged(pageId) {
+            console.log("new pageId: " + pageId);
+            this.pageId = pageId || '';
+        }
+
+
+        _showPage404() {
+            this.page = '404';
+        }
     }
 
-    static get observers() {
-      return [
-        '_routePageChanged(routeData.page)',
-        '_routeIdChanged(subrouteData.pageId)'
-      ];
-    }
-
-    _routePageChanged(page) {
-      console.log("new page: " + page);
-      this.page = page || 'markets';
-    }
-
-    _pageChanged(page) {
-      // Load page import on demand. Show 404 page if fails
-      const resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
-      Polymer.importHref(
-        resolvedPageUrl,
-        null,
-        this._showPage404.bind(this),
-        true);
-    }
-
-    _routeIdChanged(pageId) {
-      console.log("new pageId: " + pageId);
-      this.pageId = pageId || '';
-    }
-
-
-    _showPage404() {
-      this.page = '404';
-    }
-  }
-
-  window.customElements.define(MyApp.is, MyApp);
-  </script>
+    window.customElements.define(MyApp.is, MyApp);
+    </script>
 </dom-module>
