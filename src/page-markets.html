@@ -10,129 +10,137 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-markets">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-
-    .decrease {
-      color: var(--app-green-color);
-    }
-
-    .increase {
-      color: var(--app-red-color);
-    }
-
-    </style>
-    <looper-page>
-      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
-      <looper-toolbar slot="secondary-toolbar" active-tab="markets">
-      </looper-toolbar>
-      <div class="sections">
-        <paper-card>
-          <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json" handle-as="json" last-response="{{data}}" debounce-duration="300">
-          </iron-ajax>
-          <vaadin-grid aria-label="Markets" items="[[_filterMarkets(data.result)]]">
-            <!-- items="[[_show(data.result, size)]]" -->
-            <vaadin-grid-column>
-              <template class="header">Market</template>
-              <template><a href="#/market/[[_a(item.market)]]">[[item.market]]</a></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column>
-              <template class="header">Last Price</template>
-              <template><pretty-number v="[[item.last]]" d=4></pretty-number></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="60px">
-              <template class="header">Change</template>
-              <template>
-                <div class$="[[_class(item.change)]]">[[_showChange(item.change)]]</pretty-number></div>
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">24Hr Volume</template>
-              <template><pretty-number v="[[item.vol]]" d=2></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Bid</template>
-              <template><pretty-number v="[[item.buy]]" d=2></template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-              <template class="header">Ask</template>
-              <template><pretty-number v="[[item.sell]]" d=2></template>
-            </vaadin-grid-column>
-          </vaadin-grid>
-        </paper-card>
-        <div class="footer-spacer flex"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageMarkets extends Polymer.Element {
-    static get is() { return 'page-markets'; }
-
-    ready() {
-      super.ready();
-      this.size = 10;
-    }
-
-    _filter(datas){
-        let onShowMarkets = this.appConfig.markets
-        let newArray = new Array()
-        for (var x in datas){
-            let item = datas[x]
-            var market = item.market.toUpperCase()
-            if(onShowMarkets.indexOf(market) >-1){
-                newArray.push(item)
-            }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
         }
-        return newArray
+
+        .decrease {
+            color: var(--app-green-color);
+        }
+
+        .increase {
+            color: var(--app-red-color);
+        }
+        </style>
+        <looper-page>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+            <looper-toolbar slot="secondary-toolbar" active-tab="markets">
+            </looper-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/tickers.json" handle-as="json" last-response="{{data}}" debounce-duration="300">
+                    </iron-ajax>
+                    <vaadin-grid aria-label="Markets" items="[[_filterMarkets(data.result)]]">
+                        <!-- items="[[_show(data.result, size)]]" -->
+                        <vaadin-grid-column>
+                            <template class="header">Market</template>
+                            <template><a href="#/market/[[_a(item.market)]]">[[item.market]]</a></template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column>
+                            <template class="header">Last Price</template>
+                            <template>
+                                <pretty-number v="[[item.last]]" d=4></pretty-number>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="60px">
+                            <template class="header">Change</template>
+                            <template>
+                                <div class$="[[_class(item.change)]]">[[_showChange(item.change)]]</pretty-number>
+                                </div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">24Hr Volume</template>
+                            <template>
+                                <pretty-number v="[[item.vol]]" d=2>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">Bid</template>
+                            <template>
+                                <pretty-number v="[[item.buy]]" d=2>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="50px">
+                            <template class="header">Ask</template>
+                            <template>
+                                <pretty-number v="[[item.sell]]" d=2>
+                            </template>
+                        </vaadin-grid-column>
+                    </vaadin-grid>
+                </paper-card>
+                <div class="footer-spacer flex"></div>
+                <looper-footer></looper-footer>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+    class PageMarkets extends Polymer.Element {
+        static get is() { return 'page-markets'; }
+
+        ready() {
+            super.ready();
+            this.size = 10;
+        }
+
+        _filter(datas) {
+            let onShowMarkets = this.appConfig.markets
+            let newArray = new Array()
+            for (var x in datas) {
+                let item = datas[x]
+                var market = item.market.toUpperCase()
+                if (onShowMarkets.indexOf(market) > -1) {
+                    newArray.push(item)
+                }
+            }
+            return newArray
+        }
+
+        _filterMarkets(datas) {
+            if (!datas) return;
+            return this._filter(datas)
+        }
+
+        _a(value) {
+            if (!value) {
+                return "#";
+            }
+            let array = value.split("/")
+            return array[0].toLowerCase() + "-" + array[1].toLowerCase()
+        }
+
+        _show(data, size) {
+            if (!data) {
+                return;
+            }
+            return data.slice(0, size)
+        }
+
+        _showAll() {
+            if (!this.data) {
+                return;
+            }
+            this.size = this.data.result.size
+        }
+
+        _class(value) {
+            if (value > 0) return "increase";
+            else if (value < 0) return "decrease";
+            else return "";
+        }
+
+        _showChange(value) {
+            if (value > 0) {
+                return "+" + value.toFixed(1) + "%";
+            } else if (value < 0) {
+                return value.toFixed(1) + "%";
+            } else { return '-'; }
+        }
     }
 
-    _filterMarkets(datas){
-        if(!datas) return;
-        return this._filter(datas)
-    }
-
-    _a(value) {
-      if (!value) {
-        return "#";
-      }
-      let array = value.split("/")
-      return array[0].toLowerCase()+"-"+array[1].toLowerCase()
-    }
-
-    _show(data, size) {
-      if (!data) {
-        return;
-      }
-      return data.slice(0, size)
-    }
-
-    _showAll() {
-      if (!this.data) {
-        return;
-      }
-      this.size = this.data.result.size
-    }
-
-    _class(value) {
-      if (value > 0) return "increase";
-      else if (value < 0) return "decrease";
-      else return "";
-    }
-
-    _showChange(value) {
-      if (value > 0) {
-        return "+" + value.toFixed(1) + "%";
-      } else if (value < 0) {
-        return value.toFixed(1) + "%";
-      } else { return '-'; }
-    }
-  }
-
-  window.customElements.define(PageMarkets.is, PageMarkets);
-  </script>
+    window.customElements.define(PageMarkets.is, PageMarkets);
+    </script>
 </dom-module>

@@ -1,90 +1,90 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="notification-panel">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {}
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {}
 
-    paper-toast {
-      width: 100%;
-      text-align: center;
-      min-width: 0;
-      border-radius: 0;
-      margin: 0;
-      height: 160px;
+        paper-toast {
+            width: 100%;
+            text-align: center;
+            min-width: 0;
+            border-radius: 0;
+            margin: 0;
+            height: 160px;
+        }
+
+        paper-toast a {
+            color: white;
+        }
+
+        paper-toast.error {
+            background-color: var(--google-red-500);
+        }
+
+        paper-toast.warning {
+            background-color: var(--paper-amber-700);
+            color: black;
+        }
+
+        paper-toast.info {
+            background-color: var(--app-primary-color);
+        }
+
+        iron-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        paper-icon-button:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        paper-icon-button[disabled]:hover {
+            background-color: transparent;
+        }
+        </style>
+        <paper-toast id="bottom" fit-bottom class$="[[bottomClass]]">
+            <div class="horizontal center center-justified layout">
+                <paper-icon-button noink disabled></paper-icon-button>
+                <div class="vertical center flex layout">
+                    <div class="flex"></div>
+                    <iron-icon icon="[[bottomClass]]"></iron-icon>
+                    <div>[[text]] <a styleless href$="[[link]]">[[linkText]]</a></div>
+                    <div class="flex"></div>
+                </div>
+                <paper-icon-button noink icon="close" on-click="close"></paper-icon-button>
+            </div>
+        </paper-toast>
+    </template>
+    <script>
+    class NotificationPanel extends Polymer.Element {
+        static get is() { return 'notification-panel'; }
+
+        static get properties() {
+            return {};
+        }
+
+        display(detail) {
+            this.showOnBottom(detail);
+        }
+
+        close() {
+            this.$.bottom.hide();
+        }
+
+        showOnBottom(detail) {
+            this.$.bottom.close();
+            this.text = detail.text;
+            this.link = detail.link;
+            this.linkText = detail.linkText;
+            this.$.bottom.duration = detail.duration;
+            this.bottomClass = detail.category;
+            this.$.bottom.open();
+        }
+
     }
 
-    paper-toast a {
-      color: white;
-    }
-
-    paper-toast.error {
-      background-color: var(--google-red-500);
-    }
-
-    paper-toast.warning {
-      background-color: var(--paper-amber-700);
-      color: black;
-    }
-
-    paper-toast.info {
-      background-color: var(--app-primary-color);
-    }
-
-    iron-icon {
-      width: 36px;
-      height: 36px;
-    }
-
-    paper-icon-button:hover {
-      background-color: rgba(0, 0, 0, .1);
-    }
-
-    paper-icon-button[disabled]:hover {
-      background-color: transparent;
-    }
-    </style>
-    <paper-toast id="bottom" fit-bottom class$="[[bottomClass]]">
-      <div class="horizontal center center-justified layout">
-        <paper-icon-button noink disabled></paper-icon-button>
-        <div class="vertical center flex layout">
-          <div class="flex"></div>
-          <iron-icon icon="[[bottomClass]]"></iron-icon>
-          <div>[[text]] <a styleless href$="[[link]]">[[linkText]]</a></div>
-          <div class="flex"></div>
-        </div>
-        <paper-icon-button noink icon="close" on-click="close"></paper-icon-button>
-      </div>
-    </paper-toast>
-  </template>
-  <script>
-  class NotificationPanel extends Polymer.Element {
-    static get is() { return 'notification-panel'; }
-
-    static get properties() {
-      return {};
-    }
-
-    display(detail) {
-      this.showOnBottom(detail);
-    }
-
-    close() {
-      this.$.bottom.hide();
-    }
-
-    showOnBottom(detail) {
-      this.$.bottom.close();
-      this.text = detail.text;
-      this.link = detail.link;
-      this.linkText = detail.linkText;
-      this.$.bottom.duration = detail.duration;
-      this.bottomClass = detail.category;
-      this.$.bottom.open();
-    }
-
-  }
-
-  window.customElements.define(NotificationPanel.is, NotificationPanel);
-  </script>
+    window.customElements.define(NotificationPanel.is, NotificationPanel);
+    </script>
 </dom-module>
