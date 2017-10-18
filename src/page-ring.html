@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/ringMined.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+
     <looper-page>
       <simple-toolbar slot="secondary-toolbar" title="Ring" id="[[id]]" back-link="#/rings"></simple-toolbar>
       <div class="sections">
@@ -37,7 +38,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="horizontal layout">
               <paper-item class="position" style="width: 575px">
                 <paper-item-body two-line>
-                  <div class="title"> Miner</div>
+                  <!--<div class="title"> Miner</div>-->
+                    <div><ethereum-signer></ethereum-signer></div>
                   <div secondary><a href="https://etherscan.io/address/[[ring.miner]]" class="decorations">[[ring.miner]]</a></div>
                 </paper-item-body>
               </paper-item>
