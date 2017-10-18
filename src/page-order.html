@@ -17,42 +17,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-
-      .line {
+      .container {
         @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-      }
-
-      .summary{
-        @apply(--layout-vertical);
-        @apply(--layout-center-justified);
-      }
-
-      .summary .line{
-        @apply(--layout-horizontal);
-        @apply(--layout-center-justified);
-        text-align: right;
+        @apply(--layout-start-justified);
+        text-align: left;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.78);
-        border: none;
-        padding-top: 16px;
         height: 100%;
         line-height: 32px;
       }
-
-      .summary .line .title {
-        width: 100px;
-        font-weight: 500;
+      .container .left {
+        width: 48%;
+        #border-top:     1px  solid #bcbcbc;
+        border-bottom:  1px  solid #bcbcbc;
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
       }
-
-      .summary .line .column1 {
-         width: 100px;
+      .container .middle {
+        width: 4%;
       }
-      .summary .line .column2 {
-        width: 100px;
+      .container .right {
+        width: 48%;
+        #border-top:      1px solid #bcbcbc;
+        border-bottom:  1px solid #bcbcbc;
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
       }
-      .summary .line .column3 {
-        width: 100px;
+      .key {
+        width: 40%;
+        padding-left: 10px;
+      }
+      .value {
+        width: 60%;
+        padding-left: 10px;
       }
 
     </style>
@@ -73,9 +70,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 debounce-duration="300">
         </iron-ajax>
 
-        <div style="padding-top: 10px;">Summary</div>
+        <div style="padding-top: 10px;">Overview</div>
+        <!-- use key-value-panel
         [[_fillInArray(order)]]
         <key-value-panel datas="{{keyValueArray}}"></key-value-panel>
+        -->
+        <paper-card>
+          <div class="container">
+            <div class="left">
+              <div class="key">Original Sell Amount:</div>
+              <div class="value">[[_orginalSell(order)]]</div>
+            </div>
+            <div class="middle"></div>
+            <div class="right">
+              <div class="key">Original Buy Amount:</div>
+              <div class="value">[[_originalBuy(order)]]</div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="left">
+              <div class="key">Filled Sell Amount:</div>
+              <div class="value">[[_filledSell(order)]]</div>
+            </div>
+            <div class="middle"></div>
+            <div class="right">
+              <div class="key">Filled Buy Amount:</div>
+              <div class="value">[[_filledBuy(order)]]</div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="left">
+              <div class="key">Status:</div>
+              <div class="value">[[order.result.status]]</div>
+            </div>
+            <div class="middle"></div>
+            <div class="right"></div>
+          </div>
+        </paper-card>
 
         <div style="padding-top: 10px;">Fills</div>
         <paper-card>
@@ -101,6 +132,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ready(){
         super.ready();
         console.log("order:"+this.id)
+    }
+    _orginalSell(data){
+        return data.result.orginalOrder.amountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"
+    }
+    _originalBuy(data){
+        return data.result.orginalOrder.amountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"
+    }
+    _filledSell(data){
+        return data.result.totalDealedAmountS+"("+this._formatValue(data.result.orginalOrder.tokenS)+")"
+    }
+    _filledBuy(data){
+        return data.result.totalDealedAmountB+"("+this._formatValue(data.result.orginalOrder.tokenB)+")"
     }
     _fillInArray(data){
         if(!data) return [];
