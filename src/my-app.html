@@ -63,7 +63,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/vaadin-radio-button/vaadin-radio-button.html">
 <link rel="import" href="../bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="../bower_components/vaadin-date-picker/vaadin-date-picker.html">
-<link rel="import" href="../bower_components/global-variable/global-variable.html">
 <link rel="import" href="../bower_components/scary-cookie-consent/scary-cookie-consent.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="looper-page/looper-toolbar.html">
@@ -77,8 +76,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="utils/pretty-number.html">
 <link rel="import" href="utils/long-hash.html">
 <link rel="import" href="utils/time-str.html">
+<link rel="import" href="utils/global-variable.html">
 <link rel="import" href="utils/notification-panel.html">
-<link rel="import" href="market/recent-fills.html">
 <link rel="lazy-import" href="page-markets.html">
 <link rel="lazy-import" href="page-market.html">
 <link rel="lazy-import" href="page-rings.html">
@@ -176,7 +175,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             top: 60px;
         }
 
-
+        #lockButton.openned {
+            background-color: var(--app-red-color);
+            color: white;
+            border-radius: 50%;
+        }
 
         paper-icon-button:not([narrow]) [drawer-toggle] {
             display: none;
@@ -213,9 +216,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <app-toolbar>
                         <!-- <paper-icon-button icon="menu" drawer-toggle></paper-icon-button> -->
                         <div spacer></div>
-                        <iron-icon icon="menu"></iron-icon>
-                        <div main-title>Looper</div>
+                        <a styleless href="/#/">
+                            <iron-icon icon="menu"></iron-icon>
+                        </a>
+                        <a styleless href="/#/">
+                            <div main-title>Looper</div>
+                        </a>
+                        <div condensed-title></div>
                         <div>[[wallet.address]]</div>
+                        <paper-icon-button id="lockButton" class$="[[lockClass]]" on-click="_lockButtonClick" icon="lock"></paper-icon-button>
+                        <div spacer></div>
                     </app-toolbar>
                 </app-header>
                 <div id="loading" class="vertical layout center center-justified">
@@ -301,6 +311,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 '_routePageChanged(routeData.page)',
                 '_routeIdChanged(subrouteData.pageId)'
             ];
+        }
+
+        _lockButtonClick() {
+            this.$.lockButton.icon = "lock-open";
+            this.lockClass = "openned";
         }
 
         _routePageChanged(page) {

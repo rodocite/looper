@@ -11,114 +11,107 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/scary-cookie/scary-cookie.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-settings">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
 
-    app-toolbar {
-      color: white;
-      background-color: var(--app-primary-color);
-    }
+        app-toolbar {
+            color: white;
+            background-color: var(--app-primary-color);
+        }
 
-    paper-icon-button {
-      color: white;
-    }
+        paper-icon-button {
+            color: white;
+        }
 
-    .item {
-      /*background-color: red;*/
-      padding: 16px 32px 16px 32px;
-    }
+        .item {
+            /*background-color: red;*/
+            padding-bottom: 16px;
+        }
 
-    .label {
-      min-width: 200px;
-      color: var(--app-text-color-light);
-    }
+        .label {
+            min-width: 200px;
+            color: var(--app-text-color-light);
+        }
 
-    vaadin-combo-box {
-      width: 260px;
-    }
-    </style>
-    <looper-page>
-      <global-variable key="wallet" value="{{wallet}}"></global-variable>
-      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
-      <global-variable key="settings-lang" value="{{settingsLang}}"></global-variable>
-      <scary-cookie name="settings-lang" value="{{settingsLang}}"></scary-cookie>
-      <global-variable key="settings-currency" value="{{settingsCurrency}}"></global-variable>
-      <scary-cookie name="settings-currency" value="{{settingsCurrency}}"></scary-cookie>
-      <global-variable key="settings-relay" value="{{settingsRelay}}"></global-variable>
-      <scary-cookie name="settings-relay" value="{{settingsRelay}}"></scary-cookie>
-      <app-toolbar slot="secondary-toolbar">
-        <paper-icon-button noink disabled></paper-icon-button>
-        <div condensed-title></div>
-        Settings
-        <div condensed-title></div>
-        <a href="/#/">
-          <paper-icon-button noink icon="close"></paper-icon-button>
-        </a>
-      </app-toolbar>
-      <div class="sections">
-        <paper-card>
-          <div class="card-content vertical center layout">
-            <div class="vertical layout">
-              <div class="item horizontal center layout">
-                <div class="label">Language</div>
-                <vaadin-combo-box id="lang" placeholder="English" items="{{appConfig.langs}}"></vaadin-combo-box>
-              </div>
-              <div class="item horizontal center layout">
-                <div class="label">Currency</div>
-                <vaadin-combo-box id="currency" placeholder="USD" items="{{appConfig.fiat}}"></vaadin-combo-box>
-              </div>
-              <div class="item horizontal center layout">
-                <div class="label">Relay</div>
-                <vaadin-combo-box id="relay" placeholder="Default Looper Relay" items="{{appConfig.relays}}"></vaadin-combo-box>
-              </div>
+        vaadin-combo-box {
+            width: 260px;
+        }
+        </style>
+        <looper-page>
+            <global-variable key="wallet" value="{{wallet}}"></global-variable>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+            <global-variable key="settings-lang" value="{{settingsLang}}"></global-variable>
+            <scary-cookie name="settings-lang" value="{{settingsLang}}"></scary-cookie>
+            <global-variable key="settings-currency" value="{{settingsCurrency}}"></global-variable>
+            <scary-cookie name="settings-currency" value="{{settingsCurrency}}"></scary-cookie>
+            <global-variable key="settings-relay" value="{{settingsRelay}}"></global-variable>
+            <scary-cookie name="settings-relay" value="{{settingsRelay}}"></scary-cookie>
+            <looper-toolbar slot="secondary-toolbar" active-tab="settings">
+            </looper-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <div class="card-content vertical center layout">
+                        <div class="vertical layout">
+                            <div class="item horizontal center layout">
+                                <div class="label">Language</div>
+                                <vaadin-combo-box id="lang" placeholder="English" items="{{appConfig.langs}}"></vaadin-combo-box>
+                            </div>
+                            <div class="item horizontal center layout">
+                                <div class="label">Currency</div>
+                                <vaadin-combo-box id="currency" placeholder="USD" items="{{appConfig.fiat}}"></vaadin-combo-box>
+                            </div>
+                            <div class="item horizontal center layout">
+                                <div class="label">Relay</div>
+                                <vaadin-combo-box id="relay" placeholder="Default Looper Relay" items="{{appConfig.relays}}"></vaadin-combo-box>
+                            </div>
+                        </div>
+                    </div>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
             </div>
-          </div>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageSettings extends Polymer.Element {
-    static get is() {
-      return 'page-settings';
+        </looper-page>
+    </template>
+    <script>
+    class PageSettings extends Polymer.Element {
+        static get is() {
+            return 'page-settings';
+        }
+
+        static get properties() {
+            return {};
+        }
+
+
+        ready() {
+            super.ready();
+            this.$.lang.value = this.settingsLang || "en";
+            this.$.currency.value = this.settingsCurrency || "usd";
+            this.$.relay.value = this.settingsRelay || "//relay1.loopring.io";
+
+            var _this = this;
+
+            this.$.lang.addEventListener('value-changed', function() {
+                _this.settingsLang = _this.$.lang.value || "en";
+                console.log(_this.settingsLang);
+            });
+
+            this.$.currency.addEventListener('value-changed', function() {
+                _this.settingsCurrency = _this.$.currency.value || "usd";
+                console.log(_this.settingsCurrency);
+            });
+
+            this.$.relay.addEventListener('value-changed', function() {
+                _this.settingsRelay = _this.$.relay.value || "//relay1.loopring.io";
+                console.log(_this.settingsRelay);
+            });
+        }
     }
 
-    static get properties() {
-      return {};
-    }
-
-
-    ready() {
-      super.ready();
-      this.$.lang.value = this.settingsLang || "en";
-      this.$.currency.value = this.settingsCurrency || "usd";
-      this.$.relay.value = this.settingsRelay || "//relay1.loopring.io";
-
-      var _this = this;
-
-      this.$.lang.addEventListener('value-changed', function() {
-        _this.settingsLang = _this.$.lang.value || "en";
-        console.log(_this.settingsLang);
-      });
-
-      this.$.currency.addEventListener('value-changed', function() {
-        _this.settingsCurrency = _this.$.currency.value || "usd";
-        console.log(_this.settingsCurrency);
-      });
-
-      this.$.relay.addEventListener('value-changed', function() {
-        _this.settingsRelay = _this.$.relay.value || "//relay1.loopring.io";
-        console.log(_this.settingsRelay);
-      });
-    }
-  }
-
-  window.customElements.define(PageSettings.is, PageSettings);
-  </script>
+    window.customElements.define(PageSettings.is, PageSettings);
+    </script>
 </dom-module>

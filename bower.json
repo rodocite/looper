@@ -43,7 +43,6 @@
     "vaadin-button": "vaadin/vaadin-button#^1.0.4",
     "vaadin-progress-bar": "vaadin/vaadin-progress-bar#^1.0.0-alpha4",
     "highstock": "highstock-release#^6.0.1",
-    "global-variable": "trofrigo/global-variable#^0.1.4",
     "paper-spinner": "PolymerElements/paper-spinner#^2.0.0",
     "vaadin-valo-theme": "vaadin/vaadin-valo-theme#^0.3.2",
     "scary-cookie": "Scarygami/scary-cookie#^2.0.0",
@@ -51,10 +50,8 @@
     "paper-progress": "PolymerElements/paper-progress#^2.0.1",
     "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.1",
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
-    "web3": "^0.19.0",
-    "ethereum.js": "^0.0.15",
-    "wallet-address-validator": "crypto-wallet-address-validator#^0.2.1",
-    "browser-builds": "ethereumjs/browser-builds"
+    "iron-label": "PolymerElements/iron-label#^2.0.0",
+    "paper-fab": "PolymerElements/paper-fab#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",

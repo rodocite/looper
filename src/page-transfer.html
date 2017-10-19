@@ -10,204 +10,234 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-transfer">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
 
-    .container {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-justified);
-      margin: 50px;
-    }
+        .container {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+            margin: 50px;
+        }
 
-    .flexleft {
-      @apply(--layout-vertical);
-      width: 400px;
-      #background-color: mediumvioletred;
-    }
+        .flexleft {
+            @apply(--layout-vertical);
+            width: 400px;
+            #background-color: mediumvioletred;
+        }
 
-    .flexright {
-      @apply(--layout-vertical);
-      width: 500px;
-      padding-left: 40px;
-      margin-left: 100px;
-      #background-color: #b0e0e6;
-    }
+        .flexright {
+            @apply(--layout-vertical);
+            width: 500px;
+            padding-left: 40px;
+            margin-left: 100px;
+            #background-color: #b0e0e6;
+        }
 
-    .flexright>.hr {
-      width: 350px;
-    }
+        .flexright>.hr {
+            width: 350px;
+        }
 
-    .fontTitle {
-      font-family: Georgia, serif;
-      font-size: 1.2em;
-    }
+        .fontTitle {
+            font-family: Georgia, serif;
+            font-size: 1.2em;
+        }
 
-    .fontContent {
-      font-family: Georgia, serif;
-      font-size: 0.875em;
-    }
+        .fontContent {
+            font-family: Georgia, serif;
+            font-size: 0.875em;
+        }
 
-    iron-list {
-      flex: 1 1 auto;
-    }
+        iron-list {
+            flex: 1 1 auto;
+        }
 
-    .hidden {
-      display: none;
-    }
+        .hidden {
+            display: none;
+        }
 
-    iron-input>input {
-      width: 350px;
-    }
+        iron-input>input {
+            width: 350px;
+        }
 
-    iron-input>.amount {
-      width: 150px;
-    }
+        iron-input>.amount {
+            width: 150px;
+        }
 
-    iron-input[invalid]>input {
-      border: 1px solid red;
-      background-color: #FFCDD2;
-    }
+        iron-input[invalid]>input {
+            border: 1px solid red;
+            background-color: #FFCDD2;
+        }
 
-    .line {
-      @apply(--layout-horizontal);
-      @apply(--layout-start-justified);
-      margin-top: 10px;
-    }
+        .line {
+            @apply(--layout-horizontal);
+            @apply(--layout-start-justified);
+            margin-top: 10px;
+        }
 
-    .lineHoriziontal {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-justified);
-      margin-top: 20px;
-    }
+        .lineHoriziontal {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+            margin-top: 20px;
+        }
 
-    paper-dropdown-menu.noLable {
-      --paper-input-container-label: {
-        color: var(--paper-pink-500);
-        font-style: italic;
-        text-align: center;
-        font-weight: bold;
-      }
-      ;
-      --paper-input-container-input: {
-        color: var(--paper-indigo-500);
-        font-style: normal;
-        font-family: serif;
-        text-transform: uppercase;
-      }
-      ;
-    }
-    </style>
-    <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
-      <global-variable key="wallet" value="{{wallet}}"></global-variable>
-      <div class="sections">
-        <paper-card>
-          <div class="container">
-            <div class="flexleft">
-              <div class="line">
-                Send To:
-              </div>
-              <div class="line">
-                <iron-input bind-value="{{bindValue}}">
-                  <input value="{{value::input}}">
-                </iron-input>
-              </div>
-              <div class="line">
-                Amount to Send:
-              </div>
-              <div class="line">
-                <iron-input bind-value="{{bindValue}}">
-                  <input value="{{value::input}}" class="amount">
-                </iron-input>
-                <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
-                  <paper-listbox slot="dropdown-content" selected="0">
-                    <paper-item>LRC</paper-item>
-                    <paper-item>EOS</paper-item>
-                  </paper-listbox>
-                </paper-dropdown-menu>
-              </div>
-              <div class="line">
-                Gas Limit:
-              </div>
-              <div class="line">
-                <iron-input bind-value="{{bindValue}}">
-                  <input value="{{value::input}}">
-                </iron-input>
-              </div>
-              <div class="line">
-                <a on-click="handleClick">+Advanced: Add Data</a>
-              </div>
-              <div class="hidden" id="hiddenExtData">
-                <div class="line">
-                  Data:
-                </div>
-                <div class="line">
-                  <iron-input bind-value="{{bindValue}}">
-                    <input value="{{value::input}}">
-                  </iron-input>
-                </div>
-              </div>
-              <div class="lineHoriziontal">
-                <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
-              </div>
-            </div>
-            <div class="flexright">
-              <div class="line fontTitle">
-                Account Address:
-              </div>
-              <div class="line fontContent">
-                [[wallet.address]]
-              </div>
-              <div class="line fontTitle">
-                Account Balance:
-              </div>
-              <div class="line fontContent">
-                0 ETH
-              </div>
-              <div class="hr">
-                <hr>
-              </div>
-              <div class="line fontTitle">
-                Token Balances:
-              </div>
-              <div class="line">
-                <iron-ajax url="http://127.0.0.1:8081/testData-tokens.json" last-response="{{data}}" auto></iron-ajax>
-                <iron-list items="[[data]]" as="item">
-                  <template>
-                    <div class="fontContent">
-                      [[item.symbol]] [[item.balance]]
+        paper-dropdown-menu.noLable {
+            --paper-input-container-label: {
+                color: var(--paper-pink-500);
+                font-style: italic;
+                text-align: center;
+                font-weight: bold;
+            }
+            ;
+            --paper-input-container-input: {
+                color: var(--paper-indigo-500);
+                font-style: normal;
+                font-family: serif;
+                text-transform: uppercase;
+            }
+            ;
+        }
+        </style>
+        <looper-page>
+            <global-variable key="wallet" value="{{wallet}}"></global-variable>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+            <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <div class="container">
+                        <div class="flexleft">
+                            <div class="line">
+                                Send To:
+                            </div>
+                            <div class="line">
+                                <iron-input bind-value="{{bindValue}}">
+                                    <input value="{{value::input}}">
+                                </iron-input>
+                            </div>
+                            <div class="line">
+                                Amount to Send:
+                            </div>
+                            <div class="line">
+                                <iron-input bind-value="{{bindValue}}">
+                                    <input value="{{value::input}}" class="amount">
+                                </iron-input>
+                                <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
+                                    <paper-listbox slot="dropdown-content" selected="0">
+                                        <paper-item>LRC</paper-item>
+                                        <paper-item>EOS</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+                            <div class="line">
+                                Gas Limit:
+                            </div>
+                            <div class="line">
+                                <iron-input bind-value="{{bindValue}}">
+                                    <input value="{{value::input}}">
+                                </iron-input>
+                            </div>
+                            <div class="line">
+                                <a on-click="handleClick">+Advanced: Add Data</a>
+                            </div>
+                            <div class="hidden" id="hiddenExtData">
+                                <div class="line">
+                                    Data:
+                                </div>
+                                <div class="line">
+                                    <iron-input bind-value="{{bindValue}}">
+                                        <input value="{{value::input}}">
+                                    </iron-input>
+                                </div>
+                            </div>
+                            <div class="lineHoriziontal">
+                                <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
+                            </div>
+                        </div>
+                        <div class="flexright">
+                            <div class="line fontTitle">
+                                Account Address:
+                            </div>
+                            <div class="line fontContent">
+                                [[wallet.address]]
+                            </div>
+                            <div class="line fontTitle">
+                                Account Balance:
+                            </div>
+                            <div class="line fontContent">
+                                0 ETH
+                            </div>
+                            <div class="hr">
+                                <hr>
+                            </div>
+                            <div class="line fontTitle">
+                                Token Balances:
+                            </div>
+                            <div class="line">
+                                <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
+                                <iron-list items="[[data.result.tokens]]" as="item">
+                                    <template>
+                                        <div class="fontContent">
+                                            [[_findSymbol(item.contract)]] [[item.balance]]
+                                        </div>
+                                    </template>
+                                </iron-list>
+                            </div>
+                        </div>
                     </div>
-                  </template>
-                </iron-list>
-              </div>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
             </div>
-          </div>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageTransfer extends Polymer.Element {
-    static get is() { return 'page-transfer'; }
-    handleClick() {
-      var extData = this.$.hiddenExtData;
-      if (extData.style.display == 'block') {
-        extData.style.display = 'none';
-      } else {
-        extData.style.display = 'block';
-      }
+        </looper-page>
+    </template>
+    <script>
+    class PageTransfer extends Polymer.Element {
+        static get is() { return 'page-transfer'; }
+        handleClick() {
+            var extData = this.$.hiddenExtData;
+            if (extData.style.display == 'block') {
+                extData.style.display = 'none';
+            } else {
+                extData.style.display = 'block';
+            }
+        }
+
+        _findTokenConfig(address) {
+            var tokens = this.appConfig.tokens;
+            for (var x in tokens) {
+                var token = tokens[x];
+                if (token.contract == address) {
+                    return token;
+                }
+            }
+        }
+
+        _toLowerSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit.toLowerCase()
+            } else {
+                return "?";
+            }
+        }
+
+        _findSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit
+            } else {
+                return "?";
+            }
+        }
+
+        signToSend() {
+            var detail = { raw: "raw message" };
+            this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+        }
     }
-    signToSend() {
-      var detail = { raw: "raw message" };
-      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
-    }
-  }
-  window.customElements.define(PageTransfer.is, PageTransfer);
-  </script>
+    window.customElements.define(PageTransfer.is, PageTransfer);
+    </script>
 </dom-module>

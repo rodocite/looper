@@ -9,97 +9,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-
 <dom-module id="page-fill">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
-      }
-      .item{
-        @apply(--layout-horizontal);
-        @apply(--layout-start-justified);
-        text-align: left;
-        font-size: 14px;
-        color: var(--app-text-color);
-        padding-top: 16px;
-        height: 100%;
-        line-height: 32px;
-      }
-      .item .key {
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-        width:50%;
-        padding-right: 10px;
-        font-weight: 500;
-      }
-      .item .value {
-        @apply(--layout-horizontal);
-        @apply(--layout-start-justified);
-        width:50%;
-        padding-left: 10px;
-      }
-      .item .array{
-        @apply(--layout-vertical);
-        @apply(--layout-start-justified);
-        width:50%;
-        padding-left: 10px;
-      }
-    </style>
-    <looper-page>
-      <simple-toolbar slot="secondary-toolbar" title="Fill" id="[[id]]" back-link="#/fills"></simple-toolbar>
-      <div class="sections">
-        <div style="padding-top: 10px; padding-top: 10px;">Fill</div>
-        <paper-card>
-          <recent-fills filter-mine name="myfills"></recent-fills>
-        </paper-card>
-        <iron-ajax
-                auto
-                url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/fill.json"
-                handle-as="json"
-                last-response="{{order}}"
-                debounce-duration="300">
-        </iron-ajax>
-
-        <div style="padding-top: 10px; padding-top: 10px;">Orders</div>
-        <paper-card>
-          <div class="item">
-            <div class='key'>Tx Hash</div>
-            <div class='value'><a href="#">[[order.result.txHash]]</a></div>
-          </div>
-          <div class="item">
-            <div class='key'>Ring Hash</div>
-            <div class='value'><a href="#/ring/[[order.result.ringHash]]">[[order.result.ringHash]]</a></div>
-          </div>
-          <div class="item">
-            <div class='key'>Orders</div>
-            <div class='array'>
-              <ul>
-                <template is="dom-repeat" items="[[order.result.orders]]" as="order">
-                  <li><a href="#/order/[[order]]">[[order]]</a></li>
-                </template>
-              </ul>
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+        </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Fill" id="[[id]]" back-link="#/fills"></simple-toolbar>
+            <div class="sections">
+                <paper-card transparent>Fill</paper-card>
+                <paper-card>
+                    <recent-fills filter-mine name="myfills"></recent-fills>
+                </paper-card>
+                <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/fill.json" handle-as="json" last-response="{{order}}" debounce-duration="300">
+                </iron-ajax>
+                <paper-card transparent>Orders</paper-card>
+                <paper-card>
+                    <div class="horizontal wrap layout">
+                        <paper-item class="flex">
+                            <paper-item-body two-line>
+                                <div class="title"> Tx Hash</div>
+                                <div secondary>
+                                    <a href="#">
+                                        <div class="long-hash">[[order.result.txHash]]</div>
+                                    </a>
+                                </div>
+                            </paper-item-body>
+                        </paper-item>
+                        <paper-item class="flex">
+                            <paper-item-body two-line>
+                                <div class="title "> Ring Hash</div>
+                                <div secondary><a href="#/ring/[[order.result.ringHash]]">[[order.result.ringHash]]</a></div>
+                            </paper-item-body>
+                        </paper-item>
+                        <paper-item class="flex">
+                            <paper-item-body two-line>
+                                <div class="title "> Orders</div>
+                                <div secondary>
+                                    <template is="dom-repeat" items="[[order.result.orders]]" as="orderItem">
+                                        <div><a href="#/order/[[orderItem]]">[[orderItem]]</a></div>
+                                    </template>
+                                </div>
+                            </paper-item-body>
+                        </paper-item>
+                    </div>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
             </div>
-          </div>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageFill extends Polymer.Element {
-    static get is() {
-      return 'page-fill';
+        </looper-page>
+    </template>
+    <script>
+    class PageFill extends Polymer.Element {
+        static get is() {
+            return 'page-fill';
+        }
+        static get properties() {
+            return {
+                id: String,
+                keyValueArray: Array
+            };
+        }
     }
-    static get properties() {
-      return {
-        id: String,
-        keyValueArray: Array
-      };
-    }
-  }
 
-  window.customElements.define(PageFill.is, PageFill);
-  </script>
+    window.customElements.define(PageFill.is, PageFill);
+    </script>
 </dom-module>

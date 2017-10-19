@@ -1,198 +1,198 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="subpage-ready" fit>
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
 
-    vaadin-grid {
-      height: 100%;
-    }
+        vaadin-grid {
+            height: 100%;
+        }
 
-    .card-actions {
-      --app-grid-columns: 5;
-      /*--app-grid-item-height: 40px;*/
-      --app-grid-gutter: 0px;
-    }
-    /*  .market-list > .item:first-child {
+        .card-actions {
+            --app-grid-columns: 5;
+            /*--app-grid-item-height: 40px;*/
+            --app-grid-gutter: 0px;
+        }
+        /*  .market-list > .item:first-child {
       @apply --app-grid-expandible-item;
     }*/
 
-    .item {}
+        .item {}
 
-    .item>a {
-      padding-right: 16px;
-    }
-
-    .header {
-      background-color: var(--google-grey-100);
-    }
-
-    .header .item {
-      color: var(--google-grey-500);
-    }
-
-    .wallet-summary {
-      padding: 16px 0 16px 0;
-      margin: 16px;
-    }
-
-    .wallet-summary .head {
-      /*min-width: 120px;*/
-      color: var(--google-grey-500);
-    }
-
-    ul {
-      padding: 0;
-      list-style: none;
-    }
-    </style>
-    <global-variable key="wallet" value="{{wallet}}"></global-variable>
-    <global-variable key="app-config" value="{{appConfig}}"></global-variable>
-    <div class="sections">
-      <paper-card transparent>Ether</paper-card>
-      <paper-card>
-        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json" handle-as="json" last-response="{{ethers}}" debounce-duration="300">
-        </iron-ajax>
-        <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
-          <vaadin-grid-column>
-            <template class="header">Name</template>
-            <template>[[_findSymbol(item.contract)]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column>
-            <template class="header">Balance</template>
-            <template>[[item.balance]]([[item.unit]])</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="60px">
-            <template class="header">Price (USD)</template>
-            <template>[[item.priceUSD]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="50px">
-            <template class="header">Value (USD)</template>
-            <template>[[item.valueUSD]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="100px">
-            <template class="header">Operations</template>
-            <template>
-              <div class="horizontal end-justified layout">
-                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
-                <div style="margin-left: 10px;"><a href="#/convert">convert</a></div>
-              </div>
-            </template>
-          </vaadin-grid-column>
-        </vaadin-grid>
-      </paper-card>
-      <paper-card transparent>ERC20 Tokens</paper-card>
-      <paper-card>
-        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" handle-as="json" last-response="{{tokens}}" debounce-duration="300">
-        </iron-ajax>
-        <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
-          <vaadin-grid-column>
-            <template class="header">Name</template>
-            <template>[[_findSymbol(item.contract)]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column>
-            <template class="header">Balance</template>
-            <template>[[item.balance]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="60px">
-            <template class="header">Price (USD)</template>
-            <template>[[item.priceUSD]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="50px">
-            <template class="header">Value (USD)</template>
-            <template>[[item.valueUSD]]</template>
-          </vaadin-grid-column>
-          <vaadin-grid-column width="100px">
-            <template class="header">Operations</template>
-            <template>
-              <div class="horizontal end-justified layout">
-                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
-                <div style="margin-left: 10px;"><a href="#/market/[[_toLowerSymbol(item.contract)]]">trade</a></div>
-                <div class="horizontal layout" style="margin-left: 10px;">
-                  <div><a href="#/market/[[_toLowerSymbol(item.contract)]]">allowance</a></div>
-                  <template is="dom-if" if="{{_allowanceWarn(item.contract, item.allowance)}}">
-                    <div>
-                      <a href="#" id="warn{{item.contract}}">
-                        <iron-icon icon="icons:error"></iron-icon>
-                      </a>
-                    </div>
-                    <paper-tooltip for="warn{{item.contract}}" position="left">
-                      <p>
-                        allowance left: [[item.allowance]] is lower than [[_getAllowance(item.contract)]]
-                      </p>
-                    </paper-tooltip>
-                  </template>
-                </div>
-              </div>
-            </template>
-          </vaadin-grid-column>
-        </vaadin-grid>
-      </paper-card>
-  </template>
-  <script>
-  class SubpageReady extends Polymer.Element {
-    static get is() { return 'subpage-ready'; }
-
-    static get properties() {
-      return {};
-    }
-
-    _convertToArray(wallet) {
-      var array = new Array();
-      array.push(wallet)
-      return array
-    }
-
-    _findTokenConfig(address) {
-      var tokens = this.appConfig.tokens;
-      for (var x in tokens) {
-        var token = tokens[x];
-        if (token.contract == address) {
-          return token;
+        .item>a {
+            padding-right: 16px;
         }
-      }
+
+        .header {
+            background-color: var(--google-grey-100);
+        }
+
+        .header .item {
+            color: var(--google-grey-500);
+        }
+
+        .wallet-summary {
+            padding: 16px 0 16px 0;
+            margin: 16px;
+        }
+
+        .wallet-summary .head {
+            /*min-width: 120px;*/
+            color: var(--google-grey-500);
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+        </style>
+        <global-variable key="wallet" value="{{wallet}}"></global-variable>
+        <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+        <div class="sections">
+            <paper-card transparent>Ether</paper-card>
+            <paper-card>
+                <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletEther.json" handle-as="json" last-response="{{ethers}}" debounce-duration="300">
+                </iron-ajax>
+                <vaadin-grid aria-label="Ethers" items="[[ethers.result.ether]]" size=2>
+                    <vaadin-grid-column>
+                        <template class="header">Name</template>
+                        <template>[[_findSymbol(item.contract)]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">Balance</template>
+                        <template>[[item.balance]]([[item.unit]])</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="60px">
+                        <template class="header">Price (USD)</template>
+                        <template>[[item.priceUSD]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Value (USD)</template>
+                        <template>[[item.valueUSD]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="100px">
+                        <template class="header">Operations</template>
+                        <template>
+                            <div class="horizontal end-justified layout">
+                                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
+                                <div style="margin-left: 10px;"><a href="#/convert">convert</a></div>
+                            </div>
+                        </template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </paper-card>
+            <paper-card transparent>ERC20 Tokens</paper-card>
+            <paper-card>
+                <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" handle-as="json" last-response="{{tokens}}" debounce-duration="300">
+                </iron-ajax>
+                <vaadin-grid aria-label="Tokens" items="[[tokens.result.tokens]]">
+                    <vaadin-grid-column>
+                        <template class="header">Name</template>
+                        <template>[[_findSymbol(item.contract)]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">Balance</template>
+                        <template>[[item.balance]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="60px">
+                        <template class="header">Price (USD)</template>
+                        <template>[[item.priceUSD]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Value (USD)</template>
+                        <template>[[item.valueUSD]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="100px">
+                        <template class="header">Operations</template>
+                        <template>
+                            <div class="horizontal end-justified layout">
+                                <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
+                                <div style="margin-left: 10px;"><a href="#/market/[[_toLowerSymbol(item.contract)]]">trade</a></div>
+                                <div class="horizontal layout" style="margin-left: 10px;">
+                                    <div><a href="#/market/[[_toLowerSymbol(item.contract)]]">allowance</a></div>
+                                    <template is="dom-if" if="{{_allowanceWarn(item.contract, item.allowance)}}">
+                                        <div>
+                                            <a href="#" id="warn{{item.contract}}">
+                                                <iron-icon icon="icons:error"></iron-icon>
+                                            </a>
+                                        </div>
+                                        <paper-tooltip for="warn{{item.contract}}" position="left">
+                                            <p>
+                                                allowance left: [[item.allowance]] is lower than [[_getAllowance(item.contract)]]
+                                            </p>
+                                        </paper-tooltip>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </paper-card>
+    </template>
+    <script>
+    class SubpageReady extends Polymer.Element {
+        static get is() { return 'subpage-ready'; }
+
+        static get properties() {
+            return {};
+        }
+
+        _convertToArray(wallet) {
+            var array = new Array();
+            array.push(wallet)
+            return array
+        }
+
+        _findTokenConfig(address) {
+            var tokens = this.appConfig.tokens;
+            for (var x in tokens) {
+                var token = tokens[x];
+                if (token.contract == address) {
+                    return token;
+                }
+            }
+        }
+
+        _toLowerSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit.toLowerCase()
+            } else {
+                return "?";
+            }
+        }
+
+        _findSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit
+            } else {
+                return "?";
+            }
+        }
+
+        _getAllowance(address) {
+            var token = this._findTokenConfig(address);
+            if (!token) {
+                return 0;
+            }
+            return token.allowanceWarn
+        }
+
+        _allowanceWarn(address, allowance) {
+            var token = this._findTokenConfig(address);
+            if (!token) {
+                return false;
+            }
+            if (token.allowanceWarn > 0 && (!allowance || allowance < token.allowanceWarn)) {
+                return true;
+            }
+        }
     }
 
-    _toLowerSymbol(address) {
-      var token = this._findTokenConfig(address);
-      if (token) {
-        return token.unit.toLowerCase()
-      } else {
-        return "?";
-      }
-    }
-
-    _findSymbol(address) {
-      var token = this._findTokenConfig(address);
-      if (token) {
-        return token.unit
-      } else {
-        return "?";
-      }
-    }
-
-    _getAllowance(address) {
-      var token = this._findTokenConfig(address);
-      if (!token) {
-        return 0;
-      }
-      return token.allowanceWarn
-    }
-
-    _allowanceWarn(address, allowance) {
-      var token = this._findTokenConfig(address);
-      if (!token) {
-        return false;
-      }
-      if (token.allowanceWarn > 0 && (!allowance || allowance < token.allowanceWarn)) {
-        return true;
-      }
-    }
-  }
-
-  window.customElements.define(SubpageReady.is, SubpageReady);
-  </script>
+    window.customElements.define(SubpageReady.is, SubpageReady);
+    </script>
 </dom-module>

@@ -11,24 +11,116 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-authorize">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
     <style include="shared-styles">
-     :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
+      .container {
+        width: 800px;
+      }
+      .left {
+        width:45%;
+      }
+      .middle {
+        width:10%;
+      }
+      .right {
+        width:45%;
+      }
+      .button {
+        padding-top: 20px;
+      }
+      .amount {
+        width: 100px;
+        height: 30px;
+      }
+      paper-dropdown-menu.noLable {
+        --paper-input-container-label: {
+          color: var(--paper-pink-500);
+          font-style: italic;
+          text-align: center;
+          font-weight: bold;
+        };
+        --paper-input-container-input: {
+          color: var(--paper-indigo-500);
+          font-style: normal;
+          font-family: serif;
+          text-transform: uppercase;
+          text-align: center;
+        }
+      }
+      .fontTitle {
+        font-family: Georgia, serif;
+        font-size: 1.2em;
+      }
+
+      .fontContent {
+        font-family: Georgia, serif;
+        font-size: 0.875em;
+        padding-left: 10px;
+      }
     </style>
     <looper-page>
+      <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+      <global-variable key="wallet" value="{{wallet}}"></global-variable>
       <simple-toolbar slot="secondary-toolbar" title="ERC20 Authorize" back-link="#/wallet"></simple-toolbar>
       <div class="sections">
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
-          </div>
-        </paper-card>
-        <paper-card heading="Card Title">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
-            <paper-button>Some action</paper-button>
+        <paper-card>
+          <div class="horizontal layout center-justified">
+            <div class="container">
+              <div class="horizontal layout flex">
+                <div class="left">
+                  <div class="vertical layout start-justified">
+                    <div class="horizontal layout start-justified">
+                      <iron-input bind-value="{{bindValue}}">
+                        <input value="{{amount::input}}" class="amount">
+                      </iron-input>
+                      <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
+                        <paper-listbox slot="dropdown-content" attr-for-selected="value" selected="{{selectedToken}}">
+                          <template is="dom-repeat" items="[[_toTokenNameArray(appConfig.tokens)]]">
+                            <paper-item value="[[item.address]]">[[item.name]]</paper-item>
+                          </template>
+                        </paper-listbox>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="horizontal layout center-justified button">
+                      <paper-button raised on-click="_signToSend">Generate Transaction</paper-button>
+                    </div>
+                  </div>
+                </div>
+                <div class="middle"></div>
+                <div class="right">
+                  <div class="vertical layout start-justified">
+                    <div class="fontTitle">Address:</div>
+                    <div class="fontContent">[[wallet.address]]</div>
+                    <div class="fontTitle">
+                      Balance & Allowance(available/advice):
+                    </div>
+                    <div class="fontContent">
+                      <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
+                      <iron-list items="[[_fillAllowanceArray(data.result.tokens)]]" as="item">
+                        <template>
+                          <div>
+                            [[item.unit]]:[[item.balance]] ([[item.availableAllowance]]/[[item.defaultAllowance]])
+                            <template is="dom-if" if="{{_allowanceWarn(item.contract, item.availableAllowance)}}">
+                              <a href="#" id="warn{{item.contract}}">
+                                <iron-icon icon="icons:error"></iron-icon>
+                              </a>
+                              <paper-tooltip for="warn{{item.contract}}" position="left">
+                                <p>
+                                  allowance left: [[item.availableAllowance]] is lower than [[item.defaultAllowance]]
+                                </p>
+                              </paper-tooltip>
+                            </template>
+                          </div>
+                        </template>
+                      </iron-list>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </paper-card>
       </div>
@@ -39,8 +131,123 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageAuthorize extends Polymer.Element {
     static get is() { return 'page-authorize'; }
-  }
+    static get properties() {
+      return {
+         selectedToken: {
+            type: String,
+            notify: true,
+            observer: "_selected"
+         },
+         amount: {
+            type: Number,
+            notify: true,
+            observer: "_selected"
+         }
+      };
+    }
 
+    _selected(){
+        if(!this.selectedToken || !this.amount) return;
+        let tokenConfig = this._findTokenConfig(this.selectedToken);
+        if(!tokenConfig){
+            var detail = { text: "invalid selected token", category: "warning", duration: 8000 }
+            this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+            return;
+        }
+        if(this.amount < tokenConfig.allowanceWarn){
+            var detail = { text: "input a lower allowance:"+this.amount+" proper for:"+tokenConfig.allowanceWarn+", but you could continue as you wish", category: "warning", duration: 8000 }
+            this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+            return;
+        }
+        var detail = { text: "ok", category: "info", duration: 8000 }
+        this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    _toTokenNameArray(obj) {
+       if(!obj) return;
+       let array = Object.keys(obj).map(function(key) {
+          return {
+             name: key,
+             address: obj[key].contract
+          };
+       });
+       return array.filter(function(item){
+           return item.name != "ETH"
+       });
+    }
+
+    _findTokenConfig(address) {
+       var tokens = this.appConfig.tokens;
+       for (var x in tokens) {
+          var token = tokens[x];
+          if (token.contract == address) {
+             return token;
+          }
+       }
+    }
+
+    _toLowerSymbol(address) {
+       var token = this._findTokenConfig(address);
+       if (token) {
+          return token.unit.toLowerCase()
+       } else {
+          return "?";
+       }
+    }
+
+    _findSymbol(address) {
+       var token = this._findTokenConfig(address);
+       if (token) {
+          return token.unit
+       } else {
+          return "?";
+       }
+    }
+
+    _fillAllowanceArray(userAllowanceArray){
+      if(!userAllowanceArray) return;
+      let a = this
+      let newArray = userAllowanceArray.map(function(item){
+          let tokenConfig = a._findTokenConfig(item.contract);
+          if(!tokenConfig) return;
+          if(item.balance <=0) return;
+          return {
+              unit: tokenConfig.unit,
+              contract: item.contract,
+              balance: item.balance,
+              availableAllowance: item.allowance,
+              defaultAllowance: tokenConfig.allowanceWarn
+          }
+      });
+      return newArray;
+    }
+
+    _allowanceWarn(address, allowance) {
+       var token = this._findTokenConfig(address);
+       if (!token) {
+          return false;
+       }
+       if (token.allowanceWarn > 0 && (!allowance || allowance < token.allowanceWarn)) {
+          return true;
+       }
+    }
+
+    _signToSend(){
+        if(!this.amount || !this.selectedToken){
+            var detail = { text: "input value and select token", category: "warning", duration: 8000 }
+            this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+            return;
+        }
+        let tokenConfig = this._findTokenConfig(this.selectedToken);
+        if(!tokenConfig){
+            var detail = { text: "invalid selected token", category: "warning", duration: 8000 }
+            this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: detail }));
+            return;
+        }
+        var detail = { raws: [{"raw":"cancle datas", "subTitle":"Cancel Older Authorization"}, {"raw":"authorize datas", "subTitle":"New Authorization"}] };
+        this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+    }
+  }
   window.customElements.define(PageAuthorize.is, PageAuthorize);
   </script>
 </dom-module>

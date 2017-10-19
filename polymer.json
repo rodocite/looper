@@ -1,48 +1,48 @@
 {
-  "entrypoint": "index.html",
-  "shell": "src/my-app.html",
-  "fragments": [
-    "src/page-markets.html",
-    "src/page-market.html",
-    "src/page-rings.html",
-    "src/page-ring.html",
-    "src/page-orders.html",
-    "src/page-order.html",
-    "src/page-fills.html",
-    "src/page-fill.html",
-    "src/page-wallet.html",
-    "src/page-authorize.html",
-    "src/page-convert.html",
-    "src/page-transfer.html",
-    "src/page-settings.html",
-    "src/page-doc.html",
-    "src/page-404.html",
-    "src/page-dev.html",
-    "src/page-wallet-default.html",
-    "src/page-wallet-unlock.html",
-    "src/page-wallet-generate.html",
-    "src/page-wallet-default.html"
-  ],
-  "sources": [
-    "src/**/*",
-    "images/**/*"
-  ],
-  "extraDependencies": [
-    "manifest.json",
-    "bower_components/webcomponentsjs/*.js"
-  ],
-  "lint":
-  {
-    "rules": ["polymer-2"]
-  },
-  "builds": [
-  {
-    "preset": "es5-bundled"
-  },
-  {
-    "preset": "es6-bundled"
-  },
-  {
-    "preset": "es6-unbundled"
-  }]
+    "entrypoint": "index.html",
+    "shell": "src/my-app.html",
+    "fragments": [
+        "src/page-markets.html",
+        "src/page-market.html",
+        "src/page-rings.html",
+        "src/page-ring.html",
+        "src/page-orders.html",
+        "src/page-order.html",
+        "src/page-fills.html",
+        "src/page-fill.html",
+        "src/page-wallet.html",
+        "src/page-authorize.html",
+        "src/page-convert.html",
+        "src/page-transfer.html",
+        "src/page-settings.html",
+        "src/page-doc.html",
+        "src/page-404.html",
+        "src/page-dev.html",
+        "src/page-wallet-default.html",
+        "src/page-wallet-unlock.html",
+        "src/page-wallet-generate.html",
+        "src/page-wallet-default.html"
+    ],
+    "sources": [
+        "src/**/*",
+        "images/**/*"
+    ],
+    "extraDependencies": [
+        "manifest.json",
+        "bower_components/webcomponentsjs/*.js"
+    ],
+    "lint":
+    {
+        "rules": ["polymer-2"]
+    },
+    "builds": [
+    {
+        "preset": "es5-bundled"
+    },
+    {
+        "preset": "es6-bundled"
+    },
+    {
+        "preset": "es6-unbundled"
+    }]
 }

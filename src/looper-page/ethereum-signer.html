@@ -1,30 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<script src="../../bower_components/bignumber.js/bignumber.js"></script>
-<script src="../../bower_components/ethereum.js/dist/ethereum.js"></script>
-<script src="../../bower_components/wallet-address-validator/dist/wallet-address-validator.min.js"></script>
-<script src="../../bower_components/browser-builds/dist/ethereumjs-all.js"></script>
-
-<script src="../../libs/bundle.js"></script>
-<dom-module id="ethereum-signer">
-    <template>
-        <span>[[sign()]]</span>
-    </template>
+<dom-module id="ethereum-signer" fit>
     <script>
-        const test = require('crypto');
-        class EthreumSigner extends Polymer.Element {
-            static get is() {
-                return 'ethereum-signer';
-            }
+    class EthreumSigner extends Polymer.Element {
+        static get is() { return 'ethereum-signer'; }
 
-            static get properties() {
-                return {};
-            }
-
-            sign() {
-               return test.randomBytes(32).toString('hex');
-            }
+        static get properties() {
+            return {};
         }
 
-        window.customElements.define(EthreumSigner.is, EthreumSigner);
+        sign(raw) {
+            return raw;
+        }
+    }
+
+    window.customElements.define(EthreumSigner.is, EthreumSigner);
     </script>
 </dom-module>
