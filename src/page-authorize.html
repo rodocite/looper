@@ -91,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       Balance & Allowance(current available/advice to set):
                     </div>
                     <div class="value">
-                      <iron-ajax url="http://127.0.0.1:8081/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
+                      <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
                       <iron-list items="[[_fillAllowanceArray(data.result.tokens)]]" as="item">
                         <template>
                           <div class="fontContent">
