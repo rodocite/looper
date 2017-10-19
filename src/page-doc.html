@@ -10,57 +10,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="page-doc">
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-
-    app-toolbar {
-      color: black;
-      background-color: var(--paper-grey-200);
-    }
-
-    paper-icon-button {
-      color: black;
-    }
-    </style>
-    <looper-page>
-      <app-toolbar slot="secondary-toolbar">
-        <div condensed-title></div>
-        Looper Documentation
-        <div condensed-title></div>
-        <a href="/#/">
-          <paper-icon-button noink icon="close"></paper-icon-button>
-        </a>
-      </app-toolbar>
-      <div class="sections">
-        <paper-card>
-          <marked-element>
-            <div slot="markdown-html"></div>
-            <script type="text/markdown" src="//raw.githubusercontent.com/Loopring/looper/master/README.md"></script>
-          </marked-element>
-        </paper-card>
-        <div class="footer-spacer"></div>
-        <looper-footer></looper-footer>
-      </div>
-    </looper-page>
-  </template>
-  <script>
-  class PageDoc extends Polymer.Element {
-    static get is() {
-      return 'page-doc';
-    }
-    static get properties() {
-      return {
-        markdown: {
-          type: String,
-          reflectToAttribute: true
+    <template>
+        <style include="shared-styles">
+         :host {
+            display: block;
         }
-      };
-    }
-  }
 
-  window.customElements.define(PageDoc.is, PageDoc);
-  </script>
+        app-toolbar {
+            color: black;
+            background-color: var(--paper-grey-200);
+        }
+
+        paper-icon-button {
+            color: black;
+        }
+        </style>
+        <looper-page>
+            <app-toolbar slot="secondary-toolbar">
+                <div condensed-title></div>
+                Looper Documentation
+                <div condensed-title></div>
+                <a href="/#/">
+                    <paper-icon-button noink icon="close"></paper-icon-button>
+                </a>
+            </app-toolbar>
+            <div class="sections">
+                <paper-card>
+                    <marked-element>
+                        <div slot="markdown-html"></div>
+                        <script type="text/markdown" src="//raw.githubusercontent.com/Loopring/looper/master/README.md"></script>
+                    </marked-element>
+                </paper-card>
+                <div class="footer-spacer"></div>
+                <looper-footer></looper-footer>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+    class PageDoc extends Polymer.Element {
+        static get is() {
+            return 'page-doc';
+        }
+        static get properties() {
+            return {
+                markdown: {
+                    type: String,
+                    reflectToAttribute: true
+                }
+            };
+        }
+    }
+
+    window.customElements.define(PageDoc.is, PageDoc);
+    </script>
 </dom-module>

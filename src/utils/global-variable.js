@@ -4,7 +4,7 @@
 
 "use strict";
 
-var PolymerGlobalData = (function () {
+var PolymerGlobalData = (function() {
 
     var instance,
         data,
@@ -18,34 +18,34 @@ var PolymerGlobalData = (function () {
      * @param path
      * @private
      */
-    var _notify = function (event, detail, path) {
+    var _notify = function(event, detail, path) {
         // This method will notify to elements subscribed to the path,
         // as well as the element who are subscribed to every single action, as the global-data element.
         var subscribersToNotify = [];
 
-        if(typeof subscribers['*'] != 'undefined')
+        if (typeof subscribers['*'] != 'undefined')
             subscribersToNotify = subscribersToNotify.concat(subscribers['*']);
 
-        if(typeof path != 'undefined' && typeof subscribers[path] != 'undefined')
+        if (typeof path != 'undefined' && typeof subscribers[path] != 'undefined')
             subscribersToNotify = subscribersToNotify.concat(subscribers[path]);
 
-        subscribersToNotify.forEach(function (subscriber) {
+        subscribersToNotify.forEach(function(subscriber) {
             subscriber._onEvent(event, detail);
         });
     };
 
-    var _init = function (initData) {
+    var _init = function(initData) {
 
         data = initData || {}; //TODO Must be an object
         subscribers = {};
 
         //Public API
         return {
-            get: function (path) {
+            get: function(path) {
                 return data[path];
             },
 
-            set: function (path, value) {
+            set: function(path, value) {
                 if (data[path] != value) {
                     data[path] = value;
                     _notify('set', {
@@ -55,7 +55,7 @@ var PolymerGlobalData = (function () {
                 }
             },
 
-            subscribe: function (path, subscriber) {
+            subscribe: function(path, subscriber) {
                 subscribers[path] = subscribers[path] || [];
                 subscribers[path].push(subscriber);
                 _notify('subscribe', {
@@ -64,7 +64,7 @@ var PolymerGlobalData = (function () {
                 })
             },
 
-            unsubscribe: function (path, subscriber) {
+            unsubscribe: function(path, subscriber) {
                 if (typeof subscribers[path] != 'undefined') {
                     var index = subscribers[path].indexOf(subscriber);
                     if (index >= 0) subscribers[path].splice(index, 1);
@@ -81,10 +81,10 @@ var PolymerGlobalData = (function () {
              * @param subscriber
              * @returns {String | false}
              */
-            isSubcribed: function (subscriber) {
+            isSubcribed: function(subscriber) {
                 for (var prop in subscribers) {
-                    if (subscribers.hasOwnProperty(prop)
-                        && subscribers[prop].indexOf(subscriber) >= 0)
+                    if (subscribers.hasOwnProperty(prop) &&
+                        subscribers[prop].indexOf(subscriber) >= 0)
                         return prop;
                 }
                 return false;
@@ -99,7 +99,7 @@ var PolymerGlobalData = (function () {
          * @param data {Object} Initial data
          * @returns {*}
          */
-        init: function (data) {
+        init: function(data) {
             if (!instance) {
                 instance = _init(data)
             }
@@ -109,5 +109,3 @@ var PolymerGlobalData = (function () {
     };
 
 })();
-
-

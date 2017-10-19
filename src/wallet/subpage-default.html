@@ -1,79 +1,79 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="subpage-default" fit>
-  <template>
-    <style include="shared-styles"></style>
-    <style>
-     :host {
-      display: block;
-      --paper-card-actions: {
-        background-color: var(--paper-grey-50);
-      }
-      --paper-card-header-text: {
-        font-size: 18px;
-        color: var(--app-text-color-light);
-      }
-    }
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+         :host {
+            display: block;
+            --paper-card-actions: {
+                background-color: var(--paper-grey-50);
+            }
+            --paper-card-header-text: {
+                font-size: 18px;
+                color: var(--app-text-color-light);
+            }
+        }
 
-    .or {
-      color: var(--paper-grey-700);
-      text-align: center;
-    }
+        .or {
+            color: var(--paper-grey-700);
+            text-align: center;
+        }
 
-    .card-actions {
-      text-align: center;
-    }
+        .card-actions {
+            text-align: center;
+        }
 
-    .card-actions paper-button {
-      min-width: 360px;
-      /*margin:8px 0 8px 0;*/
-      /*color: var(--app-primary-color-dark);*/
-    }
+        .card-actions paper-button {
+            min-width: 360px;
+            /*margin:8px 0 8px 0;*/
+            /*color: var(--app-primary-color-dark);*/
+        }
 
-    .card-actions paper-button:hover {
-      color: var(--app-primary-color-dark);
-    }
+        .card-actions paper-button:hover {
+            color: var(--app-primary-color-dark);
+        }
 
-    .sections > paper-card {
-      padding: 0;
-    }
-    </style>
-    <div class="sections">
-      <paper-card nopadding heading="Generate New Wallet">
-        <div class="card-content">Looper gives you the ability to generate new wallets so you can store your ETH & Tokens yourself, not on an exchange. This process happens entirely in your browser. Looper is not a web wallet. We are a client-side interface that allows you to interact with the Ethereum blockchain. We never save, store, or transmit any sensitive information ever. Therefore, when you generate a new wallet, you are responsible for safely backing it up.</div>
-        <div class="card-actions">
-          <paper-button on-click="generateClicked">Generate Ethereum Wallet</paper-button>
+        .sections>paper-card {
+            padding: 0;
+        }
+        </style>
+        <div class="sections">
+            <paper-card nopadding heading="Generate New Wallet">
+                <div class="card-content">Looper gives you the ability to generate new wallets so you can store your ETH & Tokens yourself, not on an exchange. This process happens entirely in your browser. Looper is not a web wallet. We are a client-side interface that allows you to interact with the Ethereum blockchain. We never save, store, or transmit any sensitive information ever. Therefore, when you generate a new wallet, you are responsible for safely backing it up.</div>
+                <div class="card-actions">
+                    <paper-button on-click="generateClicked">Generate Ethereum Wallet</paper-button>
+                </div>
+            </paper-card>
+            <paper-card transparent elevation=0>
+                <div class="horiziontal center layout">
+                    <div class="flex or">or</div>
+                </div>
+            </paper-card>
+            <paper-card nopadding heading="Unlock Existing Wallet">
+                <div class="card-content">Some content</div>
+                <div class="card-actions">
+                    <paper-button on-click="unlockClicked">Unlock Keystore File (UTC / JSON)</paper-button>
+                </div>
+            </paper-card>
         </div>
-      </paper-card>
-      <paper-card transparent elevation=0>
-        <div class="horiziontal center layout">
-          <div class="flex or">or</div>
-        </div>
-      </paper-card>
-      <paper-card nopadding heading="Unlock Existing Wallet">
-        <div class="card-content">Some content</div>
-        <div class="card-actions">
-          <paper-button on-click="unlockClicked">Unlock Keystore File (UTC / JSON)</paper-button>
-        </div>
-      </paper-card>
-    </div>
-  </template>
-  <script>
-  class SubpageDefault extends Polymer.Element {
-    static get is() { return 'subpage-default'; }
+    </template>
+    <script>
+    class SubpageDefault extends Polymer.Element {
+        static get is() { return 'subpage-default'; }
 
-    static get properties() {
-      return {};
+        static get properties() {
+            return {};
+        }
+
+        generateClicked(e) {
+            this.dispatchEvent(new CustomEvent('generate-wallet', { bubbles: true, composed: true }));
+        }
+
+        unlockClicked() {
+            this.dispatchEvent(new CustomEvent('unlock-wallet', { bubbles: true, composed: true }));
+        }
     }
 
-    generateClicked(e) {
-      this.dispatchEvent(new CustomEvent('generate-wallet', { bubbles: true, composed: true }));
-    }
-
-    unlockClicked() {
-      this.dispatchEvent(new CustomEvent('unlock-wallet', { bubbles: true, composed: true }));
-    }
-  }
-
-  window.customElements.define(SubpageDefault.is, SubpageDefault);
-  </script>
+    window.customElements.define(SubpageDefault.is, SubpageDefault);
+    </script>
 </dom-module>

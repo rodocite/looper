@@ -43,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-weight: 400;
             padding-top: 32px;
             font-size: 14px;
+            color: var(--app-text-color);
         }
 
         .sections>paper-card {
@@ -70,6 +71,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .footer-spacer {
             @apply --layout-flex;
             min-height: 48px;
+        }
+
+        div.long-hash {
+            width: 160px;
+            display: inline-block;
+            vertical-align: bottom;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         app-toolbar {
@@ -129,6 +138,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-item {
             padding-top: 8px;
             padding-bottom: 8px;
+            min-width: 300px;
+        }
+
+        paper-item.long {
+            min-width: 800px;
         }
 
         paper-item:hover {
@@ -140,8 +154,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         paper-item div.title {
-            font-size: 1em;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
             color: var(--app-text-color-light);
         }
 

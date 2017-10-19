@@ -1,28 +1,28 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <dom-module id="looper-page">
-  <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-    <style include="shared-styles">
-     :host {
-      display: block;
-    }
-    </style>
-    <app-header-layout has-scrolling-region fullbleed>
-      <app-header slot="header" fixed condenses effects="waterfall">
-        <slot name="secondary-toolbar" sticky></slot>
-      </app-header>
-      <slot></slot>
-    </app-header-layout>
-  </template>
-  <script>
-  class LooperPage extends Polymer.Element {
-    static get is() { return 'looper-page'; }
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+        }
+        </style>
+        <app-header-layout has-scrolling-region fullbleed>
+            <app-header slot="header" fixed condenses effects="waterfall">
+                <slot name="secondary-toolbar" sticky></slot>
+            </app-header>
+            <slot></slot>
+        </app-header-layout>
+    </template>
+    <script>
+    class LooperPage extends Polymer.Element {
+        static get is() { return 'looper-page'; }
 
-    static get properties() {
-      return {};
+        static get properties() {
+            return {};
+        }
     }
-  }
 
-  window.customElements.define(LooperPage.is, LooperPage);
-  </script>
+    window.customElements.define(LooperPage.is, LooperPage);
+    </script>
 </dom-module>
