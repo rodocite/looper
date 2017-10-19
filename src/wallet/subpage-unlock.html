@@ -82,8 +82,8 @@
                     <div>
                     </div>
                 </div>
-                <div class="card-actions">
-                    <paper-button on-click="unlockClicked">Go ahead and unlock my wallet.</paper-button>
+                <div class="input-wrapper horizontal layout center-justified">
+                    <paper-button primary on-click="unlockClicked">Go ahead and unlock my wallet.</paper-button>
                 </div>
             </paper-card>
         </div>
@@ -119,6 +119,9 @@
             };
             reader.readAsText(file);
         }
+
+
+
     }
 
     window.customElements.define(SubpageUnlock.is, SubpageUnlock);
