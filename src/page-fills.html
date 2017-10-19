@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <simple-toolbar slot="secondary-toolbar" title="Fills" back-link="#/markets"></simple-toolbar>
             <div class="sections">
                 <paper-card>
-                    <recent-fills></recent-fills>
+                    <recent-fills hash-title="Ring Hash" market="[[id]]"></recent-fills>
                 </paper-card>
                 <div class="footer-spacer"></div>
                 <looper-footer></looper-footer>
@@ -31,6 +31,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
     class PageFills extends Polymer.Element {
         static get is() { return 'page-fills'; }
+        static get properties() {
+            return {
+                id: String
+            };
+        }
     }
 
     window.customElements.define(PageFills.is, PageFills);

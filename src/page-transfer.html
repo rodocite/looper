@@ -41,11 +41,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             width: 350px;
         }
 
-        .fontTitle {
-            font-family: Georgia, serif;
-            font-size: 1.2em;
-        }
-
         .fontContent {
             font-family: Georgia, serif;
             font-size: 0.875em;
@@ -61,10 +56,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         iron-input>input {
             width: 350px;
+            height: 34px;
+            padding-bottom: 0px;
         }
 
         iron-input>.amount {
             width: 150px;
+            height: 34px;
+            padding-bottom: 0px;
         }
 
         iron-input[invalid]>input {
@@ -84,21 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             margin-top: 20px;
         }
 
-        paper-dropdown-menu.noLable {
-            --paper-input-container-label: {
-                color: var(--paper-pink-500);
-                font-style: italic;
-                text-align: center;
-                font-weight: bold;
-            }
-            ;
-            --paper-input-container-input: {
-                color: var(--paper-indigo-500);
-                font-style: normal;
-                font-family: serif;
-                text-transform: uppercase;
-            }
-            ;
+        .selectBox {
+            padding-bottom: 1px;
         }
         </style>
         <looper-page>
@@ -124,12 +110,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <iron-input bind-value="{{bindValue}}">
                                     <input value="{{value::input}}" class="amount">
                                 </iron-input>
-                                <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
-                                    <paper-listbox slot="dropdown-content" selected="0">
-                                        <paper-item>LRC</paper-item>
-                                        <paper-item>EOS</paper-item>
-                                    </paper-listbox>
-                                </paper-dropdown-menu>
+                                <div class="selectBox">
+                                    <vaadin-combo-box id="tokensSelector" items="[[_toTokenNameArray(appConfig.tokens)]]" item-label-path="name" item-value-path="address"></vaadin-combo-box>
+                                </div>
                             </div>
                             <div class="line">
                                 Gas Limit:
@@ -157,34 +140,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </div>
                         </div>
                         <div class="flexright">
-                            <div class="line fontTitle">
-                                Account Address:
-                            </div>
-                            <div class="line fontContent">
-                                [[wallet.address]]
-                            </div>
-                            <div class="line fontTitle">
-                                Account Balance:
-                            </div>
-                            <div class="line fontContent">
-                                0 ETH
-                            </div>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Account Address</div>
+                                    <div secondary>
+                                        [[wallet.address]]
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Account Balance</div>
+                                    <div secondary>0</div>
+                                </paper-item-body>
+                            </paper-item>
                             <div class="hr">
                                 <hr>
                             </div>
-                            <div class="line fontTitle">
-                                Token Balances:
-                            </div>
-                            <div class="line">
-                                <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
-                                <iron-list items="[[data.result.tokens]]" as="item">
-                                    <template>
-                                        <div class="fontContent">
-                                            [[_findSymbol(item.contract)]] [[item.balance]]
-                                        </div>
-                                    </template>
-                                </iron-list>
-                            </div>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Token Balances</div>
+                                    <div secondary>
+                                        <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
+                                        <iron-list items="[[data.result.tokens]]" as="item">
+                                            <template>
+                                                <div class="fontContent">
+                                                    [[_findSymbol(item.contract)]] [[item.balance]]
+                                                </div>
+                                            </template>
+                                        </iron-list>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
                         </div>
                     </div>
                 </paper-card>
@@ -196,6 +183,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
     class PageTransfer extends Polymer.Element {
         static get is() { return 'page-transfer'; }
+
+        ready() {
+            super.ready();
+            var combobox = this.$.tokensSelector
+            var context = this
+            combobox.addEventListener('value-changed', function() {
+                context.selectedToken = combobox.value;
+                console.log("selected token:"+context.selectedToken)
+            });
+        }
+
         handleClick() {
             var extData = this.$.hiddenExtData;
             if (extData.style.display == 'block') {
@@ -203,6 +201,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             } else {
                 extData.style.display = 'block';
             }
+        }
+
+        _toTokenNameArray(obj) {
+            if(!obj) return;
+            let array = Object.keys(obj).map(function(key) {
+                return {
+                    name: key,
+                    address: obj[key].contract
+                };
+            });
+            return array.filter(function(item){
+                return item.name != "ETH"
+            });
         }
 
         _findTokenConfig(address) {
