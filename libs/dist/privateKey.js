@@ -26317,7 +26317,7 @@ function privateKey() {
     var publicKey;
     var address;
 
-    this.generat = function () {
+    this.generate = function () {
         privateKey = crypto.randomBytes(32);
         publicKey = ethereumUtil.privateToPublic(privateKey);
         address = ethereumUtil.publicToAddress(publicKey);
