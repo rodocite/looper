@@ -229,7 +229,7 @@
                 const element = document.createElement('a');
                 element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.key.toKeystore(this.password))));
                 const ts = new Date();
-                element.setAttribute('download', ['UTC--', ts.toJSON().replace(/:/g, '-'),'--',this.key.getAddress()].join(''));
+                element.setAttribute('download', ['UTC--', ts.toJSON().replace(/:/g, '-'), '--', this.key.getAddress(), '.json'].join(''));
                 this.key='';
                 this.password='';
                 element.style.display = 'none';
