@@ -16,7 +16,7 @@
             }
 
             .input-wrapper {
-                padding-top: 24px;
+                padding-top: 16px;
                 padding-bottom: 24px;
             }
 
@@ -75,6 +75,15 @@
                 visibility: visible;
             }
 
+            div.error {
+                opacity: 0;
+                color: var(--app-red-color);
+            }
+
+            div[show] {
+                opacity: 1;
+            }
+
         </style>
         <div class="sections">
             <paper-card nopadding heading="Generate Ethereum Walelt">
@@ -88,13 +97,13 @@
                             <paper-icon-button id="visibleBtn" on-click="toggleVisible"
                                                icon="{{visibility}}"></paper-icon-button>
                         </div>
-                        <div>
-                            <p style="color: red">{{passwordCheck}}</p>
+                        <div class="error" show$="[[showError]]">
+                            Your password is too weak, it should have at least 9 characters.
                         </div>
                     </div>
                 </div>
                 <div class="input-wrapper horizontal layout center-justified">
-                    <paper-button primary  disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me.</paper-button>
+                    <paper-button primary  disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me</paper-button>
                 </div>
             </paper-card>
             <paper-card transparent elevation=0>
@@ -131,8 +140,8 @@
                     </div>
                 </div>
                 <div class="input-wrapper horizontal layout center-justified">
-                    <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]">I saved my keystore file. Proceed to
-                        unlock my wallet.
+                    <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]"> Proceed to
+                        unlock my wallet
                     </paper-button>
                 </div>
             </paper-card>
@@ -199,7 +208,7 @@
                     this.$.generateButton.disabled = password.length < 9;
                     this.generateClass = password.length >=9 ? '':'disabled';
                     this.key='';
-                    this.passwordCheck = password.length >= 9 || password === '' ? '' : 'please input at least 9 characters';
+                    this.showError = (password === '' || password.length < 9) ;
                 }
             }
             unlockClicked() {
