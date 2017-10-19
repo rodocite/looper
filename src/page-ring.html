@@ -71,13 +71,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                         [[tranHextoNum(ring.blockNum)]]</a></div>
                                 </paper-item-body>
                             </paper-item>
+                            <paper-item class="flex">
+                                <paper-item-body two-line>
+                                    <div class="title"> Time</div>
+                                    <div secondary>
+                                        <time-str seconds="[[ring.timestamp]]"></time-str>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
                         </div>
                     </div>
                 </paper-card>
                 <paper-card transparent>Recent Fills</paper-card>
                 <paper-card>
                     <div class="card-content">
-                        <recent-fills></recent-fills>
+                        <recent-fills hash-title="Order Hash" market="[[id]]"></recent-fills>
                     </div>
                 </paper-card>
                 <div class="footer-spacer"></div>

@@ -98,11 +98,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         iron-input input:focus {
             padding-bottom: 0;
             border-bottom: solid 2px var(--app-primary-color);
+            background-color: white;
         }
 
 
         iron-input input {
             height: 36px;
+            background-color: var(--google-grey-100);
         }
 
         paper-icon-button {
@@ -188,6 +190,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .sections>paper-card {
                 width: 1024px;
             }
+        }
+
+        div[part="input-field"]{
+            -moz-border-radius:0px;
         }
         </style>
     </template>

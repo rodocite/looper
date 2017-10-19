@@ -73,6 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         </style>
         <looper-page>
+            <global-variable key="wallet" value="{{wallet}}"></global-variable>
             <simple-toolbar slot="secondary-toolbar" title="Market" id="[[marketId()]]" back-link="#/markets"></simple-toolbar>
             <div class="sections">
                 <paper-card>
@@ -99,14 +100,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-tabs selected="{{dataSelection}}" attr-for-selected="name">
                             <paper-tab name="orders">Recent Orders</paper-tab>
                             <paper-tab name="fills">Recent Fills</paper-tab>
-                            <paper-tab name="myorders">My Orders</paper-tab>
-                            <paper-tab name="myfills">My Fills</paper-tab>
+                            <template is="dom-if" if="{{_isUnlocked(wallet)}}">
+                                <paper-tab name="myorders">My Orders</paper-tab>
+                                <paper-tab name="myfills">My Fills</paper-tab>
+                            </template>
                         </paper-tabs>
                         <iron-pages selected="{{dataSelection}}" attr-for-selected="name">
                             <recent-fills name="fills" token="{{id}}"></recent-fills>
                             <recent-orders name="orders" token="{{id}}"></recent-orders>
-                            <recent-fills filter-mine name="myfills"></recent-fills>
-                            <recent-orders filter-mine name="myorders"></recent-orders>
+                            <template is="dom-if" if="{{_isUnlocked(wallet)}}">
+                                <recent-fills filter-mine name="myfills"></recent-fills>
+                                <recent-orders filter-mine name="myorders"></recent-orders>
+                            </template>
                         </iron-pages>
                     </div>
                 </paper-card>
@@ -147,7 +152,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         }
         marketId() {
-            return this.id.toUpperCase();
+            if(this.id) return this.id.toUpperCase();
+        }
+        _isUnlocked(wallet){
+            console.log(wallet)
+            return null != this.wallet
         }
     }
 

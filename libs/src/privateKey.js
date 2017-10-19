@@ -13,6 +13,12 @@ function privateKey() {
         address = ethereumUtil.publicToAddress(publicKey);
     };
 
+    this.setPrivateKey = function (key) {
+        privateKey = key;
+        publicKey = ethereumUtil.privateToPublic(privateKey);
+        address = ethereumUtil.publicToAddress(publicKey);
+    };
+
     this.getAddress = function () {
         return ethereumUtil.toChecksumAddress("0x" + address.toString('hex'));
     };
