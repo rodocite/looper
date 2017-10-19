@@ -1,22 +1,99 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
 <dom-module id="order-book" fit>
     <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
         <style include="shared-styles">
          :host {
             display: block;
         }
+
+        .seperator {
+            width: 40px;
+        }
+
+         vaadin-grid {
+            line-height: inherit;
+        }
         </style>
-        order-book
+        <iron-ajax auto url="//raw.githubusercontent.com/Loopring/mock-relay-data/master/orders.json" handle-as="json" last-response="{{resp}}"></iron-ajax>
+        <!-- The array is set as the <vaadin-grid>'s "items" property -->
+        <div class="horizontal layout">
+            <div class="asks flex">
+                <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Amount</template>
+                        <template>[[numberFormat(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Price</template>
+                        <template>[[getPrice(item.orginalOrder.amountS,item.orginalOrder.amountB)]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Size</template>
+                        <template>[[numberFormat(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
+                        </template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </div>
+            <div class="seperator"></div>
+            <div class="bids flex">
+                <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Amount</template>
+                        <template>[[numberFormat(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Price</template>
+                        <template>[[getPrice(item.orginalOrder.amountS,item.orginalOrder.amountB)]]</template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="50px">
+                        <template class="header">Size</template>
+                        <template>[[numberFormat(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
+                        </template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </div>
+        </div>
     </template>
     <script>
     class OrderBook extends Polymer.Element {
-        static get is() { return 'order-book'; }
+        static get is() {
+            return 'order-book';
+        }
 
         static get properties() {
             return {
-
+                token: String
             };
+        }
+
+        transtoUppercase(str) {
+            if (str) {
+                return str.toUpperCase();
+            }
+            return '';
+        }
+
+        tranHextoNum(hex) {
+            if (hex) {
+                return Number(hex);
+            }
+            return '';
+        }
+
+        numberFormat(num) {
+            const size = this.tranHextoNum(num);
+            return (size / 1000000000000000000).toFixed(4);
+        }
+
+        getPrice(s, b) {
+
+            const sell = this.numberFormat(s);
+            const buy = this.numberFormat(b);
+            return (sell / buy).toFixed(8);
+
         }
     }
 

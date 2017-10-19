@@ -1,13 +1,77 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!-- <link rel="import" href="../../bower_components/paper-button/paper-button.html"> -->
 <dom-module id="operation-panel" fit>
     <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
         <style include="shared-styles">
          :host {
             display: block;
+            /*background-color: red;*/
+        }
+
+
+        vaadin-text-field {
+            width: 240px;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: flex-end;
+            @apply --layout-horizontal;
+            @apply --start-justified-layout;
+        }
+
+        .seperator {
+            width: 40px;
+        }
+
+        paper-button {
+            width: 240px;
+            color: red;
         }
         </style>
-        operation-panel
+        <div class="horizontal center center-justified layout">
+            <dom-bind id="sell-bind">
+                <template>
+                    <div class="middle vertical center layout flex">
+                        <div class="form-item">
+                            <div class="label">Amount</div>
+                            <vaadin-text-field minlength="4" maxlength="8" error-message="You must write something in this input" required pattern="^\w+$"></vaadin-text-field>
+                        </div>
+                        <div class="form-item">
+                            <vaadin-text-field label="Age" pattern="\d\d\d*" required></vaadin-text-field>
+                        </div>
+                        <div class="form-item">
+                            <vaadin-text-field label="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"></vaadin-text-field>
+                        </div>
+                        <paper-button>
+                            <iron-icon icon="menu"></iron-icon>Sell</paper-button>
+                    </div>
+                </template>
+            </dom-bind>
+            <div class="seperator"></div>
+            <div class="middle vertical center layout flex">
+                <div class="horizontal layout">
+                    <div class="label">Amount</div>
+                    <iron-input auto-validate>
+                        <input>
+                    </iron-input>
+                </div>
+                <div class="horizontal layout">
+                    <div class="label">Price</div>
+                    <iron-input auto-validate>
+                        <input>
+                    </iron-input>
+                </div>
+                <div class="horizontal layout">
+                    <div class="label">Total</div>
+                    <iron-input auto-validate>
+                        <input>
+                    </iron-input>
+                </div>
+                <paper-button>
+                    <iron-icon icon="menu"></iron-icon>Buy</paper-button>
+            </div>
+        </div>
     </template>
     <script>
     class OperationPanel extends Polymer.Element {
