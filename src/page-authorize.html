@@ -28,9 +28,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .right {
         width:45%;
       }
-      .value {
-        padding-left: 10px;
-      }
       .button {
         padding-top: 20px;
       }
@@ -52,6 +49,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           text-transform: uppercase;
           text-align: center;
         }
+      }
+      .fontTitle {
+        font-family: Georgia, serif;
+        font-size: 1.2em;
+      }
+
+      .fontContent {
+        font-family: Georgia, serif;
+        font-size: 0.875em;
+        padding-left: 10px;
       }
     </style>
     <looper-page>
@@ -85,16 +92,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="middle"></div>
                 <div class="right">
                   <div class="vertical layout start-justified">
-                    <div>Address:</div>
-                    <div class="value">[[wallet.address]]</div>
-                    <div>
-                      Balance & Allowance(current available/advice to set):
+                    <div class="fontTitle">Address:</div>
+                    <div class="fontContent">[[wallet.address]]</div>
+                    <div class="fontTitle">
+                      Balance & Allowance(available/advice):
                     </div>
-                    <div class="value">
+                    <div class="fontContent">
                       <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
                       <iron-list items="[[_fillAllowanceArray(data.result.tokens)]]" as="item">
                         <template>
-                          <div class="fontContent">
+                          <div>
                             [[item.unit]]:[[item.balance]] ([[item.availableAllowance]]/[[item.defaultAllowance]])
                             <template is="dom-if" if="{{_allowanceWarn(item.contract, item.availableAllowance)}}">
                               <a href="#" id="warn{{item.contract}}">

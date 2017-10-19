@@ -102,8 +102,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         </style>
         <looper-page>
-            <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
             <global-variable key="wallet" value="{{wallet}}"></global-variable>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+            <simple-toolbar slot="secondary-toolbar" title="Transfer" back-link="#/wallet"></simple-toolbar>
             <div class="sections">
                 <paper-card>
                     <div class="container">
@@ -175,11 +176,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 Token Balances:
                             </div>
                             <div class="line">
-                                <iron-ajax url="http://127.0.0.1:8081/testData-tokens.json" last-response="{{data}}" auto></iron-ajax>
-                                <iron-list items="[[data]]" as="item">
+                                <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
+                                <iron-list items="[[data.result.tokens]]" as="item">
                                     <template>
                                         <div class="fontContent">
-                                            [[item.symbol]] [[item.balance]]
+                                            [[_findSymbol(item.contract)]] [[item.balance]]
                                         </div>
                                     </template>
                                 </iron-list>
@@ -203,6 +204,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 extData.style.display = 'block';
             }
         }
+
+        _findTokenConfig(address) {
+            var tokens = this.appConfig.tokens;
+            for (var x in tokens) {
+                var token = tokens[x];
+                if (token.contract == address) {
+                    return token;
+                }
+            }
+        }
+
+        _toLowerSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit.toLowerCase()
+            } else {
+                return "?";
+            }
+        }
+
+        _findSymbol(address) {
+            var token = this._findTokenConfig(address);
+            if (token) {
+                return token.unit
+            } else {
+                return "?";
+            }
+        }
+
         signToSend() {
             var detail = { raw: "raw message" };
             this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
