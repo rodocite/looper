@@ -102,9 +102,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageAuthorize extends Polymer.Element {
     static get is() { return 'page-authorize'; }
+
+      /**
+       * token : parent input parameter, lrc...
+       * selectedToken: current selected token contract address
+       * amount: current input amount
+       */
     static get properties() {
       return {
-         id: {
+         token: {
              type: String
          },
          selectedToken: {
@@ -127,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       combobox.addEventListener('value-changed', function() {
           context.selectedToken = combobox.value;
       });
-      if(this.id){
+      if(this.token){
           this._selectedTokenUnit()
       }
     }
@@ -148,7 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var tokens = this.appConfig.tokens;
         let token = null;
         for (var x in tokens) {
-            if (x == this.id.toUpperCase()) {
+            if (x == this.token.toUpperCase()) {
                 token = tokens[x];
             }
         }
