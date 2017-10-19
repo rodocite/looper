@@ -9,7 +9,6 @@
         "src/page-orders.html",
         "src/page-order.html",
         "src/page-fills.html",
-        "src/page-fill.html",
         "src/page-wallet.html",
         "src/page-authorize.html",
         "src/page-convert.html",
@@ -18,10 +17,10 @@
         "src/page-doc.html",
         "src/page-404.html",
         "src/page-dev.html",
-        "src/page-wallet-default.html",
-        "src/page-wallet-unlock.html",
-        "src/page-wallet-generate.html",
-        "src/page-wallet-default.html"
+        "src/wallet/subpage-default.html",
+        "src/wallet/subpage-unlock.html",
+        "src/wallet/subpage-generate.html",
+        "src/wallet/subpage-ready.html"
     ],
     "sources": [
         "src/**/*",
