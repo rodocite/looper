@@ -133,6 +133,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     static get is() { return 'page-authorize'; }
     static get properties() {
       return {
+         id: {
+             type: String,
+             notify: true,
+             observer: "_selectedTokenUnit"
+         },
          selectedToken: {
             type: String,
             notify: true,
@@ -144,6 +149,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observer: "_selected"
          }
       };
+    }
+
+    _selectedTokenUnit(){
+        var tokens = this.appConfig.tokens;
+        let token = null;
+        for (var x in tokens) {
+            if (x == this.id.toUpperCase()) {
+                token = tokens[x];
+            }
+        }
+        if(!token) return;
+        this.selectedToken = token.contract
     }
 
     _selected(){

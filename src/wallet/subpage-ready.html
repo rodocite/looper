@@ -112,7 +112,7 @@
                                 <div><a href="#/transfer/[[_toLowerSymbol(item.contract)]]">transfer</a></div>
                                 <div style="margin-left: 10px;"><a href="#/market/[[_toLowerSymbol(item.contract)]]">trade</a></div>
                                 <div class="horizontal layout" style="margin-left: 10px;">
-                                    <div><a href="#/market/[[_toLowerSymbol(item.contract)]]">allowance</a></div>
+                                    <div><a href="#/authorize/[[_toLowerSymbol(item.contract)]]">allowance</a></div>
                                     <template is="dom-if" if="{{_allowanceWarn(item.contract, item.allowance)}}">
                                         <div>
                                             <a href="#" id="warn{{item.contract}}">
