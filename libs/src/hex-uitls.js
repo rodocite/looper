@@ -1,4 +1,4 @@
-const BigNumber = require('bignumber.js')
+const BigNumber = require('bignumber')
 
 exports.stripHex= function (address) {
     return address.replace('0x', '').toLowerCase();

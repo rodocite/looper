@@ -8,7 +8,8 @@
                 display: block;
                 --paper-card-actions: {
                     background-color: var(--paper-grey-50);
-                } --paper-card-header-text: {
+                } ;
+                --paper-card-header-text: {
                 font-size: 18px;
                 color: var(--app-text-color-light);
             }
@@ -57,10 +58,23 @@
                 padding-right: 8px;
             }
 
+            paper-button.disabled{
+                background-color:var(--paper-grey-400);
+            }
+
+
             strong {
                 color: var(--app-primary-color-dark);
                 padding-right: 8px;
             }
+
+            paper-card.hidden {
+                visibility: hidden;
+            }
+            paper-card.visible {
+                visibility: visible;
+            }
+
         </style>
         <div class="sections">
             <paper-card nopadding heading="Generate Ethereum Walelt">
@@ -75,12 +89,12 @@
                                                icon="{{visibility}}"></paper-icon-button>
                         </div>
                         <div>
-                            <p style="color: red">{{passwordCheck(password)}}</p>
+                            <p style="color: red">{{passwordCheck}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="card-actions">
-                    <paper-button on-click="unlockClicked">Generate wallet for me.</paper-button>
+                <div class="input-wrapper horizontal layout center-justified">
+                    <paper-button primary  disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me.</paper-button>
                 </div>
             </paper-card>
             <paper-card transparent elevation=0>
@@ -88,7 +102,7 @@
                     <!-- <div class="flex"></div> -->
                 </div>
             </paper-card>
-            <paper-card nopadding heading="Save Keystore File" style$="visibility:{{unlock}}">
+            <paper-card nopadding heading="Save Keystore File" class$="[[unlock]]">
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div class="vertical layout warning" secondary-text>
@@ -108,16 +122,16 @@
                             </div>
                         </div>
                         <div class="input-wrapper horizontal layout center-justified">
-                            <paper-button primary on-click="downloadKeystore" id="downloadButton"
-                                          style$="background-color:{{disableColor}}">
+                            <paper-button primary disabled on-click="downloadKeystore" id="downloadButton"
+                                          class$="[[determineButtonStyle(key)]]">
                                 <iron-icon icon="file-download"></iron-icon>
                                 Download Keystore File
                             </paper-button>
                         </div>
                     </div>
                 </div>
-                <div class="card-actions">
-                    <paper-button id="proceedButton" on-click="proceedClicked">I saved my keystore file. Proceed to
+                <div class="input-wrapper horizontal layout center-justified">
+                    <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]">I saved my keystore file. Proceed to
                         unlock my wallet.
                     </paper-button>
                 </div>
@@ -160,8 +174,18 @@
                         value: false,
                     },
 
-                    key: Object,
-
+                    key: {
+                        type: Object,
+                        notify: true,
+                    },
+                    proceedClass: {
+                        type: String,
+                        value: 'disabled',
+                    },
+                    generateClass: {
+                        type: String,
+                        value: 'disabled',
+                    },
                 };
             }
 
@@ -172,22 +196,22 @@
             passwordInput(password) {
                 if (password !== '') {
                     this.unlock = 'hidden';
+                    this.$.generateButton.disabled = password.length < 9;
+                    this.generateClass = password.length >=9 ? '':'disabled';
+                    this.key='';
+                    this.passwordCheck = password.length >= 9 || password === '' ? '' : 'please input at least 9 characters';
                 }
             }
-
             unlockClicked() {
                 if (this.password.length >= 9) {
                     const maker = new privateKey();
                     maker.generate();
                     this.key = maker;
+                    this.$.generateButton.disabled = true;
+                    this.generateClass = 'disabled';
                     this.unlock = 'visible';
                     this.$.downloadButton.disabled = false;
-                    this.disableColor = '';
                 }
-            }
-
-            passwordCheck(string) {
-                return string.length >= 9 || string === '' ? '' : 'please input at least 9 characters';
             }
 
             toggleVisible() {
@@ -196,23 +220,32 @@
             }
 
             proceedClicked() {
-                this.password = '';
+                this.unlock = 'hidden';
                 this.dispatchEvent(new CustomEvent('reset-wallet', {bubbles: true, composed: true}));
             }
 
             downloadKeystore(e) {
                 this.$.downloadButton.disabled = true;
-                this.disableColor = 'var(--paper-grey-400)';
                 const element = document.createElement('a');
                 element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.key.toKeystore(this.password))));
                 const ts = new Date();
                 element.setAttribute('download', ['UTC--', ts.toJSON().replace(/:/g, '-'),'--',this.key.getAddress()].join(''));
+                this.key='';
+                this.password='';
                 element.style.display = 'none';
                 document.body.appendChild(element);
                 element.click();
                 document.body.removeChild(element);
-                this.key='';
+                this.$.proceedButton.disabled = false;
+                this.proceedClass = '';
             }
+
+            determineButtonStyle(pkey){
+                if(!pkey){
+                    return 'disabled';
+                }
+            }
+
         }
 
         window.customElements.define(SubpageGenerate.is, SubpageGenerate);
