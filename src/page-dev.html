@@ -46,6 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-button raised on-click="showWarning">show a warning(3s)</paper-button>
             <paper-button raised on-click="showError">show a error(10s)</paper-button>
             <paper-button raised on-click="signToSend">signToSend</paper-button>
+            <paper-button raised on-click="signToSendWithTwo">signToSend(With 2 Trans)</paper-button>
             <paper-button raised on-click="setWallet">setWallet</paper-button>
           </div>
         </paper-card>
@@ -76,7 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     signToSend() {
-      var detail = { raw: "raw message" };
+      var detail = { raws: [{"raw":"authorize datas"}] };
+      this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+    }
+
+    signToSendWithTwo(){
+      var detail = { raws: [{"raw":"cancle datas", "subTitle":"Cancel Older Authorization"}, {"raw":"authorize datas", "subTitle":"Authorization"}] };
       this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
     }
 

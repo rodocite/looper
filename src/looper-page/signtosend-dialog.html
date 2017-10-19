@@ -43,21 +43,28 @@
     </style>
     <ethereum-signer id="signer"></ethereum-signer>
     <paper-dialog always-on-top no-cancel-on-outside-click with-backdrop id="dialog" entry-animation="slide-from-top-animation" exit-animation="fade-out-animation">
-      <h2>Sign Transaction</h2>
-      <div class="content horizontal center layout">
-        <div class="part raw vertical layout flex">
-          <div class="title">Raw transaction:</div>
-          <div class="wrapper raw">
-            <iron-autogrow-textarea value={{detail.raw}} readonly="true"></iron-autogrow-textarea>
+      <template is="dom-repeat" items="[[detail.raws]]">
+        <template is="dom-if" if="{{_hasSubTitle(item)}}">
+          <h2>[[item.subTitle]]</h2>
+        </template>
+        <template is="dom-if" if="{{_noSubTitle(item)}}">
+          <h2>Sign Transaction</h2>
+        </template>
+        <div class="content horizontal center layout">
+          <div class="part raw vertical layout flex">
+            <div class="title">Raw transaction:</div>
+            <div class="wrapper raw">
+              <iron-autogrow-textarea value={{item.raw}} readonly="true"></iron-autogrow-textarea>
+            </div>
+          </div>
+          <div class="part  vertical layout flex">
+            <div class="title">Signed transaction:</div>
+            <div class="wrapper signed">
+              <iron-autogrow-textarea value={{_sign(item.raw)}} readonly="true"></iron-autogrow-textarea>
+            </div>
           </div>
         </div>
-        <div class="part  vertical layout flex">
-          <div class="title">Signed transaction:</div>
-          <div class="wrapper signed">
-            <iron-autogrow-textarea value={{signed}} readonly="true"></iron-autogrow-textarea>
-          </div>
-        </div>
-      </div>
+      </template>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm autofocus>Send Transaction</paper-button>
@@ -68,11 +75,30 @@
   class SigntosendDialog extends Polymer.Element {
     static get is() { return 'signtosend-dialog'; }
 
+      /**
+       * detail:[
+       *  {"raw":"raw datas", "subTitle":"Cancel Older Authorization"},
+       *  {"raw":"raw datas", "subTitle":"Authorization"}
+       * ]
+       * @returns {{detail: Object, signed: String}}
+       */
     static get properties() {
       return {
         detail: Object,
         signed: String
       };
+    }
+
+    _noSubTitle(item){
+        return !item.subTitle || item.subTitle === ""
+    }
+
+    _hasSubTitle(item){
+        return item.subTitle != ""
+    }
+
+    _sign(raw){
+        return raw + "fdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdja  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fdfdjafldjafkl;djsaklfjdsal;f  fd";
     }
 
     show(detail) {
