@@ -18,35 +18,6 @@
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="50px">
                 <template class="header">
-                    <div class="left-aligned">Time</div>
-                </template>
-                <template>
-                    <div class="left-aligned">
-                        <time-str seconds="[[item.orginalOrder.timestamp]]"></time-str>
-                    </div>
-                </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="20px">
-                <template class="header">Type</template>
-                <template><span style$="color:[[typeStyle(item.orginalOrder.tokenB)]]"> [[getType(item.orginalOrder.tokenB)]]</span>
-                </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">Amount</template>
-                <template>[[numberFormat(item.orginalOrder.amountB)]] [[transtoUppercase(item.orginalOrder.tokenB)]]
-                </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">Price</template>
-                <template>[[getPrice(item.orginalOrder.amountS,item.orginalOrder.amountB)]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column width="50px">
-                <template class="header">Size</template>
-                <template>[[numberFormat(item.orginalOrder.amountS)]] [[transtoUppercase(item.orginalOrder.tokenS)]]
-                </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column>
-                <template class="header">
                     <div class="left-aligned">Hash</div>
                 </template>
                 <template>
@@ -57,11 +28,44 @@
                     </div>
                 </template>
             </vaadin-grid-column>
+            <vaadin-grid-column width="20px">
+                <template class="header">Type</template>
+                <template><span style$="color:[[typeStyle(item.orginalOrder.tokenB)]]"> [[getType(item.orginalOrder.tokenB)]]</span>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Amount</template>
+                <template>
+                    <pretty-number v="[[numberFormat(item.orginalOrder.amountB)]]" d=4 postfix="[[transtoUppercase(item.orginalOrder.tokenB)]]"></pretty-number>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Price</template>
+                <template>
+                    <pretty-number v="[[getPrice(item.orginalOrder.amountS,item.orginalOrder.amountB)]]" d=8></pretty-number>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">Size</template>
+                <template>
+                    <pretty-number v="[[numberFormat(item.orginalOrder.amountS)]]" d=4 postfix="[[transtoUppercase(item.orginalOrder.tokenS)]]"></pretty-number>
+                </template>
+            </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">Status</template>
                 <template>
                     <div class="horizontal end-justified layout">
                         <paper-progress value="[[numberFormat(item.totalDealedAmountB)]]" secondary-progress="60" max="[[numberFormat(item.orginalOrder.amountB)]]"></paper-progress>
+                    </div>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">
+                    <div class="left-aligned">Time</div>
+                </template>
+                <template>
+                    <div class="left-aligned">
+                        <time-str seconds="[[item.orginalOrder.timestamp]]"></time-str>
                     </div>
                 </template>
             </vaadin-grid-column>
@@ -90,19 +94,20 @@
             if (hex) {
                 return Number(hex);
             }
-            return '';
+            return 0;
         }
 
         numberFormat(num) {
+            if(!num) return 0
             const size = this.tranHextoNum(num);
-            return (size / 1000000000000000000).toFixed(4);
+            return size / 1000000000000000000;
         }
 
         getPrice(s, b) {
-
+            if(!s || !b) return 0
             const sell = this.numberFormat(s);
             const buy = this.numberFormat(b);
-            return (sell / buy).toFixed(8);
+            return (sell / buy);
 
         }
 

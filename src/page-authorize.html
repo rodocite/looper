@@ -33,32 +33,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .amount {
         width: 100px;
-        height: 30px;
+        height: 34px;
+        padding-bottom: 0px;
       }
-      paper-dropdown-menu.noLable {
-        --paper-input-container-label: {
-          color: var(--paper-pink-500);
-          font-style: italic;
-          text-align: center;
-          font-weight: bold;
-        };
-        --paper-input-container-input: {
-          color: var(--paper-indigo-500);
-          font-style: normal;
-          font-family: serif;
-          text-transform: uppercase;
-          text-align: center;
-        }
-      }
-      .fontTitle {
-        font-family: Georgia, serif;
-        font-size: 1.2em;
-      }
-
-      .fontContent {
-        font-family: Georgia, serif;
-        font-size: 0.875em;
-        padding-left: 10px;
+      .input{
+        margin-bottom: var(--valo-space-xs);
       }
     </style>
     <looper-page>
@@ -73,16 +52,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="left">
                   <div class="vertical layout start-justified">
                     <div class="horizontal layout start-justified">
-                      <iron-input bind-value="{{bindValue}}">
-                        <input value="{{amount::input}}" class="amount">
-                      </iron-input>
-                      <paper-dropdown-menu class="noLable" label="Tokens" no-label-float>
-                        <paper-listbox slot="dropdown-content" attr-for-selected="value" selected="{{selectedToken}}">
-                          <template is="dom-repeat" items="[[_toTokenNameArray(appConfig.tokens)]]">
-                            <paper-item value="[[item.address]]">[[item.name]]</paper-item>
-                          </template>
-                        </paper-listbox>
-                      </paper-dropdown-menu>
+                      <div class="vertical layout end-justified input">
+                        <iron-input bind-value="{{bindValue}}">
+                          <input value="{{amount::input}}" class="amount">
+                        </iron-input>
+                      </div>
+                      <vaadin-combo-box id="tokensSelector" items="[[_toTokenNameArray(appConfig.tokens)]]" item-label-path="name" item-value-path="address"></vaadin-combo-box>
                     </div>
                     <div class="horizontal layout center-justified button">
                       <paper-button raised on-click="_signToSend">Generate Transaction</paper-button>
@@ -92,31 +67,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="middle"></div>
                 <div class="right">
                   <div class="vertical layout start-justified">
-                    <div class="fontTitle">Address:</div>
-                    <div class="fontContent">[[wallet.address]]</div>
-                    <div class="fontTitle">
-                      Balance & Allowance(available/advice):
-                    </div>
-                    <div class="fontContent">
-                      <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
-                      <iron-list items="[[_fillAllowanceArray(data.result.tokens)]]" as="item">
-                        <template>
-                          <div>
-                            [[item.unit]]:[[item.balance]] ([[item.availableAllowance]]/[[item.defaultAllowance]])
-                            <template is="dom-if" if="{{_allowanceWarn(item.contract, item.availableAllowance)}}">
-                              <a href="#" id="warn{{item.contract}}">
-                                <iron-icon icon="icons:error"></iron-icon>
-                              </a>
-                              <paper-tooltip for="warn{{item.contract}}" position="left">
-                                <p>
-                                  allowance left: [[item.availableAllowance]] is lower than [[item.defaultAllowance]]
-                                </p>
-                              </paper-tooltip>
-                            </template>
-                          </div>
-                        </template>
-                      </iron-list>
-                    </div>
+                    <iron-ajax auto url="http://127.0.0.1:8081/walletTokens.json" handle-as="json" last-response="{{data}}" debounce-duration="300"></iron-ajax>
+                    <paper-item class="flex">
+                      <paper-item-body two-line>
+                        <div class="title"> Address</div>
+                        <div secondary>
+                          [[wallet.address]]
+                        </div>
+                      </paper-item-body>
+                    </paper-item>
+                    <paper-item class="flex">
+                      <paper-item-body two-line>
+                        <div class="title"> Balance</div>
+                        <div secondary>[[_outputBalance(selectedToken, data)]]</div>
+                      </paper-item-body>
+                    </paper-item>
+                    <paper-item class="flex">
+                      <paper-item-body two-line>
+                        <div class="title"> Allowance(available/advice)</div>
+                        <div secondary>[[_output(selectedToken, data)]]</div>
+                      </paper-item-body>
+                    </paper-item>
                   </div>
                 </div>
               </div>
@@ -134,9 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     static get properties() {
       return {
          id: {
-             type: String,
-             notify: true,
-             observer: "_selectedTokenUnit"
+             type: String
          },
          selectedToken: {
             type: String,
@@ -151,6 +120,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       };
     }
 
+    ready() {
+      super.ready();
+      var combobox = this.$.tokensSelector
+      var context = this
+      combobox.addEventListener('value-changed', function() {
+          context.selectedToken = combobox.value;
+      });
+      if(this.id){
+          this._selectedTokenUnit()
+      }
+    }
+
+    _output(selectedToken, data){
+        this._fillSelectedAllowance()
+        if(!this.currentToken) return
+        return this.currentToken.availableAllowance+"/"+this.currentToken.defaultAllowance
+    }
+
+    _outputBalance(selectedToken, data){
+        this._fillSelectedAllowance()
+        if(!this.currentToken) return
+        return this.currentToken.balance
+    }
+
     _selectedTokenUnit(){
         var tokens = this.appConfig.tokens;
         let token = null;
@@ -161,10 +154,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         if(!token) return;
         this.selectedToken = token.contract
+        var combobox = this.$.tokensSelector
+        combobox.value = token.contract
+        this._fillSelectedAllowance()
     }
 
     _selected(){
         if(!this.selectedToken || !this.amount) return;
+        this._output(this.data)
         let tokenConfig = this._findTokenConfig(this.selectedToken);
         if(!tokenConfig){
             var detail = { text: "invalid selected token", category: "warning", duration: 8000 }
@@ -203,6 +200,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        }
     }
 
+    _toUpper(name) {
+       return name.toUpperCase()
+    }
+
     _toLowerSymbol(address) {
        var token = this._findTokenConfig(address);
        if (token) {
@@ -219,6 +220,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        } else {
           return "?";
        }
+    }
+
+    _fillSelectedAllowance(){
+        if(!this.data || !this.data.result.tokens || !this.selectedToken) return;
+        let a = this
+        let selected = this.data.result.tokens.filter(function(item){
+            return item.contract == a.selectedToken
+        })
+        let balance = 0, contract = "", allowance = 0
+        if(selected && selected.length === 1) {
+            balance = selected[0].balance;
+            contract = selected[0].contract;
+            allowance = selected[0].allowance
+        }
+        let tokenConfig = a._findTokenConfig(this.selectedToken);
+        this.currentToken = {
+            unit: tokenConfig.unit,
+            contract: contract,
+            balance: balance,
+            availableAllowance: allowance,
+            defaultAllowance: tokenConfig.allowanceWarn
+        }
     }
 
     _fillAllowanceArray(userAllowanceArray){

@@ -193,7 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <signtosend-dialog id="signtosend"></signtosend-dialog>
         <notification-panel id="notification"></notification-panel>
         <!-- ajax -->
-        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
+        <iron-ajax auto url="http://127.0.0.1:8081/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
         <!-- global vars -->
         <global-variable key="app-config" value="{{appConfig}}"></global-variable>
         <global-variable key="wallet" value="{{wallet}}"></global-variable>
@@ -238,7 +238,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <page-ring name="ring" id={{pageId}}></page-ring>
                     <page-orders name="orders"></page-orders>
                     <page-order name="order" id={{pageId}}></page-order>
-                    <page-fills name="fills"></page-fills>
+                    <page-fills name="fills" id={{pageId}}></page-fills>
                     <page-convert name="convert" id={{pageId}}></page-convert>
                     <page-authorize name="authorize" id={{pageId}}></page-authorize>
                     <page-transfer name="transfer"></page-transfer>
