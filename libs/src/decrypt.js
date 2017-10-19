@@ -29,11 +29,11 @@ exports.decodeCryptojsSalt = function (input) {
 
 
 
-function decipherBuffer (decipher,data) {
+ exports.decipherBuffer = function(decipher,data) {
     return Buffer.concat([decipher.update(data), decipher.final()]);
 }
 
-function evp_kdf(data,salt,opts) {
+ exports.evp_kdf = function(data,salt,opts) {
 
     function iter(block) {
         let hash = crypto.createHash(opts.digest || 'md5');
