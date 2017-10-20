@@ -43,7 +43,6 @@
             padding-top: 30px;
         }
 
-
         </style>
         <div class="sections">
             <paper-card nopadding heading="Generate New Wallet">
@@ -63,6 +62,11 @@
                     <paper-button primary on-click="unlockClicked">Unlock Keystore File (UTC / JSON)</paper-button>
                 </div>
             </paper-card>
+
+
+            <granite-file-reader read-as="txt" accept=".txt,.json">
+                <div class="clickHere">Click here to load a file</div>
+            </granite-file-reader>
         </div>
     </template>
     <script>

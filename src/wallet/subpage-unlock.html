@@ -85,7 +85,8 @@
                             </paper-button>
                         </div>
                         <div id="test">
-                            [[walletContent]]
+                            <label>Wallet Content</label>
+                            <p> {{showContent(walletContent)}}</p>
                         </div>
                         <div class$="[[isPassWordRequiredClass(passwordRequired)]]">
                             <div secondary-text>Great. Your wallet is password protected. Provide your password:</div>
@@ -121,9 +122,9 @@
             static get properties() {
                 return {
                     walletContent: {
-                        type: String,
+                        type: Object,
                         notify: true,
-
+                        observer: 'isPassWordRequired',
                     },
                     passwordRequired: {
                         type: Boolean,
@@ -131,10 +132,6 @@
                         notify: true,
                     },
                 };
-            }
-
-            static get observers() {
-                return ['isPassWordRequired(walletContent)'];
             }
 
             ready() {
@@ -152,11 +149,16 @@
                     return;
                 }
                 const reader = new FileReader();
-                reader.readAsText(file);
+                var _this = this;
                 reader.onload = function (e) {
-                    this.walletContent = e.target.result;
-
+                    _this.walletContent = e.target.result;
+                    console.log('wallet Content:' + this.walletContent);
                 }.bind(this);
+                reader.readAsText(file);
+            }
+
+            showContent(content) {
+                return JSON.stringify(content);
             }
 
             isPassWordRequired(walletContent) {
