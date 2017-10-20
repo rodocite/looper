@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
 <script src="../../libs/dist/privateKey.js"></script>
-<dom-module id="subpage-generate" fit>
+<dom-module id="subpage-generate"> 
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
         <style include="shared-styles">
@@ -85,8 +86,11 @@
             }
 
         </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Wallet" id="Generate New Wallet" back-link="#/wallet"></simple-toolbar>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
         <div class="sections">
-            <paper-card nopadding heading="Generate Ethereum Walelt">
+            <paper-card>
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div secondary-text> Provide a very strong password:</div>
@@ -111,7 +115,7 @@
                     <!-- <div class="flex"></div> -->
                 </div>
             </paper-card>
-            <paper-card nopadding heading="Save Keystore File" class$="[[unlock]]">
+            <paper-card class$="[[unlock]]">
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div class="vertical layout warning" secondary-text>
@@ -146,6 +150,7 @@
                 </div>
             </paper-card>
         </div>
+    </looper-page>
     </template>
     <script>
         const privateKey = require('privateKey');

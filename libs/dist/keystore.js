@@ -26463,7 +26463,7 @@ exports.determineKeystoreType = function (keystore) {
     else if (parsed.publisher === 'MyEtherWallet') return 'v2-unencrypted';
     else throw new Error('Invalid keystore');
 
-}
+};
 
 exports.decryptPresaleToPrivKey = function(keystore,password) {
     const json = JSON.parse(keystore);
@@ -26519,7 +26519,7 @@ exports.decryptMewV1ToPrivKey = function (keystore,password) {
 
 }
 
-function isKeystorePassRequired(keystore) {
+exports.isKeystorePassRequired = function (keystore) {
     switch (determineKeystoreType(keystore)) {
         case 'presale':
             return true;
@@ -26534,7 +26534,7 @@ function isKeystorePassRequired(keystore) {
         default:
             return false;
     }
-}
+};
 
 }).call(this,require("buffer").Buffer)
 },{"./decrypt.js":72,"buffer":120,"crypto":129,"ethereumjs-util":24,"scryptsy":53,"uuid/v4":71}]},{},[]);
