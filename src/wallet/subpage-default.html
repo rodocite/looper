@@ -1,8 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../shared-styles.html">
 <dom-module id="subpage-default" fit>
     <template>
         <style include="shared-styles"></style>
+        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
         <style>
          :host {
             display: block;
@@ -37,27 +37,30 @@
         .sections>paper-card {
             padding: 0;
         }
+
+        .space{
+            padding-bottom: 20px;
+            padding-top: 30px;
+        }
+
+
         </style>
         <div class="sections">
             <paper-card nopadding heading="Generate New Wallet">
                 <div class="card-content">Looper gives you the ability to generate new wallets so you can store your ETH & Tokens yourself, not on an exchange. This process happens entirely in your browser. Looper is not a web wallet. We are a client-side interface that allows you to interact with the Ethereum blockchain. We never save, store, or transmit any sensitive information ever. Therefore, when you generate a new wallet, you are responsible for safely backing it up.</div>
-                <div class="card-actions">
-                    <a href="/#/generatewallet">
-                        <paper-button on-click="generateClicked">Generate Ethereum Wallet</paper-button>
-                    </a>
+                <div class=" input-wrapper horizontal layout center-justified space">
+                    <paper-button primary on-click="generateClicked">Generate Ethereum Wallet</paper-button>
                 </div>
             </paper-card>
             <paper-card transparent elevation=0>
-                <div class="horiziontal center layout">
+                <div class="horizontal center layout">
                     <div class="flex or">or</div>
                 </div>
             </paper-card>
-            <paper-card nopadding heading="Unlock Existing Wallet">
+            <paper-card nopadding heading="Unlock Existing Wallet" >
                 <div class="card-content">Some content</div>
-                <div class="card-actions">
-                    <a href="/#/unlockwallet">
-                        <paper-button>Unlock Keystore File (UTC / JSON)</paper-button>
-                    </a>
+                <div class="input-wrapper horizontal layout center-justified space">
+                    <paper-button primary on-click="unlockClicked">Unlock Keystore File (UTC / JSON)</paper-button>
                 </div>
             </paper-card>
         </div>
