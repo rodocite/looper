@@ -1,0 +1,250 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<script src="../libs/dist/privateKey.js"></script>
+<dom-module id="page-generatewallet">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+        <style include="shared-styles">
+         :host {
+            display: block;
+            --paper-card-actions: {
+                background-color: var(--paper-grey-50);
+            }
+            ;
+            --paper-card-header-text: {
+                font-size: 18px;
+                color: var(--app-text-color-light);
+            }
+        }
+
+        .input-wrapper {
+            padding-top: 16px;
+            padding-bottom: 24px;
+        }
+
+        iron-input input {
+            width: 400px;
+        }
+
+        #visibleBtn {
+            height: 39px;
+            width: 39px;
+            background-color: var(--google-grey-300);
+        }
+
+        .card-actions {
+            text-align: center;
+        }
+
+        .card-actions paper-button {
+            min-width: 360px;
+            /*margin:8px 0 8px 0;*/
+            /*color: var(--app-primary-color-dark);*/
+        }
+
+        .card-actions paper-button:hover {
+            color: var(--app-primary-color-dark);
+        }
+
+        .warning iron-icon {
+            height: 18px;
+            margin-bottom: 5px;
+            color: var(--paper-amber-700);
+        }
+
+        strong {
+            color: var(--app-primary-color-dark);
+            padding-right: 8px;
+        }
+
+        paper-card.hidden {
+            visibility: hidden;
+        }
+
+        paper-card.visible {
+            visibility: visible;
+        }
+
+        div.error {
+            opacity: 0;
+            color: var(--app-red-color);
+        }
+
+        div[show] {
+            opacity: 1;
+        }
+        </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Wallet" id="Generate New Wallet" back-link="#/wallet"></simple-toolbar>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
+            <div class="sections">
+                <paper-card>
+                    <div class="card-content">
+                        <div class="vertical center layout ">
+                            <div secondary-text> Provide a very strong password:</div>
+                            <div class="input-wrapper horizontal layout center-justified">
+                                <iron-input bind-value="{{password}}" auto-validate>
+                                    <input type$="{{inputType}}">
+                                </iron-input>
+                                <paper-icon-button id="visibleBtn" on-click="toggleVisible" icon="{{visibility}}"></paper-icon-button>
+                            </div>
+                            <div class="error" show$="[[showError]]">
+                                Your password is too weak, it should have at least 9 characters.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-wrapper horizontal layout center-justified">
+                        <paper-button primary disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me</paper-button>
+                    </div>
+                </paper-card>
+                <paper-card transparent elevation=0>
+                    <div class="horiziontal center layout">
+                        <!-- <div class="flex"></div> -->
+                    </div>
+                </paper-card>
+                <paper-card class$="[[unlock]]">
+                    <div class="card-content">
+                        <div class="vertical center layout ">
+                            <div class="vertical layout warning" secondary-text>
+                                <div>
+                                    <iron-icon icon="warning"></iron-icon>
+                                    <strong>Do not lose it!</strong> It cannot be recovered if you lose it.
+                                </div>
+                                <div>
+                                    <iron-icon icon="warning"></iron-icon>
+                                    <strong>Do not share it!</strong> Your funds will be stolen if you use this file on a malicious/phishing site.
+                                </div>
+                                <div>
+                                    <iron-icon icon="warning"></iron-icon>
+                                    <strong>Make a backup!</strong> Secure it like the millions of dollars it may one day be worth.
+                                </div>
+                            </div>
+                            <div class="input-wrapper horizontal layout center-justified">
+                                <paper-button primary disabled on-click="downloadKeystore" id="downloadButton" class$="[[determineButtonStyle(key)]]">
+                                    <iron-icon icon="file-download"></iron-icon>
+                                    Download Keystore File
+                                </paper-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-wrapper horizontal layout center-justified">
+                        <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]"> Proceed to unlock my wallet
+                        </paper-button>
+                    </div>
+                </paper-card>
+            </div>
+        </looper-page>
+    </template>
+    <script>
+    const privateKey = require('privateKey');
+
+
+    class PageGenerateWallet extends Polymer.Element {
+        static get is() {
+            return 'page-generatewallet';
+        }
+
+        static get properties() {
+            return {
+                visibility: {
+                    type: String,
+                    value: 'visibility-off',
+                    notify: true,
+                },
+                inputType: {
+                    type: String,
+                    value: 'password',
+                },
+                unlock: {
+                    type: String,
+                    value: 'hidden',
+                    notify: true,
+                },
+
+                primary: {
+                    type: Boolean,
+                    value: true,
+                },
+
+                disabled: {
+                    type: Boolean,
+                    value: false,
+                },
+
+                key: {
+                    type: Object,
+                    notify: true,
+                },
+                proceedClass: {
+                    type: String,
+                    value: 'disabled',
+                },
+                generateClass: {
+                    type: String,
+                    value: 'disabled',
+                },
+            };
+        }
+
+        static get observers() {
+            return ['passwordInput(password)'];
+        }
+
+        passwordInput(password) {
+            if (password !== '') {
+                this.unlock = 'hidden';
+                this.$.generateButton.disabled = password.length < 9;
+                this.generateClass = password.length >= 9 ? '' : 'disabled';
+                this.key = '';
+                this.showError = (password === '' || password.length < 9);
+            }
+        }
+        unlockClicked() {
+            if (this.password.length >= 9) {
+                const maker = new privateKey();
+                maker.generate();
+                this.key = maker;
+                this.$.generateButton.disabled = true;
+                this.generateClass = 'disabled';
+                this.unlock = 'visible';
+                this.$.downloadButton.disabled = false;
+            }
+        }
+
+        toggleVisible() {
+            this.visibility = this.$.visibleBtn.icon !== 'visibility' ? 'visibility' : 'visibility-off';
+            this.inputType = this.visibility !== 'visibility' ? 'password' : 'text';
+        }
+
+        proceedClicked() {
+            this.unlock = 'hidden';
+            this.dispatchEvent(new CustomEvent('reset-wallet', { bubbles: true, composed: true }));
+        }
+
+        downloadKeystore(e) {
+            this.$.downloadButton.disabled = true;
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.key.toKeystore(this.password))));
+            const ts = new Date();
+            element.setAttribute('download', ['UTC--', ts.toJSON().replace(/:/g, '-'), '--', this.key.getAddress(), '.json'].join(''));
+            this.key = '';
+            this.password = '';
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            this.$.proceedButton.disabled = false;
+            this.proceedClass = '';
+        }
+
+        determineButtonStyle(pkey) {
+            if (!pkey) {
+                return 'disabled';
+            }
+        }
+
+    }
+
+    window.customElements.define(PageGenerateWallet.is, PageGenerateWallet);
+    </script>
+</dom-module>

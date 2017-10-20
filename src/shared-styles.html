@@ -128,14 +128,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-button[primary] {
             background-color: var(--app-primary-color);
             color: white;
+            min-width: 280px;
         }
 
         paper-button[primary]:hover {
             background-color: var(--app-primary-color-dark);
         }
 
+        paper-button[primary].disabled {
+            background-color: var(--paper-grey-400);
+        }
+
+
+        paper-button[primary]>iron-icon {
+            padding-right: 8px;
+        }
+
+
         paper-button {
-            text-transform: none;
+            /*text-transform: none;*/
             border-radius: 0;
         }
 

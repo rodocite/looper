@@ -2,26 +2,11 @@
 <link rel="import" href="../shared-styles.html">
 <dom-module id="subpage-ready" fit>
     <template>
-        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
         <style include="shared-styles">
          :host {
             display: block;
         }
-
-        vaadin-grid {
-            height: 100%;
-        }
-
-        .card-actions {
-            --app-grid-columns: 5;
-            /*--app-grid-item-height: 40px;*/
-            --app-grid-gutter: 0px;
-        }
-        /*  .market-list > .item:first-child {
-      @apply --app-grid-expandible-item;
-    }*/
-
-        .item {}
 
         .item>a {
             padding-right: 16px;
@@ -139,6 +124,14 @@
 
         static get properties() {
             return {};
+        }
+
+        ready(){
+            if(!this.wallet){
+                window.location.href = "#/wallet"
+                return
+            }
+            super.ready()
         }
 
         _convertToArray(wallet) {

@@ -17,8 +17,8 @@
         "src/page-doc.html",
         "src/page-404.html",
         "src/page-dev.html",
-        "src/wallet/subpage-unlock.html",
-        "src/wallet/subpage-generate.html"
+        "src/page-unlockwallet.html",
+        "src/page-generatewallet.html"
     ],
     "sources": [
         "src/**/*",
