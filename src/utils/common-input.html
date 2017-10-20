@@ -1,0 +1,67 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="LooperValidator.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+<dom-module id="common-input">
+    <template>
+        <style include="shared-styles">
+         :host {
+             display: inline-block;
+         }
+         iron-input[invalid] > input {
+             border: 1px solid red;
+             background-color: #FFCDD2;
+         }
+        </style>
+            <looper-validator validator-name="validator1"></looper-validator>
+
+            <iron-input>
+                <slot name="lable">
+
+                </slot>
+            </iron-input>
+
+            <iron-input auto-validate validator="validate1">
+                <input placeholder="" value="{{value::input}}">
+            </iron-input>
+    </template>
+    <script>
+    class CommonInput extends Polymer.Element {
+        static get is() { return 'common-input'; }
+
+        static get properties() {
+            return {
+                value: {
+                    type: Number,
+                    notify: true,
+                    observer: '_update',
+                    value: 0
+                },
+                value1: {
+                                    type: Number,
+                                    observer: '_update',
+                                    value: 0
+                },
+                validator: {
+                    type: Function
+                }
+            };
+        }
+
+        ready(){
+            super.ready()
+        }
+
+        _update() {
+                 console.log("inner:"+this.value)
+        }
+
+        validate1(value) {
+                    //validation code
+                    console.log("validate1");
+                    return value.length > 3;
+        }
+    }
+
+    window.customElements.define(CommonInput.is, CommonInput);
+    </script>
+</dom-module>

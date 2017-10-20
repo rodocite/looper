@@ -88,6 +88,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div secondary>[[_output(selectedToken, data)]]</div>
                       </paper-item-body>
                     </paper-item>
+
+
+                    <paper-item class="flex">
+                      <paper-item-body two-line>
+                        <div class="title">
+                        </div>
+                        <div secondary>
+                          <common-input value="{{val}}" validator="[[_validator]]">
+                            <input slot="lable" placeholder="my validator is valid"></input>
+                          </common-input>
+                          111:[[val]]
+                        </div>
+                      </paper-item-body>
+                    </paper-item>
+
                   </div>
                 </div>
               </div>
@@ -124,6 +139,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observer: "_selected"
          }
       };
+    }
+
+    _validator(value){
+        console.log("validator method:"+value)
+        return "cat" === value
     }
 
     ready() {
@@ -292,6 +312,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         var detail = { raws: [{"raw":"cancle datas", "subTitle":"Cancel Older Authorization"}, {"raw":"authorize datas", "subTitle":"New Authorization"}] };
         this.dispatchEvent(new CustomEvent('signtosend', { bubbles: true, composed: true, detail: detail }));
+
+        window.location.reload( true );
     }
   }
   window.customElements.define(PageAuthorize.is, PageAuthorize);
