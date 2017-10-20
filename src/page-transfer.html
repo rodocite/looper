@@ -179,6 +179,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         ready() {
+            if(!this.wallet){
+                window.location.href = "#/wallet"
+                return
+            }
             super.ready();
             var combobox = this.$.tokensSelector
             var context = this

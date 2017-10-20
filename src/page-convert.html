@@ -90,6 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             -webkit-font-smoothing: antialiased;
         }
         </style>
+        <global-variable key="wallet" value="{{wallet}}"></global-variable>
         <looper-page>
             <simple-toolbar slot="secondary-toolbar" title="Ether ERC20 Conversion" back-link="#/wallet"></simple-toolbar>
             <div class="sections">
@@ -163,6 +164,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         }
         ready() {
+            if(!this.wallet){
+                window.location.href = "#/wallet"
+                return
+            }
             super.ready();
             this.leftTokenName = this.configData.ETH.name;
             this.leftTokenIcon = this.configData.ETH.icon;
