@@ -85,7 +85,7 @@
                             </paper-button>
                         </div>
                         <div id="test">
-                               [[walletContent]]
+                            [[walletContent]]
                         </div>
                         <div class$="[[isPassWordRequiredClass(passwordRequired)]]">
                             <div secondary-text>Great. Your wallet is password protected. Provide your password:</div>
@@ -147,23 +147,20 @@
             }
 
             readFile(e) {
-                var file = e.target.files[0];
+                const file = e.target.files[0];
                 if (!file) {
                     return;
                 }
-                var reader = new FileReader();
-                var _this = this;
-                reader.onload = function() {
-                   _this.walletContent = this.result;
-                    _this.dispatchEvent(new CustomEvent('notification', { bubbles: true, composed: true, detail: _this.walletContent }));
-                   console.log(_this.walletContent);
-                };
+                const reader = new FileReader();
                 reader.readAsText(file);
+                reader.onload = function (e) {
+                    this.walletContent = e.target.result;
 
-                console.log("reader result"+reader.result);
+                }.bind(this);
             }
+
             isPassWordRequired(walletContent) {
-                console.log("change");
+                console.log(walletContent);
                 this.passwordRequired = walletContent && keystore.isKeystorePassRequired(walletContent);
             }
 
