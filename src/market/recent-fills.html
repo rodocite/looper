@@ -13,11 +13,11 @@
         <vaadin-grid aria-label="Basic Binding Example" items="[[resp.result.data]]">
             <vaadin-grid-column width="60px">
                 <template class="header">
-                    <div class="left-aligned">[[hashTitle]]</div>
+                    <div class="left-aligned">[[_hashTitle(hashType)]]</div>
                 </template>
                 <template>
                     <div class="left-aligned">
-                        <a href="#/fill">
+                        <a href="[[_hashLink(item.txHash)]]">
                             <div class="long-hash">[[item.txHash]]</div>
                         </a>
                     </div>
@@ -54,7 +54,7 @@
         }
 
         /**
-         * hashTitle: hash column title
+         * hashType: oneof:[order, ring]
          * market: lrc-eos
          */
         static get properties() {
@@ -62,7 +62,7 @@
                 token: {
                     type: String,
                 },
-                hashTitle: {
+                hashType: {
                     type: String
                 },
                 market: String
@@ -72,6 +72,30 @@
         ready(){
             super.ready()
             console.log("selected market:"+this.market)
+        }
+
+        _hashTitle(){
+            if(!this.hashType) return "#"
+            let type = this.hashType.toLowerCase()
+            if("order" === type){
+                return "Order Hash"
+            } else if("ring" === type){
+                return "Ring Hash"
+            } else {
+                return "Hash"
+            }
+        }
+
+        _hashLink(hash){
+            if(!hash || !this.hashType) return "#"
+            let type = this.hashType.toLowerCase()
+            if("order" === type){
+                return "#/order/"+hash
+            } else if("ring" === type){
+                return "#/ring/"+hash
+            } else {
+                return "#"
+            }
         }
 
         _findTokenConfig(address) {

@@ -26,15 +26,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .flexleft {
             @apply(--layout-vertical);
             width: 400px;
-            #background-color: mediumvioletred;
         }
 
         .flexright {
             @apply(--layout-vertical);
-            width: 500px;
+            @apply(--layout-flex);
+            width: 100px;
             padding-left: 40px;
             margin-left: 100px;
-            #background-color: #b0e0e6;
         }
 
         .flexright>.hr {
@@ -66,25 +65,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             padding-bottom: 0px;
         }
 
-        iron-input[invalid]>input {
-            border: 1px solid red;
-            background-color: #FFCDD2;
-        }
-
         .line {
             @apply(--layout-horizontal);
             @apply(--layout-start-justified);
             margin-top: 10px;
         }
 
+        .line div{
+            height:36px;
+        }
+
         .lineHoriziontal {
             @apply(--layout-horizontal);
             @apply(--layout-center-justified);
             margin-top: 20px;
-        }
-
-        .selectBox {
-            padding-bottom: 1px;
         }
         </style>
         <looper-page>
@@ -107,12 +101,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 Amount to Send:
                             </div>
                             <div class="line">
-                                <iron-input bind-value="{{bindValue}}">
-                                    <input value="{{value::input}}" class="amount">
-                                </iron-input>
-                                <div class="selectBox">
-                                    <vaadin-combo-box id="tokensSelector" items="[[_toTokenNameArray(appConfig.tokens)]]" item-label-path="name" item-value-path="address"></vaadin-combo-box>
+                                <div>
+                                    <iron-input bind-value="{{bindValue}}">
+                                        <input value="{{value::input}}" class="amount">
+                                    </iron-input>
                                 </div>
+                                <vaadin-combo-box id="tokensSelector" items="[[_toTokenNameArray(appConfig.tokens)]]" item-label-path="name" item-value-path="address"></vaadin-combo-box>
                             </div>
                             <div class="line">
                                 Gas Limit:
@@ -123,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </iron-input>
                             </div>
                             <div class="line">
-                                <a on-click="handleClick">+Advanced: Add Data</a>
+                                <a href="#" on-click="handleClick">+Advanced: Add Data</a>
                             </div>
                             <div class="hidden" id="hiddenExtData">
                                 <div class="line">
@@ -136,7 +130,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </div>
                             </div>
                             <div class="lineHoriziontal">
-                                <paper-button raised on-click="signToSend">Generate Transaction</paper-button>
+                                <paper-button primary raised on-click="signToSend">Generate Transaction</paper-button>
                             </div>
                         </div>
                         <div class="flexright">
@@ -150,25 +144,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-item>
                             <paper-item class="flex">
                                 <paper-item-body two-line>
-                                    <div class="title"> Account Balance</div>
-                                    <div secondary>0</div>
-                                </paper-item-body>
-                            </paper-item>
-                            <div class="hr">
-                                <hr>
-                            </div>
-                            <paper-item class="flex">
-                                <paper-item-body two-line>
-                                    <div class="title"> Token Balances</div>
+                                    <div class="title"> [[_toUpper(token)]] Balance</div>
                                     <div secondary>
-                                        <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{data}}" auto></iron-ajax>
-                                        <iron-list items="[[data.result.tokens]]" as="item">
-                                            <template>
-                                                <div class="fontContent">
-                                                    [[_findSymbol(item.contract)]] [[item.balance]]
-                                                </div>
-                                            </template>
-                                        </iron-list>
+                                        <iron-ajax url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" last-response="{{tokens}}" auto></iron-ajax>
+                                        [[_showTokenBalance(token, tokens.result.tokens)]]
                                     </div>
                                 </paper-item-body>
                             </paper-item>
@@ -184,14 +163,78 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class PageTransfer extends Polymer.Element {
         static get is() { return 'page-transfer'; }
 
+        static get properties() {
+            return {
+                token: {
+                    type: String,
+                    notify: true,
+                    observer: "_selectedTokenUnit"
+                },
+                selectedTokenAddr: {
+                    type: String,
+                    notify: true,
+                    observer: "_changeToken"
+                },
+            }
+        }
+
         ready() {
             super.ready();
             var combobox = this.$.tokensSelector
             var context = this
             combobox.addEventListener('value-changed', function() {
-                context.selectedToken = combobox.value;
-                console.log("selected token:"+context.selectedToken)
+                context.selectedTokenAddr = combobox.value;
+                context.token = context._findSymbol(combobox.value)
             });
+            if(this.token){
+                //this._selectedTokenUnit()
+            }
+        }
+
+        _selectedTokenUnit(){
+            if(!this.token) return;
+            var tokens = this.appConfig.tokens;
+            let token = null;
+            for (var x in tokens) {
+                if (x == this.token.toUpperCase()) {
+                    token = tokens[x];
+                }
+            }
+            if(!token) return;
+            this.selectedTokenAddr = token.contract
+            var combobox = this.$.tokensSelector
+            combobox.value = token.contract
+        }
+
+        _toUpper(name){
+            if(!name) return "Token";
+            return name.toUpperCase()
+        }
+
+        _showTokenBalance(token, tokens){
+            if(!token || !tokens) return 0;
+            let upper = token.toUpperCase()
+            let tokenConfig = this._findByUnit(upper)
+            if(!tokenConfig) return 0;
+            let tokenItem = null
+            for (var x in tokens) {
+                if (tokens[x].contract === tokenConfig.contract) {
+                    tokenItem = tokens[x];
+
+                }
+            }
+            if(!tokenItem) return 0;
+            return tokenItem.balance
+        }
+
+        _findByUnit(unit) {
+            let upper = unit.toUpperCase()
+            var tokens = this.appConfig.tokens;
+            for (var x in tokens) {
+                if (x == upper) {
+                    return tokens[x];;
+                }
+            }
         }
 
         handleClick() {
@@ -231,16 +274,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (token) {
                 return token.unit.toLowerCase()
             } else {
-                return "?";
+                return "";
             }
         }
 
         _findSymbol(address) {
+            console.log(address)
             var token = this._findTokenConfig(address);
             if (token) {
                 return token.unit
             } else {
-                return "?";
+                return "";
             }
         }
 

@@ -106,10 +106,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </template>
                         </paper-tabs>
                         <iron-pages selected="{{dataSelection}}" attr-for-selected="name">
-                            <recent-fills name="fills" token="{{id}}"></recent-fills>
+                            <recent-fills name="fills" token="{{id}}" hash-type="Ring"></recent-fills>
                             <recent-orders name="orders" token="{{id}}"></recent-orders>
                             <template is="dom-if" if="{{_isUnlocked(wallet)}}">
-                                <recent-fills filter-mine name="myfills"></recent-fills>
+                                <recent-fills filter-mine name="myfills" hash-type="Ring"></recent-fills>
                                 <recent-orders filter-mine name="myorders"></recent-orders>
                             </template>
                         </iron-pages>

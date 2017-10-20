@@ -91,6 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-doc.html">
 <link rel="lazy-import" href="page-404.html">
 <link rel="lazy-import" href="page-dev.html">
+<link rel="lazy-import" href="wallet/subpage-generate.html">
+<link rel="lazy-import" href="wallet/subpage-unlock.html">
 <dom-module id="my-app">
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
@@ -193,7 +195,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <signtosend-dialog id="signtosend"></signtosend-dialog>
         <notification-panel id="notification"></notification-panel>
         <!-- ajax -->
-        <iron-ajax auto url="http://127.0.0.1:8081/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
+        <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/config.json" handle-as="json" last-response="{{appConfig}}"></iron-ajax>
         <!-- global vars -->
         <global-variable key="app-config" value="{{appConfig}}"></global-variable>
         <global-variable key="wallet" value="{{wallet}}"></global-variable>
@@ -238,11 +240,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <page-ring name="ring" id={{pageId}}></page-ring>
                     <page-orders name="orders"></page-orders>
                     <page-order name="order" id={{pageId}}></page-order>
-                    <page-fills name="fills" id={{pageId}}></page-fills>
+                    <page-fills name="fills" market={{pageId}}></page-fills>
                     <page-convert name="convert" id={{pageId}}></page-convert>
                     <page-authorize name="authorize" id={{pageId}}></page-authorize>
-                    <page-transfer name="transfer"></page-transfer>
+                    <page-transfer name="transfer" token={{pageId}}></page-transfer>
                     <page-settings name="settings"></page-settings>
+                    <subpage-unlock name="unlockwallet"></subpage-unlock>
+                    <subpage-generate name="generatewallet"></subpage-generate>
                     <page-doc name="doc" markdown={{pageId}}></page-doc>
                     <page-dev name="dev"></page-dev>
                     <page-404 name="404"></page-404>
@@ -315,13 +319,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         _routePageChanged(page) {
-            console.log("new page: " + page);
             this.page = page || 'markets';
         }
 
         _pageChanged(page) {
             // Load page import on demand. Show 404 page if fails
-            const resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
+            var resolvedPageUrl = "";
+            if (page == 'unlockwallet') {
+                resolvedPageUrl = this.resolveUrl('wallet/subpage-unlock.html');
+            } else
+            if (page == "generatewallet") {
+                resolvedPageUrl = this.resolveUrl('wallet/subpage-generate.html');
+            } else {
+                resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
+            }
+            
+            console.log(resolvedPageUrl);
+
             Polymer.importHref(
                 resolvedPageUrl,
                 null,
@@ -330,7 +344,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         _routeIdChanged(pageId) {
-            console.log("new pageId: " + pageId);
             this.pageId = pageId || '';
         }
 

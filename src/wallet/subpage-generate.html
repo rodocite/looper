@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
 <script src="../../libs/dist/privateKey.js"></script>
-<dom-module id="subpage-generate" fit>
+<dom-module id="subpage-generate"> 
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
         <style include="shared-styles">
@@ -16,7 +17,7 @@
             }
 
             .input-wrapper {
-                padding-top: 24px;
+                padding-top: 16px;
                 padding-bottom: 24px;
             }
 
@@ -75,9 +76,21 @@
                 visibility: visible;
             }
 
+            div.error {
+                opacity: 0;
+                color: var(--app-red-color);
+            }
+
+            div[show] {
+                opacity: 1;
+            }
+
         </style>
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Wallet" id="Generate New Wallet" back-link="#/wallet"></simple-toolbar>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
         <div class="sections">
-            <paper-card nopadding heading="Generate Ethereum Walelt">
+            <paper-card>
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div secondary-text> Provide a very strong password:</div>
@@ -88,13 +101,13 @@
                             <paper-icon-button id="visibleBtn" on-click="toggleVisible"
                                                icon="{{visibility}}"></paper-icon-button>
                         </div>
-                        <div>
-                            <p style="color: red">{{passwordCheck}}</p>
+                        <div class="error" show$="[[showError]]">
+                            Your password is too weak, it should have at least 9 characters.
                         </div>
                     </div>
                 </div>
                 <div class="input-wrapper horizontal layout center-justified">
-                    <paper-button primary  disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me.</paper-button>
+                    <paper-button primary  disabled on-click="unlockClicked" class$="[[generateClass]]" id="generateButton">Generate wallet for me</paper-button>
                 </div>
             </paper-card>
             <paper-card transparent elevation=0>
@@ -102,7 +115,7 @@
                     <!-- <div class="flex"></div> -->
                 </div>
             </paper-card>
-            <paper-card nopadding heading="Save Keystore File" class$="[[unlock]]">
+            <paper-card class$="[[unlock]]">
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div class="vertical layout warning" secondary-text>
@@ -131,12 +144,13 @@
                     </div>
                 </div>
                 <div class="input-wrapper horizontal layout center-justified">
-                    <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]">I saved my keystore file. Proceed to
-                        unlock my wallet.
+                    <paper-button primary disabled id="proceedButton" on-click="proceedClicked" class$="[[proceedClass]]"> Proceed to
+                        unlock my wallet
                     </paper-button>
                 </div>
             </paper-card>
         </div>
+    </looper-page>
     </template>
     <script>
         const privateKey = require('privateKey');
@@ -199,7 +213,7 @@
                     this.$.generateButton.disabled = password.length < 9;
                     this.generateClass = password.length >=9 ? '':'disabled';
                     this.key='';
-                    this.passwordCheck = password.length >= 9 || password === '' ? '' : 'please input at least 9 characters';
+                    this.showError = (password === '' || password.length < 9) ;
                 }
             }
             unlockClicked() {

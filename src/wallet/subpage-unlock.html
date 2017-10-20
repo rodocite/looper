@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="subpage-unlock" fit>
+<link rel="import" href="../shared-styles.html">
+<dom-module id="subpage-unlock">
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
         <style include="shared-styles">
@@ -46,8 +47,6 @@
             width: 280px;
         }
 
-
-
         paper-button[primary] {
             min-width: 280px;
         }
@@ -61,8 +60,11 @@
         }
         </style>
         <input id="fileInput" type="file" id="file-input" />
+        <looper-page>
+            <simple-toolbar slot="secondary-toolbar" title="Wallet" id="Unlock My Wallet" back-link="#/wallet"></simple-toolbar>
+            <global-variable key="app-config" value="{{appConfig}}"></global-variable>
         <div class="sections">
-            <paper-card nopadding heading="Unlock Your Wallet">
+           <paper-card>
                 <div class="card-content">
                     <div class="vertical center layout ">
                         <div secondary-text> Choose the wallet file to unlock. Your file will never be sent over the network to anyone</div>
@@ -87,6 +89,7 @@
                 </div>
             </paper-card>
         </div>
+    </looper-page>
     </template>
     <script>
     class SubpageUnlock extends Polymer.Element {

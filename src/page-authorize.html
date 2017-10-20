@@ -60,14 +60,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <vaadin-combo-box id="tokensSelector" items="[[_toTokenNameArray(appConfig.tokens)]]" item-label-path="name" item-value-path="address"></vaadin-combo-box>
                     </div>
                     <div class="horizontal layout center-justified button">
-                      <paper-button raised on-click="_signToSend">Generate Transaction</paper-button>
+                      <paper-button primary raised on-click="_signToSend">Generate Transaction</paper-button>
                     </div>
                   </div>
                 </div>
                 <div class="middle"></div>
                 <div class="right">
                   <div class="vertical layout start-justified">
-                    <iron-ajax auto url="http://127.0.0.1:8081/walletTokens.json" handle-as="json" last-response="{{data}}" debounce-duration="300"></iron-ajax>
+                    <iron-ajax auto url="https://raw.githubusercontent.com/Loopring/mock-relay-data/master/walletTokens.json" handle-as="json" last-response="{{data}}" debounce-duration="300"></iron-ajax>
                     <paper-item class="flex">
                       <paper-item-body two-line>
                         <div class="title"> Address</div>
@@ -102,9 +102,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   class PageAuthorize extends Polymer.Element {
     static get is() { return 'page-authorize'; }
+
+      /**
+       * token : parent input parameter, lrc...
+       * selectedToken: current selected token contract address
+       * amount: current input amount
+       */
     static get properties() {
       return {
-         id: {
+         token: {
              type: String
          },
          selectedToken: {
@@ -127,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       combobox.addEventListener('value-changed', function() {
           context.selectedToken = combobox.value;
       });
-      if(this.id){
+      if(this.token){
           this._selectedTokenUnit()
       }
     }
@@ -148,7 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var tokens = this.appConfig.tokens;
         let token = null;
         for (var x in tokens) {
-            if (x == this.id.toUpperCase()) {
+            if (x == this.token.toUpperCase()) {
                 token = tokens[x];
             }
         }
