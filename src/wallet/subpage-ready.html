@@ -141,6 +141,14 @@
             return {};
         }
 
+        ready(){
+            if(!this.wallet){
+                window.location.href = "#/wallet"
+                return
+            }
+            super.ready()
+        }
+
         _convertToArray(wallet) {
             var array = new Array();
             array.push(wallet)
