@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="utils/cats-only.html">
 <dom-module id="page-authorize">
   <template>
     <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
@@ -39,6 +40,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .input{
         margin-bottom: var(--valo-space-xs);
       }
+      iron-input[invalid] > input {
+                        border: 1px solid red;
+                        background-color: #FFCDD2;
+            }
     </style>
     <looper-page>
       <global-variable key="app-config" value="{{appConfig}}"></global-variable>
@@ -99,10 +104,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <common-input value="{{val}}" validator="[[_validator]]">
                             <div slot="postfix">houzhui...</div>
                           </common-input>
-                          111:[[val]]
+
                           -->
 
-                          <validation-element></validation-element>
+
+<!--
+                          <cats-only></cats-only>
+                          <iron-input auto-validate validator="cats-only">
+                            <input placeholder="only 'cat' is valid">
+                          </iron-input>
+
+                          -->
+
+                          <empty-validator id="testValidator"></empty-validator>
+                          [[_setValidator()]]
+                          <common-input lable="test lable" placeHolder="only ... is valid" value="[[val]]" validator="testValidator"></common-input>
+                          111:[[val]]
                         </div>
                       </paper-item-body>
                     </paper-item>
@@ -148,6 +165,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _validator(value){
         console.log("validator method:"+value)
         return "cat" === value
+    }
+
+    _setValidator(){
+        this.$.testValidator.validate = function(input){
+            console.log("parent validator:"+input)
+        }
     }
 
     ready() {

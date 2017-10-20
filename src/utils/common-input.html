@@ -1,6 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="LooperValidator.html">
-<link rel="import" href="../../bower_components/iron-input/iron-input.html">
 <dom-module id="common-input">
     <template>
         <style include="shared-styles">
@@ -12,10 +10,8 @@
              background-color: #FFCDD2;
          }
         </style>
-            <looper-validator validator-name="validator1"></looper-validator>
-
             [[lable]]
-            <iron-input auto-validate validator="validate1">
+            <iron-input auto-validate validator="[[validator]]">
                 <input placeholder="[[placeHolder]]" value="{{value::input}}">
             </iron-input>
             <slot name="postfix"></slot>
@@ -44,29 +40,24 @@
                     observer: '_update',
                     value: 0
                 },
-                value1: {
-                                    type: Number,
-                                    observer: '_update',
-                                    value: 0
-                },
                 validator: {
-                    type: Function
+                    type: Function,
+                    observer: '_changed',
                 }
             };
         }
 
         ready(){
             super.ready()
+            console.log("common-input:"+this.validator)
         }
 
         _update() {
-                 console.log("inner:"+this.value)
+            console.log("inner:"+this.value)
         }
 
-        validate1(value) {
-                    //validation code
-                    console.log("validate1");
-                    return value.length > 3;
+        _changed(){
+            console.log("inner validator set value:"+this.validator)
         }
     }
 
