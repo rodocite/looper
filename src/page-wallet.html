@@ -9,10 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="lazy-import" href="wallet/subpage-default.html">
-<link rel="lazy-import" href="wallet/subpage-generate.html">
-<link rel="lazy-import" href="wallet/subpage-unlock.html">
-<link rel="lazy-import" href="wallet/subpage-ready.html">
+<link rel="import" href="wallet/subpage-default.html">
+<link rel="import" href="wallet/subpage-ready.html">
 <dom-module id="page-wallet">
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
@@ -23,10 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <looper-page>
             <looper-toolbar slot="secondary-toolbar" active-tab="wallet"> </looper-toolbar>
-            <iron-pages selected="[[subpage]]" attr-for-selected="name" fallback-selection="404" role="main">
+            <iron-pages selected="[[subpage]]" attr-for-selected="name" role="main">
                 <subpage-default name="default"></subpage-default>
-                <subpage-unlock name="unlock"></subpage-unlock>
-                <subpage-generate name="generate"></subpage-generate>
                 <subpage-ready name="ready"></subpage-ready>
             </iron-pages>
             <div class="footer-spacer"></div>
@@ -34,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </looper-page>
     </template>
     <script>
-    class PageMyWallet extends Polymer.Element {
+    class PageWallet extends Polymer.Element {
         static get is() {
             return 'page-wallet';
         }
@@ -42,33 +38,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return {
                 subpage: {
                     type: String,
-                    value: 'default',
-                    observer: '_subpageChanged'
+                    value: 'default'
                 }
             };
         }
 
         ready() {
             super.ready();
-            this.addEventListener('generate-wallet', e => this.subpage = 'generate');
-            this.addEventListener('unlock-wallet', e => this.subpage = 'unlock');
             this.addEventListener('reset-wallet', e => this.subpage = 'default');
-        }
-
-        _subpageChanged(subpage) {
-            var resolvedPageUrl = this.resolveUrl('wallet/subpage-' + subpage + '.html');
-            Polymer.importHref(
-                resolvedPageUrl,
-                null,
-                this._showPage404.bind(this),
-                true);
-        }
-
-        _showPage404() {
-            window.location = "#/404"
         }
     }
 
-    window.customElements.define(PageMyWallet.is, PageMyWallet);
+    window.customElements.define(PageWallet.is, PageWallet);
     </script>
 </dom-module>
