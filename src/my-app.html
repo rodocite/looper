@@ -91,11 +91,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="page-doc.html">
 <link rel="lazy-import" href="page-404.html">
 <link rel="lazy-import" href="page-dev.html">
-<link rel="lazy-import" href="wallet/subpage-generate.html">
-<link rel="lazy-import" href="wallet/subpage-unlock.html">
+<link rel="lazy-import" href="page-generatewallet.html">
+<link rel="lazy-import" href="page-unlockwallet.html">
 <dom-module id="my-app">
     <template>
-        <style is="custom-style" include="iron-flex iron-flex-alignment app-grid-style"></style>
+        <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
         <style include="shared-styles">
          :host {
             --app-primary-color: var(--google-blue-500);
@@ -245,8 +245,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <page-authorize name="authorize" id={{pageId}}></page-authorize>
                     <page-transfer name="transfer" token={{pageId}}></page-transfer>
                     <page-settings name="settings"></page-settings>
-                    <subpage-unlock name="unlockwallet"></subpage-unlock>
-                    <subpage-generate name="generatewallet"></subpage-generate>
+                    <page-unlockwallet name="unlockwallet"></page-unlockwallet>
+                    <page-generatewallet name="generatewallet"></page-generatewallet>
                     <page-doc name="doc" markdown={{pageId}}></page-doc>
                     <page-dev name="dev"></page-dev>
                     <page-404 name="404"></page-404>
@@ -323,17 +323,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         _pageChanged(page) {
-            // Load page import on demand. Show 404 page if fails
-            var resolvedPageUrl = "";
-            if (page == 'unlockwallet') {
-                resolvedPageUrl = this.resolveUrl('wallet/subpage-unlock.html');
-            } else
-            if (page == "generatewallet") {
-                resolvedPageUrl = this.resolveUrl('wallet/subpage-generate.html');
-            } else {
-                resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
-            }
-            
+            const resolvedPageUrl = this.resolveUrl('page-' + page + '.html');
+
             console.log(resolvedPageUrl);
 
             Polymer.importHref(

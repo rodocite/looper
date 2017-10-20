@@ -18,7 +18,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="market/recent-orders.html">
 <link rel="import" href="market/top-orders.html">
 <script src="../bower_components/highstock/highstock.js"></script>
-<!-- <script src="../bower_components/highcharts/highcharts-more.js"></script> -->
 <dom-module id="page-market">
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment paper-material-styles"></style>
@@ -34,8 +33,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             --paper-tabs-selection-bar-color: var(--app-primary-color);
             --paper-tab-ink: transparent;
             --paper-tab-content: {
-                /*background-color: var(--app-primary-color);*/
-                /*color: var(--app-primary-color);*/
             }
 
             --paper-tab-content-unselected: {
@@ -44,11 +41,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         }
 
-
-
         paper-tabs {
             margin-bottom: 8px;
         }
+
+      /*  paper-tab {
+            background-color: rgba(0,0,0,0.02);
+        }*/
 
         .tables {
             min-height: 400px;
@@ -57,7 +56,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-fab {
             position: absolute;
             right: 100px;
-            @apply --paper-material-elevation-3;
             background-color: black;
         }
 
