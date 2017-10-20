@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id='validation-element'>
+    <template>
+        <custom-validator id="valid1" validator-name="validator1"></custom-validator>
+        <paper-input auto-validate id='input_1' label='Label_1' validator='validator1'></paper-input>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'validation-element',
+
+        validate1: function(value) {
+            //validation code
+            console.log("validate1");
+            return value.length > 3;
+        },
+
+        validate2: function(value) {
+            //validation code
+            console.log("validate2");
+            return value.length > 5;
+        },
+
+        ready: function() {
+            this.$.valid1.validate = this.validate1.bind(this);
+            console.log(this.$.valid1.validate)
+        }
+
+    });
+
+</script>

@@ -14,15 +14,11 @@
         </style>
             <looper-validator validator-name="validator1"></looper-validator>
 
-            <iron-input>
-                <slot name="lable">
-
-                </slot>
-            </iron-input>
-
+            [[lable]]
             <iron-input auto-validate validator="validate1">
-                <input placeholder="" value="{{value::input}}">
+                <input placeholder="[[placeHolder]]" value="{{value::input}}">
             </iron-input>
+            <slot name="postfix"></slot>
     </template>
     <script>
     class CommonInput extends Polymer.Element {
@@ -32,6 +28,18 @@
             return {
                 value: {
                     type: Number,
+                    notify: true,
+                    observer: '_update',
+                    value: 0
+                },
+                lable: {
+                    type: String,
+                    notify: true,
+                    observer: '_update',
+                    value: 0
+                },
+                placeHolder: {
+                    type: String,
                     notify: true,
                     observer: '_update',
                     value: 0

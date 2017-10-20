@@ -51,7 +51,8 @@
     "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.1",
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
     "iron-label": "PolymerElements/iron-label#^2.0.0",
-    "paper-fab": "PolymerElements/paper-fab#^2.0.0"
+    "paper-fab": "PolymerElements/paper-fab#^2.0.0",
+    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",
