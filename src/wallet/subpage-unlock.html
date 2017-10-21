@@ -137,7 +137,6 @@
             }
 
             _update(walletContent) {
-                console.log(walletContent);
                 this.passwordRequired = walletContent && keystore.isKeystorePassRequired(walletContent);
             }
 
@@ -151,8 +150,7 @@
                     return;
                 }
                 const reader = new FileReader();
-                console.log('old content: ' + this.walletContent);
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     this.walletContent = e.target.result;
                 }.bind(this);
                 reader.readAsText(file);
