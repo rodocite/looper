@@ -84,11 +84,7 @@
                                 Select Keystore File (UTC / JSON)
                             </paper-button>
                         </div>
-                        <div id="test">
-                            <label>Wallet Content</label>
-                            <p> {{showContent(walletContent)}}</p>
-                        </div>
-                        <div class$="[[isPassWordRequiredClass(passwordRequired)]]">
+                        <div class$="[[isPasswordRequiredClass(passwordRequired)]]">
                             <div secondary-text>Great. Your wallet is password protected. Provide your password:</div>
                             <div class="input-wrapper horizontal layout center-justified">
                                 <iron-input bind-value="{{password}}" auto-validate>
@@ -122,9 +118,10 @@
             static get properties() {
                 return {
                     walletContent: {
-                        type: Object,
+                        type: String,
+                        value: '',
                         notify: true,
-                        observer: 'isPassWordRequired',
+                        observer: '_update',
                     },
                     passwordRequired: {
                         type: Boolean,
@@ -136,7 +133,12 @@
 
             ready() {
                 super.ready();
-                this.$.fileInput.addEventListener('change', this.readFile, false);
+                this.$.fileInput.addEventListener('change', this.readFile.bind(this), false);
+            }
+
+            _update(walletContent) {
+                console.log(walletContent);
+                this.passwordRequired = walletContent && keystore.isKeystorePassRequired(walletContent);
             }
 
             chooseFile() {
@@ -149,24 +151,14 @@
                     return;
                 }
                 const reader = new FileReader();
-                var _this = this;
+                console.log('old content: ' + this.walletContent);
                 reader.onload = function (e) {
-                    _this.walletContent = e.target.result;
-                    console.log('wallet Content:' + this.walletContent);
+                    this.walletContent = e.target.result;
                 }.bind(this);
                 reader.readAsText(file);
             }
 
-            showContent(content) {
-                return JSON.stringify(content);
-            }
-
-            isPassWordRequired(walletContent) {
-                console.log(walletContent);
-                this.passwordRequired = walletContent && keystore.isKeystorePassRequired(walletContent);
-            }
-
-            isPassWordRequiredClass(required) {
+            isPasswordRequiredClass(required) {
                 return required ? 'visible' : 'hidden';
             }
 
@@ -184,9 +176,6 @@
                     return 'visible';
                 }
 
-                if (password) {
-                    return 'hidden';
-                }
             }
 
             unlockClicked() {
@@ -197,7 +186,6 @@
                     this.decryptError = e.message;
                 }
             }
-
 
         }
 
